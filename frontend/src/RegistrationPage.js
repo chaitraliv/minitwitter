@@ -23,16 +23,11 @@ export class RegistrationPage extends Component {
              username:'',
              password:'',
              email:'',
-             //phone:'',
              firstname:'',
              lastname:'',
-            // dob:'',
-             //userAccount:[],
              errors: {
                 firstname: '',
                 lastname:'',
-                // phone:'',
-                // dob:'',
                 username:'',
                 email: '',
                 password: '',
@@ -44,13 +39,34 @@ export class RegistrationPage extends Component {
     clickEvent=event=>{
 
         event.preventDefault();
+        axios
+        .post('http://127.0.0.1:8020/RegistrationPage/',this.state) // link of backend api
+        .then(response=>{
+            console.log(response);
+
+        })
+        .catch(error=>{
+            console.log(error);
+        })
         if(validateForm(this.state.errors)) {
-          console.info('Valid Form')
-          alert(`Hey ${this.state.firstname}.... Registration Successful! `);
-            // this.state.userAccount.push(this.state);      // on successful registration object get stored in array userAccount
-            console.log(this.state.userAccount);
+          if(response.data.code === 201){
+            console.info('Valid Form')
+            console.log(this.state)
+            alert(`Hey ${this.state.firstname}.... Registration Successful! `);
             history.push('/LoginPage')      //Rendering on next page
-        }else{
+
+          }
+          else if(response.data.code === 226){
+            console.log(this.state)
+            alert(`Hey ${this.state.firstname}.... username already used! `);
+          }
+          else if(response.data.code === 400){
+            console.log(this.state)
+            alert(`Empty feilds not allowed! `);
+          }
+          
+        }
+        else{
           console.error('Invalid Form')
         }
         
@@ -79,19 +95,7 @@ export class RegistrationPage extends Component {
             ? 'Last Name must be 2 characters long!'
             : '';
         break;
-      /*case 'phone': 
-        errors.phone = 
-          value.length !== 10 
-            ? 'Number should be of 10 digits!'
-            : '';
-        break;
-      case 'dob': 
-        errors.dob = 
-          value.length !== 10 
-            ? 'dob should be in dd-mm-yyyy format!'
-            : '';
-            
-        break;*/
+      
       case 'email': 
         errors.email = 
           validEmailRegex.test(value)
@@ -116,14 +120,6 @@ export class RegistrationPage extends Component {
 
     this.setState({errors, [name]: value}); // error object contains all the feilds as property which have validation error
 
-
-
-
-
-       /* this.setState({
-            [event.target.name]:event.target.value
-        });*/
-        
 
     }
     
@@ -183,32 +179,7 @@ export class RegistrationPage extends Component {
                         {errors.email.length > 0 && 
                         <span className='error'>{errors.email}</span>}
                     </div>
-                    {/* <div> 
-                        <label>Phone Number</label>
-                        <input type="text" 
-                            id="phone" 
-                            placeholder="Enter Phone Number "
-                            name="phone"
-                            value={phone}
-                            required=""
-                            onChange={this.onChangeEvent}>
-                        </input>
-                        {errors.phone.length > 0 && 
-                        <span className='error'>{errors.phone}</span>}
-                    </div>
-                    <div>
-                        <label>Date of Birth</label>
-                        <input type="text" 
-                            id="dob" 
-                            placeholder="Enter Date of Birth in dd-mm-yyyy format" 
-                            name="dob"
-                            value={dob}
-                            required=""
-                            onChange={this.onChangeEvent}>
-                        </input>
-                        {errors.dob.length > 0 && 
-                        <span className='error'>{errors.dob}</span>}
-                    </div>*/}
+                    
                     <div>
                         <label>UserName</label>
                         <input type="text" 

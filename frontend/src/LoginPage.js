@@ -26,26 +26,30 @@ class LoginPage extends Component {
         .then(response=>{
             console.log(response);
 
+            if(response.data.code === 200){
+
+                alert(`Welcome ${this.state.userName}  !`)
+                console.log(this.state);
+                history.push('/Menu')
+                event.preventDefault()
+        
+                }
+                 else if(response.data.code === 400){
+                     alert(`Empty feilds not allowed !`)
+        
+                 }
+                 else if(response.data.code === 404){
+                    alert(`Empty feilds not allowed !`)
+        
+                }
+                event.preventDefault()
+            
+
         })
         .catch(error=>{
             console.log(error);
         })
-        if(response.data.code === 200){
-
-        alert(`Welcome ${this.state.userName}  !`)
-        console.log(this.state);
-        history.push('/Menu')
-        event.preventDefault()
-
-        }
-         else if(response.data.code === 400){
-             alert(`Empty feilds not allowed !`)
-
-         }
-         else if(response.data.code === 404){
-            alert(`Empty feilds not allowed !`)
-
-        }
+        
         event.preventDefault()
         
        

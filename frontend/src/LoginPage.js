@@ -11,18 +11,18 @@ class LoginPage extends Component {
         
         this.state = {
              userName:'',
-             passWord:'',
-             //userDetails:[], // array for storing object for every login action
+             passWord:''
              
              
         }
     }
+    
 
     // Function to perform action on button click
     handleEvent=event=>{
 
         axios
-        .post('https://jsonplaceholder.typicode.com/posts',this.state) // link of backend api
+        .post('http://127.0.0.1:8020/LoginPage/',this.state) // link of backend api
         .then(response=>{
             console.log(response);
 
@@ -30,12 +30,22 @@ class LoginPage extends Component {
         .catch(error=>{
             console.log(error);
         })
+        if(response.data.code === 200){
 
-        //this.state.userDetails.push(this.state);
         alert(`Welcome ${this.state.userName}  !`)
         console.log(this.state);
         history.push('/Menu')
-        //console.log(this.state.userDetails)
+        event.preventDefault()
+
+        }
+         else if(response.data.code === 400){
+             alert(`Empty feilds not allowed !`)
+
+         }
+         else if(response.data.code === 404){
+            alert(`Empty feilds not allowed !`)
+
+        }
         event.preventDefault()
         
        

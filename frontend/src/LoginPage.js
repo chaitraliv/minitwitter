@@ -26,6 +26,17 @@ class LoginPage extends Component {
         .then(response=>{
             console.log(response);
 
+
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+
+        axios
+        .get('http://127.0.0.1:8000/LoginPage/') // link of backend api
+        .then(response=>{
+            console.log(response);
+
             if(response.data.code === 200){
 
                 alert(`Welcome ${this.state.userName}  !`)
@@ -49,6 +60,8 @@ class LoginPage extends Component {
         .catch(error=>{
             console.log(error);
         })
+
+    
         
         event.preventDefault()
         

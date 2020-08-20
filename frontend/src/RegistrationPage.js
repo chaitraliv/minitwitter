@@ -41,25 +41,11 @@ export class RegistrationPage extends Component {
 
         event.preventDefault();
         axios
-        .post('http://127.0.0.1:8020/RegistrationPage/',this.state) // link of backend api
+        .post('http://127.0.0.1:8000/RegistrationPage/',this.state) // link of backend api
         .then(response=>{
             console.log(response);
             if(validateForm(this.state.errors)) {
-              if(response.data.code === 201){
-                console.info('Valid Form')
-                console.log(this.state)
-                alert(`Hey ${this.state.firstname}.... Registration Successful! `);
-                history.push('/LoginPage')      //Rendering on next page
-    
-              }
-              else if(response.data.code === 226){
-                console.log(this.state)
-                alert(`Hey ${this.state.firstname}.... username already used! `);
-              }
-              else if(response.data.code === 400){
-                console.log(this.state)
-                alert(`Empty feilds not allowed! `);
-              }
+              console.error('valid Form')
               
             }
             else{
@@ -70,6 +56,37 @@ export class RegistrationPage extends Component {
         .catch(error=>{
             console.log(error);
         })
+
+        axios
+        .get('http://127.0.0.1:8000/RegistrationPage/',)
+        .then(response=>{
+          console.log(response);
+          if(validateForm(this.state.errors)) {
+            if(response.data.status === 201){
+              console.info('Valid Form')
+              console.log(this.state)
+              alert(`Hey ${this.state.firstname}.... Registration Successful! `);
+              history.push('/LoginPage')      //Rendering on next page
+  
+            }
+            else if(response.data.status === 226){
+              console.log(this.state)
+              alert(`Hey ${this.state.firstname}.... username already used! `);
+            }
+            else if(response.data.staus === 400){
+              console.log(this.state)
+              alert(`Empty feilds not allowed! `);
+            }
+            
+          }
+          else{
+            console.error('Invalid Form')
+          }
+
+      })
+      .catch(error=>{
+        console.log(error);
+       })
         
         
     }

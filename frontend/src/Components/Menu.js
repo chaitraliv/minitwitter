@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './Menu.css'
 import { Link } from 'react-router-dom'
 import history from './../history';
-import Axios from 'axios';
+import axios from 'axios';
 
 
 

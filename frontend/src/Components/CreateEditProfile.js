@@ -13,23 +13,31 @@ export class CreateEditProfile extends Component {
             firstname:'',
             lastname:'',
             username:'',
-            bio:''
+            bio:'',
+            token:localStorage.getItem('token')
+
         }
     }
     
     componentDidMount=()=>{
 
-        const userToken=localStorage.getItem('token')
-        console.log(userToken)
         axios
-        .post('http://127.0.0.1:8000/CreateEditProfile/',userToken)
+        .post('http://127.0.0.1:8000/CreateEditProfile/',this.state)
         .then(response=>{
             console.log(response)
+
+            this.setState({
+                firstname:response.data['firstname'],
+                lastname:response.data['lastname'],
+                username:response.data['username'],
+                bio:response.data['bio']
+            })
             
         })
         .catch(error=>{
             console.log(error);
         })
+        
     }
 
 
@@ -56,7 +64,7 @@ export class CreateEditProfile extends Component {
                     <div className="profileForm">
 
                     <form>
-                        <label>First Name</label>
+                        <label id="label-create-edit-profile">First Name</label>
                         <input type="text"
                         id="firstname"
                         name="firstname"
@@ -65,7 +73,7 @@ export class CreateEditProfile extends Component {
 
                         </input>
 
-                        <label>Last Name</label>
+                        <label id="label-create-edit-profile">Last Name</label>
                         <input type="text"
                         id="lastname"
                         name="lastname"
@@ -73,7 +81,7 @@ export class CreateEditProfile extends Component {
                         onChange={this.updateInputValue}>
                         </input>
 
-                        <label>User Name</label>
+                        <label id="label-create-edit-profile">User Name</label>
                         <input type="text"
                         id="userName"
                         name="username"
@@ -81,7 +89,7 @@ export class CreateEditProfile extends Component {
                         onChange={this.updateInputValue}>
                         </input>
 
-                        <label>Bio</label>
+                        <label id="label-create-edit-profile">Bio</label>
                         <input type="text"
                         id="bio-"
                         name="bio"

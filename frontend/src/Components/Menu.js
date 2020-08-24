@@ -1,12 +1,24 @@
 import React, { Component } from 'react'
 import './Menu.css'
-import { Link } from 'react-router-dom'
 import history from './../history';
+import axios from 'axios';
+// import history from './../history';
 
 
 
 
 export class Menu extends Component {
+
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+            username:'user',
+            tweets:'',
+            token:localStorage.getItem('token')
+        }
+    }
+    
 
     clickEventProfile=event=>{
 
@@ -34,14 +46,77 @@ export class Menu extends Component {
         history.push('/Followings')
 
     }
+    clickEventPostTweet=event=>{
+
+        console.log(this.state)
+        axios
+        .post('http://127.0.0.1:8000/Menu/',this.state)
+        .then(response=>{
+            console.log(response)
+            event.preventDefault();
+            alert('Changes saved')
+            
+            
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+        
+
+    }
+
+    clickEventLogout=event=>{
+        this.setState({token:null})
+        history.push('/LoginPage')
+       history.replace('/LoginPage')
+        axios
+        .post('http://127.0.0.1:8000/Menu/',this.state)
+        .then(response=>{
+            console.log(response)
+            if(response['status']==200){
+
+                event.preventDefault();
+                history.push('/LoginPage')
+
+            }
+            
+            
+            
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+        
+    }
+
+    changeEvent=event=>{
+        this.setState({
+            tweets:event.target.value
+        })
+    }
+
+    componentDidMount=()=>{
+
+        axios
+        .post('http://127.0.0.1:8000/Menu/',this.state)
+        .then( response=>{
+                console.log(response)
+
+                this.setState({
+                    username:response.username
+                })
+        })
+    }
 
 
     render() {
+
+        const{tweets}=this.state.tweets
         return (
             <div className="Menu">
                 <div className="sideMenu">
                     <div>
-                        <h3>User Name</h3>
+                        <h3>{this.state.username}</h3>
                     </div>
                     <div>
                         <img src="./logo.png"></img>
@@ -65,15 +140,24 @@ export class Menu extends Component {
                     <div>
                          <button type="button">Post Tweet</button>
                     </div>
+                    <div>
+                         <button type="button" onClick={this.clickEventLogout}>Logout</button>
+                    </div>
                 
 
                 </div>
                 <div className="tweetContainer">
                     <div className="tweetBox">
+                        <form>
                         <textarea
-                            placeholder="Make a tweet">
+                            value={tweets}
+                            name="tweets"
+                            placeholder="Make a tweet"
+                            onChange={this.changeEvent}>
                         </textarea><br/><br/>
-                        <button type="button">Post Tweet</button>
+                        <button type="button"
+                         onClick={this.clickEventPostTweet}>Post Tweet</button>
+                         </form>
                         
                     </div>
                     {/* <div className="Pages">

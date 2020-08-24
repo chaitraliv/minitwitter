@@ -64,8 +64,7 @@ export class CreateEditProfile extends Component {
         .catch(error=>{
             console.log(error);
         })
-        event.preventDefault()
-        alert('Changes saved')
+        
         
     }
 

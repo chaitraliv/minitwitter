@@ -2,11 +2,22 @@ import React, { Component } from 'react'
 import './Menu.css'
 import { Link } from 'react-router-dom'
 import history from './../history';
+import axios from 'axios';
 
 
 
 
 export class Menu extends Component {
+
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+            tweets:[],
+            token:localStorage.getItem('token')
+        }
+    }
+    
 
     clickEventProfile=event=>{
 
@@ -32,6 +43,23 @@ export class Menu extends Component {
 
         event.preventDefault();
         history.push('/Followings')
+
+    }
+    clickEventPostTweet=event=>{
+
+        axios
+        .post('http://127.0.0.1:8000/Menu/',this.state)
+        .then(response=>{
+            console.log(response)
+            event.preventDefault();
+            alert('Changes saved')
+            
+            
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+        
 
     }
 
@@ -73,7 +101,7 @@ export class Menu extends Component {
                         <textarea
                             placeholder="Make a tweet">
                         </textarea><br/><br/>
-                        <button type="button">Post Tweet</button>
+                        <button type="button" onClick={this.clickEventPostTweet}>Post Tweet</button>
                         
                     </div>
                     {/* <div className="Pages">

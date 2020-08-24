@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './NewUser.css'
 import Menu from './Menu'
 import history from './../history';
+import axios from 'axios'
 
 export class NewUser extends Component {
     constructor(props) {

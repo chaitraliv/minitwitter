@@ -49,9 +49,24 @@ export class CreateEditProfile extends Component {
 
 
     clickEvent=event=>{
-        event.preventDefault();
+
+        console.log(this.state)
+        axios
+        .post('http://127.0.0.1:8000/CreateEditProfile/',this.state)
+        .then(response=>{
+            console.log(response)
+
+            event.preventDefault();
+            alert('Changes saved')
+            
+            
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+        event.preventDefault()
         alert('Changes saved')
-        console.log(this.state);
+        
     }
 
     render() {

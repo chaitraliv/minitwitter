@@ -3,7 +3,7 @@ import Menu from './Menu'
 import './CreateEditProfile.css'
 import axios from 'axios'
 
-
+// This component will render the profile page of user where user can edit their personal
 export class CreateEditProfile extends Component {
 
     constructor(props) {
@@ -26,12 +26,21 @@ export class CreateEditProfile extends Component {
         .then(response=>{
             console.log(response)
 
-            this.setState({
-                firstname:response.data['firstname'],
-                lastname:response.data['lastname'],
-                username:response.data['username'],
-                bio:response.data['bio']
-            })
+            if(response[status]==504){
+                history.push('/')
+            }
+            else{
+
+                this.setState({
+                    firstname:response.data['firstname'],
+                    lastname:response.data['lastname'],
+                    username:response.data['username'],
+                    bio:response.data['bio']
+                })
+                
+            }
+
+        
             
         })
         .catch(error=>{

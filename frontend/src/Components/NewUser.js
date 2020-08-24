@@ -11,16 +11,24 @@ export class NewUser extends Component {
              firstname:'',
              lastname:'',
              username:'',
-             bio:'',
-             followers:'',
-             following:''
+             bio:''
+             
         }
     }
 
     buttonClick= event=>{
 
         event.preventDefault();
-        history.push('/CreateEditProfile')
+        axios
+        .post('http://127.0.0.1:8000/RegistrationPage/',this.state)
+        .then(response=>{
+            console.log(response)
+            history.push('/CreateEditProfile')
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+        
 
     }
     

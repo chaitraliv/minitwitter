@@ -20,16 +20,7 @@ export class NewUser extends Component {
     buttonClick= event=>{
 
         event.preventDefault();
-        axios
-        .post('http://127.0.0.1:8000/RegistrationPage/',this.state)
-        .then(response=>{
-            console.log(response)
-            history.push('/CreateEditProfile')
-        })
-        .catch(error=>{
-            console.log(error);
-        })
-        
+        history.push('/CreateEditProfile')
 
     }
     

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Menu from './Menu'
 import './CreateEditProfile.css'
+import axios from 'axios'
 
 
 export class CreateEditProfile extends Component {
@@ -9,13 +10,27 @@ export class CreateEditProfile extends Component {
         super(props)
     
         this.state = {
-            firstname:'vishakha',
-            lastname:'kajale',
-            username:'vishakha_kajale',
-            bio:'hey live happy and simple life'
+            firstname:'',
+            lastname:'',
+            username:'',
+            bio:''
         }
     }
     
+    componentDidMount=()=>{
+
+        const userToken=localStorage.getItem('token')
+        console.log(userToken)
+        axios
+        .post('http://127.0.0.1:8000/CreateEditProfile/',userToken)
+        .then(response=>{
+            console.log(response)
+            
+        })
+        .catch(error=>{
+            console.log(error);
+        })
+    }
 
 
     updateInputValue=event=>{

@@ -24,6 +24,15 @@ margin-left: 15%;
     border-bottom: 20px solid skyblue;
    
 } 
+#label-create-edit-profile{
+
+    color: rgba(35, 154, 233);
+    font-weight: bolder;
+    font-size: 18px;
+    padding: 5px 5px;
+
+    
+}
 
 #firstname,#lastname,#userName,#bio-{
 
@@ -33,7 +42,7 @@ margin-left: 15%;
     margin-bottom: 20px;
     border: none;
     border-bottom: 2px solid black;
-    margin-left: 36%;
+    margin-left: 35%;
     padding: 10px 30px;
     border-radius: 15px;
     background-color: #fff;

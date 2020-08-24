@@ -106,15 +106,15 @@
       color:black;
       
   }
-   /* .registrationPage label{  */
-    #registration-label{ 
-     margin-top: 10px;
+   .registrationPage label{  
+    /* #registration-label{  */
     font-weight: bold;
-      color:blue;
+      color:blue; 
+      /* color: white; */
       text-align: left;
       /* transition: .5s; */
       pointer-events: none;
-      background-color: #fff;
+      /* background-color: #fff; */
   }
 
   .registrationPage input:focus ~ label{ 
@@ -144,6 +144,7 @@
     color: red;
     font-style: oblique;
     font-size: 15px;
+    padding:15px 15px;
     
     
   }

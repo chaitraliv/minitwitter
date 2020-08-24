@@ -72,7 +72,7 @@ export class UserProfile extends Component {
                 <h1 id="fullname">{this.state.fullname}</h1>
                 <h2 id="userid">@{this.state.username}</h2>
                 <h3 id="bio">{this.state.bio}</h3>
-                <label>TWEETS</label>
+                <div id="label-">TWEETS</div>
                 <div className="tweets">
                         <h4 id="tweets">
                         

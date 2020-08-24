@@ -42,13 +42,14 @@ margin-top: 10.5%;
     
 }
 
-label{
+#label-{
     background-color:rgba(35, 154, 233) ;
     font-weight: bolder;
     color: white;
     font-size: 20px;
     margin-left: 20px;
     padding: 5px 5px;
+    margin-top: 10px;
    
 }
 

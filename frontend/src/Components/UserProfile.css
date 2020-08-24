@@ -1,0 +1,125 @@
+.Profile{
+    
+top:0;
+margin-top: 10.5%;
+ margin-left: 15%;
+ height: 76%;
+ box-shadow: 0 5px 10px rgba(0,0,0,.2);
+ width: 54%;
+ float: center;
+ position: fixed;
+ text-align: center;
+ overflow: scroll;
+}
+
+.Profile img{
+    margin-top: 10px;
+    margin-left: 20px;
+    width: 50px;
+}
+
+#userid,#fullname{
+    margin-left: 20px;
+    color: rgba(35, 154, 233);
+}
+
+#bio{
+
+    margin-left: 20px;
+    font-style: italic;
+    font-weight: bolder;
+    
+}
+
+.tweets{
+
+    height:50%;
+    width: 100%;
+    border-bottom: 12px solid skyblue;
+    overflow: scroll;
+    text-align: left;
+    margin-bottom: 20px;
+    
+}
+
+label{
+    background-color:rgba(35, 154, 233) ;
+    font-weight: bolder;
+    color: white;
+    font-size: 20px;
+    margin-left: 20px;
+    padding: 5px 5px;
+   
+}
+
+ #tweets{
+    margin-left: 30px;
+    color: blue;
+    font-weight: bolder;
+    font-size: 18px;
+    
+}
+#tweetuser{
+
+    color: black;
+    font-size: 14px;
+    font-weight: bolder;
+    font-style: italic;
+    background-color:white;
+    border-top: 2px groove skyblue;
+    padding: 5px 0px;
+
+    
+} 
+
+#followers,#following,#edit{
+
+    margin-left: 8%;
+    margin-right: 8%;
+    height: 8%;
+    width: 15%;
+    border-radius: 50px;
+    border:2px solid skyblue;
+    background-color: #fff;
+    color:  rgb(35, 154, 233);
+    font-weight: bolder;
+}
+
+#followers:hover{
+
+    margin-left: 8%;
+    margin-right: 8%;
+    height: 8%;
+    width: 15%;
+    border-radius: 50px;
+    border:2px solid blue;
+    background-color: rgb(35, 154, 233);
+    color:  white;
+    font-weight: bolder;
+
+}
+#following:hover{
+
+    margin-left: 8%;
+    margin-right: 8%;
+    height: 8%;
+    width: 15%;
+    border-radius: 50px;
+    border:2px solid blue;
+    background-color: rgb(35, 154, 233);
+    color:  white;
+    font-weight: bolder;
+
+}
+#edit:hover{
+
+    margin-left: 8%;
+    margin-right: 8%;
+    height: 8%;
+    width: 15%;
+    border-radius: 50px;
+    border:2px solid blue;
+    background-color: rgb(35, 154, 233);
+    color:  white;
+    font-weight: bolder;
+}

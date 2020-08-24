@@ -106,12 +106,15 @@
       color:black;
       
   }
-  .registrationPage label{
+   /* .registrationPage label{  */
+    #registration-label{ 
+     margin-top: 10px;
     font-weight: bold;
       color:blue;
       text-align: left;
       /* transition: .5s; */
       pointer-events: none;
+      background-color: #fff;
   }
 
   .registrationPage input:focus ~ label{ 
@@ -141,5 +144,6 @@
     color: red;
     font-style: oblique;
     font-size: 15px;
+    
     
   }

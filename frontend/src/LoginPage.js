@@ -12,8 +12,7 @@ class LoginPage extends Component {
        
         this.state = {
              userName:'',
-             passWord:'',
-             token:''
+             passWord:''
              
              
         }
@@ -23,18 +22,14 @@ class LoginPage extends Component {
     // Function to perform action on button click
     handleEvent=event=>{
 
-        const userToken=localStorage.getItem("token");
-        this.setState({
-            token:userToken
-        })
-
         axios
         .post('http://127.0.0.1:8000/LoginPage/',this.state) // link of backend api
         .then(response=>{
             console.log(response);
            
                 if(response['status'] == 200){
-
+                const userToken=response.data['token']
+                localStorage.setItem('token',userToken);
                 alert(`Welcome ${this.state.userName}  !`)
                 console.log(this.state);
                 history.push('/HomePage')
@@ -85,7 +80,7 @@ class LoginPage extends Component {
    
     render() {
 
-        const { userName, passWord,token } = this.state
+        const { userName, passWord} = this.state
         return (
         <div className="loginPage">
             <form>

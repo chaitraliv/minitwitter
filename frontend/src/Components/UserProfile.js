@@ -98,7 +98,7 @@ export class UserProfile extends Component {
             <div className="Profile">
 
                 <img src="./logo.png"></img>
-                <h1 id="fullname">{this.state.firstname}  {this.state.firstname}</h1>
+                <h1 id="fullname">{this.state.firstname}  {this.state.lastname}</h1>
                 <h2 id="userid">@{this.state.username}</h2>
                 <h3 id="bio">{this.state.bio}</h3>
                 <div id="label-">TWEETS</div>

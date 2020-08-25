@@ -12,6 +12,7 @@ import CreateEditProfile from './Components/CreateEditProfile'
 import HomePage from './Components/HomePage'
 import Followers from './Components/Followers'
 import Followings from './Components/Followings'
+import Menu from './Components/Menu'
 
 
 export default class Routes extends Component {
@@ -29,6 +30,7 @@ export default class Routes extends Component {
                     <Route path="/HomePage" component={HomePage} />
                     <Route path="/Followers" component={Followers} />
                     <Route path="/Followings" component={Followings} />
+                    <Route path="/Menu" component={Menu} />
 
                     
                 </Switch>

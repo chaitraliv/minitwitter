@@ -14,6 +14,7 @@ export class UserProfile extends Component {
              firstname:'',
              lastname:'',
              bio:null,
+             tweets=[],
              token:localStorage.getItem('token')
              
         }
@@ -43,14 +44,17 @@ export class UserProfile extends Component {
         .post('http://127.0.0.1:8000/UserProfile/',this.state)
         .then(response=>{
             console.log(response)
+            const userData=response.data[0]
+            const tweets=response.data[1]
 
             if(response['status']==200){
 
                 this.setState({
-                    firstname:response.data.requireddata['firstname'],
-                    lastname:response.data.requireddata['lastname'],
-                    username:response.data.requireddata['username'],
-                    bio:response.data.requireddata['bio']
+                    firstname:userData.firstname,
+                    lastname:userData.lastname,
+                    username:userData.username,
+                    bio:userData.bio,
+                    tweets:tweets.tweet
                 })
                 
             }

@@ -47,17 +47,17 @@ export class UserProfile extends Component {
             if(response['status']==200){
 
                 this.setState({
-                    firstname:response.data['firstname'],
-                    lastname:response.data['lastname'],
-                    username:response.data['username'],
-                    bio:response.data['bio']
+                    firstname:response.data.requireddata['firstname'],
+                    lastname:response.data.requireddata['lastname'],
+                    username:response.data.requireddata['username'],
+                    bio:response.data.requireddata['bio']
                 })
                 
             }
         })
         .catch(error=>{
-            console.log(error.response);
-            if(error.response['status']==504){
+            console.log(error.status);
+            if(error['status']==504){
                 history.push('/')
             }
         })

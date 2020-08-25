@@ -39,8 +39,8 @@ export class CreateEditProfile extends Component {
             }
         })
         .catch(error=>{
-            console.log(error.response);
-            if(error.response['status']==504){
+            console.log(error['status']);
+            if(error['status']==504){
                 history.push('/')
             }
         })

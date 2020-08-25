@@ -67,14 +67,7 @@ export class RegistrationPage extends Component {
               
  
             }
-            else if(response['status'] === 226){
-              console.log(this.state)
-              alert(`Hey ${this.state.firstname}.... username already used! `);
-            }
-            else if(response['status']  === 400){
-              console.log(this.state)
-              alert(`Empty feilds not allowed! `);
-            }
+            
            
                      
            
@@ -82,6 +75,15 @@ export class RegistrationPage extends Component {
         })
         .catch(error=>{
             console.log(error);
+
+            if(error.response['status'] === 226){
+              console.log(this.state)
+              alert(`Hey ${this.state.firstname}.... username already used! `);
+            }
+            else if(error.response['status']  === 400){
+              console.log(this.state)
+              alert(`Empty feilds not allowed! `);
+            }
         })
        
     }

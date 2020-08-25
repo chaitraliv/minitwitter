@@ -14,7 +14,7 @@ export class Menu extends Component {
     
         this.state = {
             username:'user',
-            tweets:'',
+            tweets:null,
             token:localStorage.getItem('token')
         }
     }
@@ -60,10 +60,11 @@ export class Menu extends Component {
         .post('http://127.0.0.1:8000/Menu/',this.state)
         .then(response=>{
             console.log(response)
-            event.preventDefault();
-            alert('Changes saved')
-            
-            
+            if(response['status']==200){
+
+                alert('Tweet Posted')  
+            }
+   
         })
         .catch(error=>{
             console.log(error);

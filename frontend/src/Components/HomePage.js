@@ -35,7 +35,7 @@ export class HomePage extends Component {
             }
         })
         .catch(error=>{
-            console.log(error.response);
+            console.log(error.response['status'])
             if(error.response['status']==504){
                 history.push('/')
             }

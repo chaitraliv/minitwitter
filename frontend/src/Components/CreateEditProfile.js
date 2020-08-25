@@ -50,6 +50,7 @@ export class CreateEditProfile extends Component {
 
     updateInputValue=event=>{
         this.setState({
+
             [event.target.name]:event.target.value
         });
     }
@@ -58,6 +59,7 @@ export class CreateEditProfile extends Component {
     clickEvent=event=>{
 
         console.log(this.state)
+
         axios
         .post('http://127.0.0.1:8000/CreateEditProfile/',this.state)
         .then(response=>{
@@ -69,7 +71,7 @@ export class CreateEditProfile extends Component {
             
         })
         .catch(error=>{
-            console.log(error);
+            console.log(error.response['status']);
         })
         
         
@@ -106,6 +108,7 @@ export class CreateEditProfile extends Component {
                         <input type="text"
                         id="userName"
                         name="username"
+                        maxLength="100"
                         value={this.state.username}>
                         {/* // onChange={ this.updateInputValue}>           */}
                         </input>
@@ -116,6 +119,7 @@ export class CreateEditProfile extends Component {
                         name="bio"
                         value={this.state.bio}
                         onChange={this.updateInputValue}>
+
                         </input>
 
                         <button type="button"

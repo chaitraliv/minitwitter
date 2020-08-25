@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './UserProfile.css'
 import Menu from './Menu'
 import history from './../history';
+import axios from 'axios'
 
 export class UserProfile extends Component {
 
@@ -9,9 +10,11 @@ export class UserProfile extends Component {
         super(props)
     
         this.state = {
-             username:'vishakha',
-             fullname:'Vishakha kajale',
-             bio:'Live happy and simple life',
+             username:'',
+             firstname:'',
+             lastname:'',
+             bio:null,
+             token:localStorage.getItem('token')
              
         }
     }
@@ -32,6 +35,32 @@ export class UserProfile extends Component {
         event.preventDefault();
         history.push('/Followings')
 
+    }
+
+    componentDidMount=()=>{
+
+        axios
+        .post('http://127.0.0.1:8000/UserProfile/',this.state)
+        .then(response=>{
+            console.log(response)
+
+            if(response['status']==200){
+
+                this.setState({
+                    firstname:response.data['firstname'],
+                    lastname:response.data['lastname'],
+                    username:response.data['username'],
+                    bio:response.data['bio']
+                })
+                
+            }
+        })
+        .catch(error=>{
+            console.log(error.response);
+            if(error.response['status']==504){
+                history.push('/')
+            }
+        })
     }
     
     render() {
@@ -69,7 +98,7 @@ export class UserProfile extends Component {
             <div className="Profile">
 
                 <img src="./logo.png"></img>
-                <h1 id="fullname">{this.state.fullname}</h1>
+                <h1 id="fullname">{this.state.firstname}  {this.state.firstname}</h1>
                 <h2 id="userid">@{this.state.username}</h2>
                 <h3 id="bio">{this.state.bio}</h3>
                 <div id="label-">TWEETS</div>

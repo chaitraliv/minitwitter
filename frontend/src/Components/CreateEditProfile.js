@@ -2,18 +2,19 @@ import React, { Component } from 'react'
 import Menu from './Menu'
 import './CreateEditProfile.css'
 import axios from 'axios'
+import history from './../history';
 
 // This component will render the profile page of user where user can edit their personal
 export class CreateEditProfile extends Component {
 
     constructor(props) {
         super(props)
-    
+
         this.state = {
             firstname:'',
             lastname:'',
             username:'',
-            bio:'',
+            bio:null,
             token:localStorage.getItem('token')
 
         }
@@ -26,10 +27,7 @@ export class CreateEditProfile extends Component {
         .then(response=>{
             console.log(response)
 
-            if(response[status]==504){
-                history.push('/')
-            }
-            else{
+            if(response['status']==200){
 
                 this.setState({
                     firstname:response.data['firstname'],
@@ -39,12 +37,12 @@ export class CreateEditProfile extends Component {
                 })
                 
             }
-
-        
-            
         })
         .catch(error=>{
-            console.log(error);
+            console.log(error.response);
+            if(error.response['status']==504){
+                history.push('/')
+            }
         })
         
     }
@@ -108,8 +106,8 @@ export class CreateEditProfile extends Component {
                         <input type="text"
                         id="userName"
                         name="username"
-                        value={this.state.username}
-                        onChange={this.updateInputValue}>
+                        value={this.state.username}>
+                        {/* // onChange={ this.updateInputValue}>           */}
                         </input>
 
                         <label id="label-create-edit-profile">Bio</label>

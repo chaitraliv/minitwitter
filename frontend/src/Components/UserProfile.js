@@ -10,9 +10,9 @@ export class UserProfile extends Component {
         super(props)
     
         this.state = {
-             username:'',
-             firstname:'',
-             lastname:'',
+             username:null,
+             firstname:null,
+             lastname:null,
              bio:null,
              token:localStorage.getItem('token')
              

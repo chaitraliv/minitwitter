@@ -11,19 +11,23 @@ export class Followings extends Component {
         this.state = {
              followings:[
                  {
-                     name:null,
-                     username:null
+                     username:'priya',
+                     firstname:null,
+                     lastname:null
                  }
              ]
         }
     }
     
     componentDidMount(){
-        if(this.state.followings.name==null){
+        if(this.state.followings.username===null){
     
             history.push('./HomePage') 
             alert('No Any Followings!')
            
+        }
+        else{
+            
         }
     }
 
@@ -35,9 +39,9 @@ export class Followings extends Component {
                 <div id="label"> Your Followings </div>
                 <div id="followers-list"> 
                     {this.state.followings.map(followings => (
-                                <div key={indexedDB}><div id="followers-name">{followings.name}<br/></div>
+                                <div key={indexedDB}><div id="followers-name">{followings.firstname}<br/></div>
                                 <div id="followers-username">@ {followings.username}
-                                <div id="view-profile-btn"><button type="button">View</button></div>
+                                <div id="view-profile-btn"><button type="button">Profile</button></div>
                                 </div>
                                 </div>
                             ))}

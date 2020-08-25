@@ -91,7 +91,7 @@ export class Menu extends Component {
             
         })
         .catch(error=>{
-            if(error.response['status']==504){
+            if(error['status']==504){
                 console.log('State:Logged Out')
                 history.push('/')
             }

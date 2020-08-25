@@ -14,7 +14,7 @@ export class UserProfile extends Component {
              firstname:'',
              lastname:'',
              bio:null,
-             tweets=[],
+             tweets:[],
              token:localStorage.getItem('token')
              
         }
@@ -84,7 +84,7 @@ export class UserProfile extends Component {
                         <h4 id="tweets">
                         
                         {tweets.map(tweet => (
-                                <h4 key={id}><div id="tweetuser">@{this.state.username}<br/></div>{tweet.tweet}</h4>
+                                <h4 key={tweet.id}><div id="tweetuser">@{this.state.username}<br/></div>{tweet.tweet}</h4>
                             ))}
                         </h4>
                 </div>

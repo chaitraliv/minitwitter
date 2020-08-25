@@ -62,7 +62,8 @@ export class Menu extends Component {
             console.log(response)
             if(response['status']==200){
 
-                alert('Tweet Posted')  
+                alert('Tweet Posted')
+                history.push('/Menu')  
             }
    
         })

@@ -22,7 +22,7 @@ export class Menu extends Component {
                 'second',
                 'second'
             ],
-            user:null,
+            otheruser:'',
             token:localStorage.getItem('token')
         }
         // this.followUserBtn.bind(this)
@@ -116,9 +116,13 @@ export class Menu extends Component {
     followUserBtn=(user,event)=>{
 
         console.log(user)
+        this.setState({
+            otheruser:user
+        })
+        console.log(this.state.otheruser)
 
         axios
-        .post('http://127.0.0.1:8000/Menu/',user)
+        .post('http://127.0.0.1:8000/Menu/',this.state)
         .then(response=>{
             console.log(response)    // will return 200 code if token is null
             if(response['status']==200){

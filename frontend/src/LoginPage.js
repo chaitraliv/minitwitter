@@ -48,13 +48,10 @@ class LoginPage extends Component {
   
             }
             else if(error.response['status'] == 404){
-               alert(`Empty feilds not allowed !`)
+               alert(`Wrong Login Credentials !`)
   
            }
-           else if(error.response['status'] == 401){
-               alert(`Please SignUp/ Register first !`)
-  
-           }
+           
            
         })
 

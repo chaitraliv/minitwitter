@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Menu from './Menu'
 import history from './../history';
 import axios from 'axios'
+import './HomePage.css'
 
 export class HomePage extends Component {
 
@@ -49,6 +50,12 @@ export class HomePage extends Component {
             <div>
                 
                 <Menu />
+
+                <div className="timeline">
+
+                    <div id="label">timeline</div>
+
+                </div>
             </div>
         )
     }

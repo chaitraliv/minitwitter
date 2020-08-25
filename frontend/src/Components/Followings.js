@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Menu from './Menu'
 import './Followings.css'
 import history from './../history';
+import axios from 'axios'
 
 export class Followings extends Component {
 
@@ -9,11 +10,11 @@ export class Followings extends Component {
         super(props)
     
         this.state = {
+            token:localStorage.getItem('token'),
+            username:null,
              followings:[
                  {
-                     username:'priya',
-                     firstname:null,
-                     lastname:null
+                     username:'user'
                  }
              ]
         }
@@ -27,11 +28,36 @@ export class Followings extends Component {
            
         }
         else{
+
+            axios
+            .post('http://127.0.0.1:8000/UserProfile/',this.state)
+            .then(response=>{
+                console.log(response)
+                const userData=response.data[0]
+                const followingsArray=response.data[1]
+    
+                if(response['status']==200){
+    
+                    this.setState({
+                        
+                        username:userData.username,
+                        followings:followingsArray
+                    })
+                    
+                }
+            })
+            .catch(error=>{
+                console.log(error.response['status']);
+                if(error.response['status']==504){
+                    history.push('/')
+                }
+            })
             
         }
     }
 
     render() {
+        // const{followings,username}=this.state
         return (
             <div>
                 <Menu />
@@ -39,7 +65,8 @@ export class Followings extends Component {
                 <div id="label"> Your Followings </div>
                 <div id="followers-list"> 
                     {this.state.followings.map(followings => (
-                                <div key={indexedDB}><div id="followers-name">{followings.firstname}<br/></div>
+                                <div key={indexedDB}>
+                                    {/* <div id="followers-name">{followings.firstname}<br/></div> */}
                                 <div id="followers-username">@ {followings.username}
                                 <div id="view-profile-btn"><button type="button">Profile</button></div>
                                 </div>

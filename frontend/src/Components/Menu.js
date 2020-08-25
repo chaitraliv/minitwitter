@@ -15,6 +15,10 @@ export class Menu extends Component {
         this.state = {
             username:'user',
             tweets:'null',
+            allUsers:[
+                'fist',
+                'second'
+            ],
             token:localStorage.getItem('token')
         }
     }
@@ -118,8 +122,12 @@ export class Menu extends Component {
         .then( response=>{
                 console.log(response)
 
+                const setusername=response.data[0]
+                const userArray=response.data[1]
+
                 this.setState({
-                    username:response.data['username']
+                    username:setusername.username,
+                    allUsers:userArray
                 })
         })
     }
@@ -127,7 +135,7 @@ export class Menu extends Component {
 
     render() {
 
-        const{tweets}=this.state.tweets
+        const{tweets,allUsers}=this.state
         return (
             <div className="Menu">
                 {/* Renders the side menu */}
@@ -165,12 +173,6 @@ export class Menu extends Component {
                         onClick={this.clickEventFollowings}>
                             Following
                         </button>
-                    </div>
-
-                    <div>
-                         <button type="button">
-                             Tweet
-                         </button>
                     </div>
 
                     <div>
@@ -218,6 +220,15 @@ export class Menu extends Component {
                         <button type="button">
                             Search
                         </button>
+
+                        <div className="users">
+                            <h4 id="other-users">
+                            
+                            {allUsers.map(user => (
+                                    <h4 key={user.id}>{user}</h4>
+                                ))}
+                            </h4>
+                        </div>
                     </div>
 
 

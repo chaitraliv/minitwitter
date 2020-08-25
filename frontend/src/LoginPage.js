@@ -42,13 +42,14 @@ class LoginPage extends Component {
 
         })
         .catch(error=>{
-            console.log(error);
-            if(error['status'] == 400){
+            console.log(error.response['status']);
+            if(error.response['status'] == 400){
                 alert(`Empty feilds not allowed !`)
   
             }
-            else if(error['status'] == 404){
-               alert(`Wrong Login Credentials !`)
+            else if(error.response['status'] == 404){
+               alert(`Please fill details again !`)
+               history.push('/LoginPage')
   
            }
            

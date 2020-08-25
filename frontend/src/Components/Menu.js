@@ -82,13 +82,21 @@ export class Menu extends Component {
         .then(response=>{
             console.log(response)    // will return 200 code if token is null
             if(response['status']==200){
+
+                event.preventDefault();
                history.push('/')
 
             }
             
         })
         .catch(error=>{
-            console.log(error);
+            if(error.response['status']==504){
+                console.log('State:Logged Out')
+                history.push('/')
+            }
+            else{
+                console.log('State:Logged In')
+            }
         })
         
     }

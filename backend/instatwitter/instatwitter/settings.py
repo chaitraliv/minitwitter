@@ -46,6 +46,7 @@ INSTALLED_APPS = [
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
@@ -61,7 +62,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'instatwitter.urls'
-
+CORS_ORIGIN_ALLOW_ALL= True,
 # new
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:3000',

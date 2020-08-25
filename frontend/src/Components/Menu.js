@@ -14,13 +14,18 @@ export class Menu extends Component {
     
         this.state = {
             username:'user',
-            tweets:'null',
+            tweets:null,
             allUsers:[
                 'fist',
+                'second',
+                'fist',
+                'second',
                 'second'
             ],
+            user:null,
             token:localStorage.getItem('token')
         }
+        // this.followUserBtn.bind(this)
     }
     
 
@@ -105,6 +110,45 @@ export class Menu extends Component {
             }
         })
         
+    }
+
+    // onclick function to follow the user
+    followUserBtn=(user,event)=>{
+
+        console.log(user)
+
+        axios
+        .post('http://127.0.0.1:8000/Menu/',user)
+        .then(response=>{
+            console.log(response)    // will return 200 code if token is null
+            if(response['status']==200){
+
+                history.push('/Followings')
+
+            }
+            
+        })
+        .catch(error=>{
+            if(error['status']==406){
+                console.log('already followed')
+                alert('User already followed!')
+                history.push('/Followings')
+            }
+            else if(error['status']==400){
+                console.log('following yourself')
+                alert('You cannot follow yourself!')
+            }
+        })
+
+
+
+    }
+
+    //onclick function to view the profile of other user
+    viewProfileBtn=(event,user)=>{
+
+        console.log(user)
+
     }
 
      // onchange function to make the tweet from textarea present in upper menu part
@@ -222,10 +266,17 @@ export class Menu extends Component {
                         </button>
 
                         <div className="users">
-                            <h4 id="other-users">
+                            <h4 id="other-users-list">
                             
                             {allUsers.map(user => (
-                                    <h4 key={user.id}>{user}</h4>
+                                   <div id="for-each"> 
+                                        <h4 key={user.id}>
+                                            <div id="other-user-name">{user}</div>
+                                            <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button><span>
+                                            <button id="visit-profile-button" onClick={this.viewProfileBtn}>Profile</button>
+                                            </span>
+                                        </h4>
+                                    </div>
                                 ))}
                             </h4>
                         </div>

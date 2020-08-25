@@ -126,13 +126,17 @@ margin-right: 30px;
 } 
 
 .searchUser{
+   
     height: 872px;
+    /* height: 50%; */
     margin-left: 20px;
     width: 500px;
     padding: 20px 20px;
     border: 1px rgba(0,0,0,.1);
-  box-shadow: 0 5px 10px rgba(0,0,0,.2);
-  text-align: center;
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    text-align:center;
+    
+
 }
 .searchBar input{
     
@@ -170,6 +174,66 @@ margin-right: 30px;
     background-color: rgb(35, 154, 233) ;
     border-radius: 50px;
     border: none;
+    color: white;
+    font-weight: bolder;
+}
+
+.users{
+
+    margin-top: 20px;
+    height: 700px;
+    width: 100%; 
+    
+    border-bottom:20px solid rgb(35, 154, 233);
+    text-align: left;
+    overflow-y: scroll;
+    
+}
+
+#other-users-list{
+
+    font-weight: bolder;
+    color:rgb(35, 154, 233);
+    overflow-y: scroll;
+
+}
+#other-user-name{
+    padding: 5px 5px;
+    font-weight: bolder;
+    font-size: 25px;
+    color:rgb(35, 154, 233);
+}
+#for-each{
+
+    border-top: 2px solid blue;
+    border-bottom: 2px solid blue;
+   
+    
+}
+#for-each:hover{
+
+    border-top: 4px solid blue;
+    background-color:rgb(233, 246, 255);
+      
+}
+/* rgb(215, 239, 255) */
+
+#follow-button{
+
+    text-align: center;
+    height: 30px;
+    width: 80px;
+    background-color: rgb(35, 154, 233);
+    color: white;
+    font-weight: bolder;
+}
+#visit-profile-button{
+
+    margin-left: 10px;
+    text-align: center;
+    height: 30px;
+    width: 80px;
+    background-color: rgb(35, 154, 233);
     color: white;
     font-weight: bolder;
 }

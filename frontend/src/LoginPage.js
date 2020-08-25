@@ -11,8 +11,8 @@ class LoginPage extends Component {
         super(props)
        
         this.state = {
-             userName:'',
-             passWord:''
+             userName:null,
+             passWord:null
              
              
         }

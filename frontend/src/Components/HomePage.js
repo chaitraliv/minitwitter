@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Menu from './Menu'
+import history from './../history';
+import axios from 'axios'
 
 export class HomePage extends Component {
 

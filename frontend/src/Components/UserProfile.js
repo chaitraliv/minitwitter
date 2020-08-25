@@ -45,7 +45,7 @@ export class UserProfile extends Component {
         .then(response=>{
             console.log(response)
             const userData=response.data[0]
-            const tweets=response.data[1]
+            const tweetsArray=response.data[1]
 
             if(response['status']==200){
 
@@ -54,7 +54,7 @@ export class UserProfile extends Component {
                     lastname:userData.lastname,
                     username:userData.username,
                     bio:userData.bio,
-                    tweets:tweets.tweet
+                    tweets:tweetsArray
                 })
                 
             }
@@ -69,33 +69,7 @@ export class UserProfile extends Component {
     
     render() {
 
-        const tweets=[
-
-            
-            '@DrRPNishankji to please postpone exams for students Sir please listen to the majority of students They are extremely stressed and are very pressurised in this pandemic Please sir',
-            'Back at it ',
-            'how are you',
-            'helo',
-            'hi',
-            'how are you',
-            'helo',
-            'hi',
-            'how are you',
-            'helo',
-            'hi',
-            'how are you',
-            'helo',
-            'hi',
-            'how are you',
-            'helo',
-            'hi',
-            'how are you',
-            ' hi',
-            'how are you',
-            'helo',
-            'hi',
-            'how are you'
-        ]
+       const{tweets}=this.state
         return (
             <div>
              <Menu />  
@@ -109,8 +83,8 @@ export class UserProfile extends Component {
                 <div className="tweets">
                         <h4 id="tweets">
                         
-                        {tweets.map(tweets => (
-                                <h4 key={indexedDB}><div id="tweetuser">@{this.state.username}<br/></div>{tweets}</h4>
+                        {tweets.map(tweet => (
+                                <h4 key={id}><div id="tweetuser">@{this.state.username}<br/></div>{tweet.tweet}</h4>
                             ))}
                         </h4>
                 </div>

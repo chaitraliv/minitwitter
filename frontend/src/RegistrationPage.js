@@ -23,11 +23,11 @@ export class RegistrationPage extends Component {
         super(props)
    
         this.state = {
-             username:'',
-             password:'',
-             email:'',
-             firstname:'',
-             lastname:'',
+             username:null,
+             password:null,
+             email:null,
+             firstname:null,
+             lastname:null,
              errors: {
                 firstname: '',
                 lastname:'',
@@ -67,6 +67,10 @@ export class RegistrationPage extends Component {
               
  
             }
+            if(response['status'] === 226){
+              console.log(this.state)
+              alert(`Hey ${this.state.firstname}.... username already used! `);
+            }
             
            
                      
@@ -76,11 +80,7 @@ export class RegistrationPage extends Component {
         .catch(error=>{
             console.log(error.response['status']);
 
-            if(error.response['status'] === 226){
-              console.log(this.state)
-              alert(`Hey ${this.state.firstname}.... username already used! `);
-            }
-            else if(error.response['status']  === 400){
+            if(error.response['status']  === 400){
               console.log(this.state)
               alert(`Empty feilds not allowed! `);
             }

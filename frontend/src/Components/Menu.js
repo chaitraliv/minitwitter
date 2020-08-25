@@ -14,7 +14,7 @@ export class Menu extends Component {
     
         this.state = {
             username:'user',
-            tweets:null,
+            tweets:'',
             token:localStorage.getItem('token')
         }
     }

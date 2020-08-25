@@ -22,7 +22,7 @@ export class Menu extends Component {
                 'second',
                 'second'
             ],
-            otheruser:'',
+            otheruser:'user',
             token:localStorage.getItem('token')
         }
         // this.followUserBtn.bind(this)
@@ -116,13 +116,14 @@ export class Menu extends Component {
     followUserBtn=(user,event)=>{
 
         console.log(user)
-        this.setState({
+        const followuser={
+            token:this.state.token,
             otheruser:user
-        })
-        console.log(this.state.otheruser)
+
+        }
 
         axios
-        .post('http://127.0.0.1:8000/Menu/',this.state)
+        .post('http://127.0.0.1:8000/Menu/',followuser)
         .then(response=>{
             console.log(response)    // will return 200 code if token is null
             if(response['status']==200){
@@ -133,12 +134,12 @@ export class Menu extends Component {
             
         })
         .catch(error=>{
-            if(error['status']==406){
+            if(error.response['status']==406){
                 console.log('already followed')
                 alert('User already followed!')
                 history.push('/Followings')
             }
-            else if(error['status']==400){
+            else if(error.response['status']==400){
                 console.log('following yourself')
                 alert('You cannot follow yourself!')
             }

@@ -60,8 +60,8 @@ export class UserProfile extends Component {
             }
         })
         .catch(error=>{
-            console.log(error.status);
-            if(error['status']==504){
+            console.log(error.response['status']);
+            if(error.response['status']==504){
                 history.push('/')
             }
         })

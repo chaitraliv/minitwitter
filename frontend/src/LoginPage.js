@@ -11,8 +11,8 @@ class LoginPage extends Component {
         super(props)
        
         this.state = {
-             userName:null,
-             passWord:null
+             userName:'',
+             passWord:''
              
              
         }
@@ -36,18 +36,6 @@ class LoginPage extends Component {
                 event.preventDefault()
        
                 }
-                 else if(response['status'] == 400){
-                     alert(`Empty feilds not allowed !`)
-       
-                 }
-                 else if(response['status'] == 404){
-                    alert(`Empty feilds not allowed !`)
-       
-                }
-                else if(response['status'] == 401){
-                    alert(`Please SignUp/ Register first !`)
-       
-                }
                 event.preventDefault()
            
 
@@ -55,6 +43,18 @@ class LoginPage extends Component {
         })
         .catch(error=>{
             console.log(error);
+            if(error.response['status'] == 400){
+                alert(`Empty feilds not allowed !`)
+  
+            }
+            else if(error.response['status'] == 404){
+               alert(`Empty feilds not allowed !`)
+  
+           }
+           else if(error.response['status'] == 401){
+               alert(`Please SignUp/ Register first !`)
+  
+           }
            
         })
 

@@ -11,9 +11,9 @@ export class CreateEditProfile extends Component {
         super(props)
 
         this.state = {
-            firstname:'',
-            lastname:'',
-            username:'',
+            firstname:null,
+            lastname:null,
+            username:null,
             bio:null,
             token:localStorage.getItem('token')
 

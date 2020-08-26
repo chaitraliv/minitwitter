@@ -11,6 +11,7 @@ export class OtherUserProfile extends Component {
     
         this.state = {
              otherUserName:localStorage.getItem('otheUserName'),
+             token:localStorage.getItem('token'),
              firstname:'',
              lastname:'',
              username:'',
@@ -19,9 +20,11 @@ export class OtherUserProfile extends Component {
 
 
         }
+        this.componentDidMount()
     }
     componentDidMount=()=>{
 
+        console.log(this.state.otherUserName)
         axios
         .post('http://127.0.0.1:8000/OtherUserProfile/',this.state)
         .then(response=>{
@@ -32,6 +35,7 @@ export class OtherUserProfile extends Component {
 
             if(response['status']==200){
 
+                localStorage.clear('otheUserName') 
                 this.setState({
                     firstname:userDataArray.firstname,
                     lastname:userDataArray.lastname,
@@ -39,7 +43,8 @@ export class OtherUserProfile extends Component {
                     bio:userDataArray.bio,
                     tweets:userTweets
                 })
-                 localStorage.clear('otheUserName') 
+                console.log(this.state.otherUserName)
+                 
                 
             }
         })
@@ -74,6 +79,10 @@ export class OtherUserProfile extends Component {
                                 ))}
                             </h4>
                     </div>
+                    <button id="exit-btn"
+                    onClick={()=>{history.push('/HomePage')}}> 
+                        Exit
+                    </button>
 
                 </div>
             </div>

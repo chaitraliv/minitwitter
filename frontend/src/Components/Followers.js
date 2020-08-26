@@ -17,6 +17,13 @@ constructor(props) {
 
 }
 
+viewProfile=(otherUserName,event)=>{
+
+    console.log(otherUserName)
+    localStorage.setItem('otheUserName',otherUserName)
+    history.push('/OtherUserProfile')
+}
+
 
 
 componentDidMount(){
@@ -43,10 +50,10 @@ componentDidMount(){
             }
         })
         .catch(error=>{
-            console.log(error.response['status']);
-            if(error.response['status']==504){
-                history.push('/')
-            }
+            // console.log(error.response['status']);
+            // if(error.response['status']==504){
+            //     history.push('/')
+            // }
         })
         
     }
@@ -63,7 +70,13 @@ componentDidMount(){
                                 <div key={indexedDB}>
                                     {/* <div id="followers-name">{followers.username}<br/></div> */}
                                 <div id="followers-username">@ {follow}
-                                <div id="view-profile-btn"><button type="button">View</button></div>
+                                <div id="view-profile-btn">
+                                    <button type="button"
+                                    onClick={()=>{
+                                        this.viewProfile(follow)
+                                    }}>
+                                        Profile
+                                    </button></div>
                                 </div>
                                 </div>
                             ))}

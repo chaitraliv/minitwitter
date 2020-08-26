@@ -88,7 +88,7 @@ class LoginPage extends Component {
                 <input
                     type="text"
                     id="username"
-                    placeholder="Enter username or phone number"
+                    placeholder="Enter username "
                     value={userName}
                     name={userName}
                     required="text"

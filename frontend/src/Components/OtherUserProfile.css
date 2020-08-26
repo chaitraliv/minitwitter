@@ -30,3 +30,25 @@
         font-weight: bolder;
         
     }
+
+    #exit-btn{
+        height: 8%;
+    width: 15%;
+    border-radius: 50px;
+    border:2px solid skyblue;
+    background-color: #fff;
+    color:  rgb(35, 154, 233);
+    font-weight: bolder;
+    }
+
+    #exit-btn:hover{
+
+        height: 8%;
+        width: 15%;
+        border-radius: 50px;
+        border:2px solid blue;
+        background-color: rgb(35, 154, 233);
+        color:  white;
+        font-weight: bolder;
+    
+    }

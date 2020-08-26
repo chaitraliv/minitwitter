@@ -11,6 +11,7 @@ class TweetSerializer(serializers.ModelSerializer):
     class Meta:
         model = TweetData
         fields = '__all__'
+
 class FollowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Follow

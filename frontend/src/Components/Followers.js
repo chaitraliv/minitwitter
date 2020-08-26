@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Menu from './Menu'
 import './Followers.css'
 import history from './../history';
+import axios from 'axios'
 
 export class Followers extends Component {
 
@@ -11,7 +12,7 @@ constructor(props) {
     this.state = {
 
         token:localStorage.getItem('token'),
-         followers:['hello']
+         followers:[]
     }
 
 }
@@ -19,7 +20,7 @@ constructor(props) {
 
 
 componentDidMount(){
-    if(this.state.followers[0]=='hello'){
+    if(this.state.followers[0]==''){
 
         history.push('./HomePage') 
         alert('No Any Followers!')
@@ -30,17 +31,16 @@ componentDidMount(){
         .post('http://127.0.0.1:8000/Followers/',this.state)
         .then(response=>{
             console.log(response)
-            // const userData=response.data[0]
-            // const followingsArray=response.data[1]
+            const followingsArray=response.data
 
-            // if(response['status']==200){
+            if(response['status']==200){
 
-            //     this.setState({
+                this.setState({
                     
-            //         followers:followingsArray
-            //     })
+                    followers:followingsArray
+                })
                 
-            // }
+            }
         })
         .catch(error=>{
             console.log(error.response['status']);
@@ -59,10 +59,10 @@ componentDidMount(){
                 <div className="UserFollowers">
                 <div id="label"> Your Followers </div>
                     <div id="followers-list"> 
-                    {this.state.followers.map(followers => (
+                    {this.state.followers.map(follow => (
                                 <div key={indexedDB}>
                                     {/* <div id="followers-name">{followers.username}<br/></div> */}
-                                <div id="followers-username">@ {followers.username}
+                                <div id="followers-username">@ {follow}
                                 <div id="view-profile-btn"><button type="button">View</button></div>
                                 </div>
                                 </div>

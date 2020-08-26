@@ -12,6 +12,8 @@ import CreateEditProfile from './Components/CreateEditProfile'
 import HomePage from './Components/HomePage'
 import Followers from './Components/Followers'
 import Followings from './Components/Followings'
+import OtherUserProfile from './Components/OtherUserProfile'
+
 
 
 
@@ -30,6 +32,7 @@ export default class Routes extends Component {
                     <Route path="/HomePage" component={HomePage} />
                     <Route path="/Followers" component={Followers} />
                     <Route path="/Followings" component={Followings} />
+                    <Route path="/OtherUserProfile" component={OtherUserProfile} />
                     
 
                     

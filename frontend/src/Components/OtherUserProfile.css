@@ -1,0 +1,32 @@
+.other-user-profile{
+    
+    top:0;
+    margin-top: 10.5%;
+     margin-left: 15%;
+     height: 76%;
+     box-shadow: 0 5px 10px rgba(0,0,0,.2);
+     width: 54%;
+     float: center;
+     position: fixed;
+     text-align: center;
+     overflow: scroll;
+    }
+
+    .other-user-profile img{
+        margin-top: 10px;
+        margin-left: 20px;
+        width: 50px;
+    }
+    
+    #userid,#fullname{
+        margin-left: 20px;
+        color: rgba(35, 154, 233);
+    }
+    
+    #bio{
+    
+        margin-left: 20px;
+        font-style: italic;
+        font-weight: bolder;
+        
+    }

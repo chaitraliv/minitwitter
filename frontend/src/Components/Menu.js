@@ -151,9 +151,35 @@ export class Menu extends Component {
     }
 
     //onclick function to view the profile of other user
-    viewProfileBtn=(event,user)=>{
+    viewProfileBtn=(user,event)=>{
 
         console.log(user)
+        localStorage.setItem('otheUserName',user)
+        history.push('/OtherUserProfile')
+
+        // const viewuser={
+
+        //     viewFlag:true,
+        //     token:localStorage.getItem('token'),
+        //     otheruser:user
+        // }
+
+        // axios
+        // .post('http://127.0.0.1:8000/Menu/',viewuser)
+        // .then(response=>{
+        //     console.log(response)    
+        //     if(response['status']==200){
+        //        console.log('user successfully recieved !')
+        //        localStorage.setItem('otheUserName',user)
+        //         history.push('/OtherUserProfile')
+
+        //     }
+            
+        // })
+        // .catch(error=>{
+        //     console.log(error.response)
+        // })
+
 
     }
 
@@ -279,7 +305,7 @@ export class Menu extends Component {
                                         <h4 key={user.id}>
                                             <div id="other-user-name">{user}</div>
                                             <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button><span>
-                                            <button id="visit-profile-button" onClick={this.viewProfileBtn}>Profile</button>
+                                            <button id="visit-profile-button" onClick={()=>{this.viewProfileBtn(user)}}>Profile</button>
                                             </span>
                                         </h4>
                                     </div>

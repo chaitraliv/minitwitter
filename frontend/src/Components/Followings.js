@@ -12,7 +12,7 @@ export class Followings extends Component {
         this.state = {
             token:localStorage.getItem('token'),
             username:null,
-             followings:['helo']
+             followings:[]
         }
     }
     
@@ -43,26 +43,26 @@ export class Followings extends Component {
                 }
             })
             .catch(error=>{
-                console.log(error.response['status']);
-                if(error.response['status']==504){
-                    history.push('/')
-                }
+                // console.log(error.response['status']);
+                // if(error.response['status']==504){
+                //     history.push('/')
+                // }
             })
             
         }
     }
 
     render() {
-        // const{followings,username}=this.state
+        const{followings,username}=this.state
         return (
             <div>
                 <Menu />
                 <div className="UserFollowings">
                 <div id="label"> Your Followings </div>
                 <div id="followers-list"> 
-                    {this.state.followings.map(followings => (
+                    {followings.map(follow => (
                                 <div key={indexedDB}>
-                                <div id="followers-username">@{followings.username}
+                                <div id="followers-username">@{follow.username}
                                 <div id="view-profile-btn"><button type="button">Profile</button></div>
                                 <div id="unfollow-btn"><button type="button">unfollow</button></div>
                                 </div>

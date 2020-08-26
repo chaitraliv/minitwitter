@@ -134,16 +134,16 @@ export class Menu extends Component {
             
         })
         .catch(error=>{
-            if(error.response['status']==406){
-                console.log('already followed')
-                alert('User already followed!')
-                history.push('/Followings')
-            }
-            else if(error.response['status']==400){
-                console.log('following yourself')
-                alert('You cannot follow yourself!')
-                history.push('/UserProfile')
-            }
+            // if(error.response['status']==406){
+            //     console.log('already followed')
+            //     alert('User already followed!')
+            //     history.push('/Followings')
+            // }
+            // else if(error.response['status']==400){
+            //     console.log('following yourself')
+            //     alert('You cannot follow yourself!')
+            //     history.push('/UserProfile')
+            // }
         })
 
 

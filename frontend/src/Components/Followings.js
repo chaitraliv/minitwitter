@@ -15,6 +15,13 @@ export class Followings extends Component {
              followings:[]
         }
     }
+
+    viewProfile=(otherUserName,event)=>{
+
+        console.log(otherUserName)
+        localStorage.setItem('otheUserName',otherUserName)
+        history.push('/OtherUserProfile')
+    }
     
     componentDidMount(){
         if(this.state.followings[0]=='helo'){
@@ -73,13 +80,14 @@ export class Followings extends Component {
                                 <div key={indexedDB}>
                                 <div id="followers-username">@{follow.username}
                                 <div id="view-profile-btn">
-                                    <button type="button">
+                                    <button type="button"
+                                    onClick={()=>{this.viewProfile(follow.username)}}>
                                         Profile
                                     </button>
                                 </div>
                                 <div id="unfollow-btn">
                                     <button type="button">
-                                        unfollow
+                                        Unfollow
                                     </button>
                                 </div>
                                 </div>

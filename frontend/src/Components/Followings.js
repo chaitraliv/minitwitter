@@ -12,25 +12,21 @@ export class Followings extends Component {
         this.state = {
             token:localStorage.getItem('token'),
             username:null,
-             followings:[
-                 {
-                     username:'user'
-                 }
-             ]
+             followings:['helo']
         }
     }
     
     componentDidMount(){
-        if(this.state.followings.username===null){
+        if(this.state.followings[0]=='helo'){
     
-            history.push('./HomePage') 
             alert('No Any Followings!')
+            history.push('./HomePage') 
            
         }
         else{
 
             axios
-            .post('http://127.0.0.1:8000/UserProfile/',this.state)
+            .post('http://127.0.0.1:8000/Followings/',this.state)
             .then(response=>{
                 console.log(response)
                 const userData=response.data[0]
@@ -66,9 +62,9 @@ export class Followings extends Component {
                 <div id="followers-list"> 
                     {this.state.followings.map(followings => (
                                 <div key={indexedDB}>
-                                    {/* <div id="followers-name">{followings.firstname}<br/></div> */}
-                                <div id="followers-username">@ {followings.username}
+                                <div id="followers-username">@{followings.username}
                                 <div id="view-profile-btn"><button type="button">Profile</button></div>
+                                <div id="unfollow-btn"><button type="button">unfollow</button></div>
                                 </div>
                                 </div>
                             ))}

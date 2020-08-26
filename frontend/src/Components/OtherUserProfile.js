@@ -26,20 +26,22 @@ export class OtherUserProfile extends Component {
         .post('http://127.0.0.1:8000/OtherUserProfile/',this.state)
         .then(response=>{
             console.log(response)
-            // const userData=response.data[0]
-            // const tweetsArray=response.data[1]
 
-            // if(response['status']==200){
+            const userDataArray=response.data[0]
+            const userTweets=response.data[1]
 
-            //     this.setState({
-            //         firstname:userData.firstname,
-            //         lastname:userData.lastname,
-            //         username:userData.username,
-            //         bio:userData.bio,
-            //         tweets:tweetsArray
-            //     })
+            if(response['status']==200){
+
+                this.setState({
+                    firstname:userDataArray.firstname,
+                    lastname:userDataArray.lastname,
+                    username:userDataArray.username,
+                    bio:userDataArray.bio,
+                    tweets:userTweets
+                })
+                 localStorage.clear('otheUserName') 
                 
-            // }
+            }
         })
         .catch(error=>{
             // console.log(error.response['status']);
@@ -68,7 +70,7 @@ export class OtherUserProfile extends Component {
                             <h4 id="tweets">
                             
                             {tweets.map(tweet => (
-                                    <h4 key={tweet.id}><div id="tweetuser">@{this.state.username}<br/></div>{tweet}</h4>
+                                    <h4 key={tweet.id}><div id="tweetuser">@{this.state.username}<br/></div>{tweet.tweet}</h4>
                                 ))}
                             </h4>
                     </div>

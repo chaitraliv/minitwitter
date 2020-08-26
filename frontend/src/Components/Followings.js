@@ -39,10 +39,19 @@ export class Followings extends Component {
                         username:userData.username,
                         followings:followingsArray
                     })
+
+                    if(this.state.followings===null || this.state.followings===undefined){
+
+                        alert('No Any Followings!')
+                        history.push('./HomePage') 
+
+                    }
                     
                 }
+                
             })
             .catch(error=>{
+                console.log(error)
                 // console.log(error.response['status']);
                 // if(error.response['status']==504){
                 //     history.push('/')
@@ -63,8 +72,16 @@ export class Followings extends Component {
                     {followings.map(follow => (
                                 <div key={indexedDB}>
                                 <div id="followers-username">@{follow.username}
-                                <div id="view-profile-btn"><button type="button">Profile</button></div>
-                                <div id="unfollow-btn"><button type="button">unfollow</button></div>
+                                <div id="view-profile-btn">
+                                    <button type="button">
+                                        Profile
+                                    </button>
+                                </div>
+                                <div id="unfollow-btn">
+                                    <button type="button">
+                                        unfollow
+                                    </button>
+                                </div>
                                 </div>
                                 </div>
                             ))}

@@ -157,29 +157,6 @@ export class Menu extends Component {
         localStorage.setItem('otheUserName',user)
         history.push('/OtherUserProfile')
 
-        // const viewuser={
-
-        //     viewFlag:true,
-        //     token:localStorage.getItem('token'),
-        //     otheruser:user
-        // }
-
-        // axios
-        // .post('http://127.0.0.1:8000/Menu/',viewuser)
-        // .then(response=>{
-        //     console.log(response)    
-        //     if(response['status']==200){
-        //        console.log('user successfully recieved !')
-        //        localStorage.setItem('otheUserName',user)
-        //         history.push('/OtherUserProfile')
-
-        //     }
-            
-        // })
-        // .catch(error=>{
-        //     console.log(error.response)
-        // })
-
 
     }
 

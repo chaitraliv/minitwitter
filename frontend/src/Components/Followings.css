@@ -33,26 +33,47 @@ margin-left: 15%;
     border-bottom: 2px solid skyblue;
 }
 
-#view-profile-btn{
+#view-profile-btn,#unfollow-btn{
     text-align: right;
     margin-left: 30px;
     margin-right: 30px;
     margin-bottom: 10px;
     
 }
+#unfollow-btn button{
+
+    border-radius: 50px;
+    border:2px solid skyblue;
+    background-color: white;
+    color:  rgb(35, 154, 233);
+    font-weight: bolder;
+    width: 80px;
+    cursor: pointer;
+    
+}
+
+#unfollow-btn button:hover{
+
+    border-radius: 50px;
+    border:2px solid skyblue;
+    background-color: rgb(35, 154, 233);
+    color:  white;
+    font-weight: bolder;
+    width: 80px;
+
+}
 
 #view-profile-btn button{
 
     border-radius: 50px;
     border:2px solid skyblue;
-    background-color: #fff;
+    background-color: white;
     color:  rgb(35, 154, 233);
-    width: 80px;
-    height: 30px;
     font-weight: bolder;
-    cursor: pointer;
+    width: 80px;
 
 }
+
 
 #view-profile-btn button:hover{
 

@@ -127,8 +127,8 @@ export class Menu extends Component {
         .then(response=>{
             console.log(response)    // will return 200 code if token is null
             if(response['status']==200){
-
-                history.push('/Followings')
+               alert('Followed Successfully!')
+                history.push('/HomePage')
 
             }
             
@@ -142,6 +142,7 @@ export class Menu extends Component {
             else if(error.response['status']==400){
                 console.log('following yourself')
                 alert('You cannot follow yourself!')
+                history.push('/UserProfile')
             }
         })
 
@@ -163,7 +164,7 @@ export class Menu extends Component {
         })
     }
 
-    // function  calls bydefault whenever this component will get call
+    // function  calls bydefault whenever this component will get call or get mount on screen
     componentDidMount=()=>{
 
         axios

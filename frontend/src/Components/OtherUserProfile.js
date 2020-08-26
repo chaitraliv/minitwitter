@@ -36,6 +36,11 @@ export class OtherUserProfile extends Component {
             if(response['status']==200){
 
                 localStorage.clear('otheUserName') 
+                localStorage.setItem('token',this.state.token)
+                this.setState({
+                    token:localStorage.getItem('token')
+                })
+                console.log('Token after other user profile',this.state.token)
                 this.setState({
                     firstname:userDataArray.firstname,
                     lastname:userDataArray.lastname,

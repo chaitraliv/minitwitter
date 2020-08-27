@@ -14,12 +14,13 @@ export class CreateEditProfile extends Component {
             firstname:'',
             lastname:'',
             username:'',
-            bio:null,
+            bio:'edit',
             token:localStorage.getItem('token')
 
         }
     }
     
+    // This function will call automatically whenever this component get call
     componentDidMount=()=>{
 
         axios
@@ -48,6 +49,7 @@ export class CreateEditProfile extends Component {
     }
 
 
+    // Function to edit and update the input values of First name Last name and bio of the user
     updateInputValue=event=>{
         this.setState({
 
@@ -56,6 +58,7 @@ export class CreateEditProfile extends Component {
     }
 
 
+    // Function for onclick to save the edit
     clickEvent=event=>{
 
         console.log(this.state)
@@ -77,6 +80,7 @@ export class CreateEditProfile extends Component {
         
     }
 
+    // Render the whole UI for edit profile form of user
     render() {
 
         return (
@@ -110,7 +114,6 @@ export class CreateEditProfile extends Component {
                         name="username"
                         maxLength="100"
                         value={this.state.username}>
-                        {/* // onChange={ this.updateInputValue}>           */}
                         </input>
 
                         <label id="label-create-edit-profile">Bio</label>

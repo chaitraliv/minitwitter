@@ -28,13 +28,15 @@ export class RegistrationPage extends Component {
              email:null,
              firstname:null,
              lastname:null,
+             isDone:'',
              errors: {
-                firstname: '',
-                lastname:'',
-                username:'',
-                email: '',
-                password: '',
+                firstname:'please enter name',
+                lastname:' please enter last name',
+                username:'please enter username',
+                email: 'please enter mail-id',
+                password:'please set password',
               }
+
         }
     }
 
@@ -42,6 +44,7 @@ export class RegistrationPage extends Component {
     clickEvent=event=>{
 
         event.preventDefault();
+        
         axios
         .post('http://127.0.0.1:8000/RegistrationPage/',this.state) // link of backend api
         .then(response=>{
@@ -78,12 +81,12 @@ export class RegistrationPage extends Component {
 
         })
         .catch(error=>{
-            console.log(error.response['status']);
+            // console.log(error.response['status']);
 
-            if(error.response['status']  === 400){
-              console.log(this.state)
-              alert(`Empty feilds not allowed! `);
-            }
+            // if(error.response['status']  === 400){
+            //   console.log(this.state)
+            //   alert(`Empty feilds not allowed! `);
+            // }
         })
        
     }
@@ -137,11 +140,13 @@ export class RegistrationPage extends Component {
     this.setState({errors, [name]: value}); // error object contains all the feilds as property which have validation error
 
 
+    
+
     }
    
    
     render() {
-        const{username,password,email,firstname,lastname }=this.state
+        const{username,password,email,firstname,lastname,isDone }=this.state
         const {errors} = this.state;
         return (
             <div className='reg'>
@@ -225,8 +230,12 @@ export class RegistrationPage extends Component {
                     </div>
                    
                    
-                   
-                    <button id="btnSignIn" type="Submit" onClick={this.clickEvent} >Register</button>
+                   {
+                     errors.username==errors.lastname && errors.lastname==errors.username && errors.lastname==errors.email && errors.lastname==errors.password  ?
+                     <button id="btnSignIn" type="Submit" onClick={this.clickEvent} >Register</button>:
+                     null
+                  }
+                    
        
        
                  </div>
@@ -494,5 +503,8 @@ export default RegistrationPage
 //         )
 //     }
 // }
+
+
+
 
 // export default RegistrationPage

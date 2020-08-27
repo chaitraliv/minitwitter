@@ -70,6 +70,7 @@ export class UserProfile extends Component {
     render() {
 
        const{tweets}=this.state
+    //    const flag='tr'
         return (
             <div>
              <Menu />  
@@ -91,6 +92,7 @@ export class UserProfile extends Component {
                 <button id="edit" type="button" onClick={this.clickForEdit}>Edit</button>
                 <button id="followers" type="button" onClick={this.clickForFollowers}>Followers</button>
                 <button id="following" type="button" onClick={this.clickForFollowing}>Following</button>
+                
              
             </div>
             </div>

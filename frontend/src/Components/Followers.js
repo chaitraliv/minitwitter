@@ -3,6 +3,7 @@ import Menu from './Menu'
 import './Followers.css'
 import history from './../history';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 export class Followers extends Component {
 
@@ -35,7 +36,7 @@ componentDidMount(){
     else{
 
         axios
-        .post('http://127.0.0.1:8000/Followers/',this.state)
+        .post('http://127.0.0.1:8000/Followers/Users/',this.state)
         .then(response=>{
             console.log(response)
             const followingsArray=response.data
@@ -69,14 +70,17 @@ componentDidMount(){
                     {this.state.followers.map(follow => (
                                 <div key={indexedDB}>
                                     {/* <div id="followers-name">{followers.username}<br/></div> */}
-                                <div id="followers-username">@ {follow}
-                                <div id="view-profile-btn">
+                                <div id="followers-username">
+                                    <Link onClick={()=>{
+                                        this.viewProfile(follow)
+                                    }}>@{follow}</Link>
+                                {/* <div id="view-profile-btn">
                                     <button type="button"
                                     onClick={()=>{
                                         this.viewProfile(follow)
                                     }}>
                                         Profile
-                                    </button></div>
+                                    </button></div> */}
                                 </div>
                                 </div>
                             ))}

@@ -41,7 +41,7 @@ export class UserProfile extends Component {
     componentDidMount=()=>{
 
         axios
-        .post('http://127.0.0.1:8000/UserProfile/',this.state)
+        .post('http://127.0.0.1:8000/User/UserProfile/',this.state)
         .then(response=>{
             console.log(response)
             const userData=response.data[0]

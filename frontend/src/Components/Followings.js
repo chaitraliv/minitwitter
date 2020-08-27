@@ -3,6 +3,7 @@ import Menu from './Menu'
 import './Followings.css'
 import history from './../history';
 import axios from 'axios'
+import { Link } from 'react-router-dom';
 
 export class Followings extends Component {
 
@@ -33,7 +34,7 @@ export class Followings extends Component {
         else{
 
             axios
-            .post('http://127.0.0.1:8000/Followings/',this.state)
+            .post('http://127.0.0.1:8000/Followings/Users/',this.state)
             .then(response=>{
                 console.log(response)
                 const userData=response.data[0]
@@ -58,11 +59,11 @@ export class Followings extends Component {
                 
             })
             .catch(error=>{
-                console.log(error)
-                console.log(error.response['status']);
-                if(error.response['status']==504){
-                    history.push('/')
-                }
+                // console.log(error)
+                // console.log(error.response['status']);
+                // if(error.response['status']==504){
+                //     history.push('/')
+                // }
             })
             
         }
@@ -78,18 +79,21 @@ export class Followings extends Component {
                 <div id="followers-list"> 
                     {followings.map(follow => (
                                 <div key={indexedDB}>
-                                <div id="followers-username">@{follow.username}
-                                <div id="view-profile-btn">
-                                    <button type="button"
-                                    onClick={()=>{this.viewProfile(follow.username)}}>
-                                        Profile
-                                    </button>
-                                </div>
-                                <div id="unfollow-btn">
-                                    <button type="button">
-                                        Unfollow
-                                    </button>
-                                </div>
+                                <div id="followings-username">
+                                    <Link onClick={()=>{this.viewProfile(follow.username)}}>
+                                        @{follow.username}
+                                    </Link>
+                                    {/* <div id="view-profile-btn">
+                                        <button type="button"
+                                        onClick={()=>{this.viewProfile(follow.username)}}>
+                                            Profile
+                                        </button>
+                                        </div> */}
+                                        <div id="unfollow-btn">
+                                            <button type="button">
+                                                Unfollow
+                                            </button>
+                                        </div>
                                 </div>
                                 </div>
                             ))}

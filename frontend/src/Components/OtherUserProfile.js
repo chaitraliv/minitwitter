@@ -26,7 +26,7 @@ export class OtherUserProfile extends Component {
 
         console.log(this.state.otherUserName)
         axios
-        .post('http://127.0.0.1:8000/OtherUserProfile/',this.state)
+        .post('http://127.0.0.1:8000/User/OtherUserProfile/',this.state)
         .then(response=>{
             console.log(response)
 

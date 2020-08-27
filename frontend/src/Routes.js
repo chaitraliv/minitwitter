@@ -18,6 +18,16 @@ import OtherUserProfile from './Components/OtherUserProfile'
 
 
 export default class Routes extends Component {
+
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+            otherUserName:localStorage.getItem('otheUserName'),
+        }
+    }
+    
+
     render() {
         return (
             <Router history={history}>

@@ -30,7 +30,7 @@ class LoginPage extends Component {
                 if(response['status'] == 200){
                 const userToken=response.data['token']
                 localStorage.setItem('token',userToken);
-                alert(`Welcome ${this.state.userName}  !`)
+                // alert(`Welcome ${this.state.userName}  !`)
                 console.log(this.state);
                 history.push('/HomePage')
                 event.preventDefault()

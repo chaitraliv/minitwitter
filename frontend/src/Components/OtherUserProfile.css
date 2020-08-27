@@ -1,6 +1,6 @@
 .other-user-profile{
     
-    top:0;
+    /* top:0;
     margin-top: 10.5%;
      margin-left: 15%;
      height: 76%;
@@ -9,13 +9,28 @@
      float: center;
      position: fixed;
      text-align: center;
-     overflow: scroll;
+     overflow: scroll; */
+
+     top:0;
+margin-top: 9.7%;
+ margin-left: 14.73%;
+ height: 76%;
+ /* box-shadow: 0 5px 10px rgba(0,0,0,.2); */
+ border-top: none;
+ border-left: 2px solid rgba(0,0,0,.1);
+ border-right: 2px solid rgba(0,0,0,.1);
+ border-bottom: 2px solid rgba(0,0,0,.1);
+ width: 53.84%;
+ float: center;
+ position: fixed;
+ text-align: center;
+ overflow: scroll;
     }
 
     .other-user-profile img{
         margin-top: 10px;
         margin-left: 20px;
-        width: 50px;
+        width: 40px;
     }
     
     #userid,#fullname{

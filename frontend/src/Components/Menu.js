@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './Menu.css'
 import history from './../history';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 // import history from './../history';
 
 
@@ -14,15 +15,22 @@ export class Menu extends Component {
     
         this.state = {
             username:'user',
+            firstname:'first name',
+            lastname:'last name',
             tweets:null,
             allUsers:[
-                'fist',
-                'second',
-                'fist',
-                'second',
-                'second'
+                'Empty user',
+                'Empty user',
+                'Empty user',
+                'Empty user',
+                'Empty user',
+                'Empty user',
+                'Empty user',
+                'Empty user',     
             ],
             otheruser:'user',
+            isUnfollow:true,
+            tweetError:"",
             token:localStorage.getItem('token')
         }
         // this.followUserBtn.bind(this)
@@ -64,6 +72,7 @@ export class Menu extends Component {
      // onclick function to post the tweet 
     clickEventPostTweet=event=>{
 
+
         console.log(this.state)
         axios
         .post('http://127.0.0.1:8000/Menu/',this.state)
@@ -72,7 +81,7 @@ export class Menu extends Component {
             if(response['status']==200){
 
                 alert('Tweet Posted')
-                history.push('/Menu')  
+                history.push('/UserProfile')  
             }
    
         })
@@ -122,33 +131,72 @@ export class Menu extends Component {
 
         }
 
+
         axios
         .post('http://127.0.0.1:8000/Menu/',followuser)
         .then(response=>{
             console.log(response)    // will return 200 code if token is null
             if(response['status']==200){
-               alert('Followed Successfully!')
+                console.log('Followed Successfully!')
                 history.push('/HomePage')
 
             }
             
         })
         .catch(error=>{
-            // if(error.response['status']==406){
-            //     console.log('already followed')
-            //     alert('User already followed!')
-            //     history.push('/Followings')
-            // }
-            // else if(error.response['status']==400){
-            //     console.log('following yourself')
-            //     alert('You cannot follow yourself!')
-            //     history.push('/UserProfile')
-            // }
+            if(error.response['status']==406){
+                console.log('already followed')
+                alert('User already followed!')
+                history.push('/Followings')
+            }
+            else if(error.response['status']==400){
+                console.log('following yourself')
+                alert('You cannot follow yourself!')
+                history.push('/UserProfile')
+            }
         })
 
 
 
     }
+
+
+    // onclick function to unfollow the user
+    unfollowUserBtn=(user,event)=>{
+
+        console.log(user)
+        const unfollowuser={
+            token:this.state.token,
+            otheruser:user
+
+        }
+
+        axios
+        .post('http://127.0.0.1:8000/Menu/',unfollowuser)
+        .then(response=>{
+            console.log(response)    // will return 200 code if token is null
+            if(response['status']==200){
+               console.log('UnFollowed Successfully!')
+                history.push('/HomePage')
+
+            }
+            
+        })
+        .catch(error=>{
+            if(error.response['status']==406){
+                console.log('already unfollowed')
+                history.push('/Followings')
+            }
+            else if(error.response['status']==400){
+                console.log('unfollowing yourself')
+                history.push('/UserProfile')
+            }
+        })
+
+
+
+    }
+
 
     //onclick function to view the profile of other user
     viewProfileBtn=(user,event)=>{
@@ -162,9 +210,28 @@ export class Menu extends Component {
 
      // onchange function to make the tweet from textarea present in upper menu part
     changeEvent=event=>{
+        
+        const{name,value}=event.target
+        console.log(value.length)
+        this.setState({tweetError:null})
+        if(value.length>100){
+
+            this.setState({
+                tweetError:"oops.. Tweet is too long!"
+            })
+        }
+        if(value.length==0){
+
+            this.setState({
+                tweetError:"oops.. Tweet is Empty!"
+            })
+        }
+        
         this.setState({
             tweets:event.target.value
         })
+
+        
     }
 
     // function  calls bydefault whenever this component will get call or get mount on screen
@@ -180,6 +247,8 @@ export class Menu extends Component {
 
                 this.setState({
                     username:setusername.username,
+                    firstname:setusername.firstname,
+                    lastname:setusername.lastname,
                     allUsers:userArray
                 })
         })
@@ -188,13 +257,14 @@ export class Menu extends Component {
 
     render() {
 
-        const{tweets,allUsers}=this.state
+        const{tweets,allUsers,isUnfollow}=this.state
         return (
             <div className="Menu">
                 {/* Renders the side menu */}
                 <div className="sideMenu">
-                    <div>
-                        <h3>{this.state.username}</h3>
+                    <div id="user-info">
+                        <div>{this.state.username}</div>
+                        <div>{this.state.firstname} {this.state.lastname} </div>
                     </div>
                     <div>
                         <img src="./logo.png"></img>
@@ -228,11 +298,11 @@ export class Menu extends Component {
                         </button>
                     </div>
 
-                    <div>
+                    {/* <div>
                          <button type="button">
                              Post Tweet
                          </button>
-                    </div>
+                    </div> */}
                     
                     <div>
                          <button type="button" 
@@ -246,15 +316,31 @@ export class Menu extends Component {
                 {/* Will render the upper part from where user can tweet */}
                 <div className="tweetContainer">
                     <div className="tweetBox">
+                        <div id="top-label">InstaTwitter</div>
                         <form>
                         <textarea
                             value={tweets}
                             name="tweets"
-                            placeholder="Make a tweet"
+                            placeholder="What's Happening?"
                             onChange={this.changeEvent}>
                         </textarea><br/><br/>
-                        <button type="button"
-                         onClick={this.clickEventPostTweet}>Post Tweet</button>
+                        <div id="tweetError">{this.state.tweetError}</div>
+                       
+                        {
+                            this.state.tweetError==null ?
+                            <button type="button"
+                            onClick={this.clickEventPostTweet}>Post Tweet</button> :
+                            null
+
+                        }
+                        {/* {
+                            this.state.tweetError=="Empty Tweet" ?
+                            <button type="button"
+                            onClick={this.clickEventPostTweet}>Post Tweet</button> :
+                            null
+
+                        } */}
+                        
                          </form>
                         
                     </div>
@@ -280,10 +366,13 @@ export class Menu extends Component {
                             {allUsers.map(user => (
                                    <div id="for-each"> 
                                         <h4 key={user.id}>
-                                            <div id="other-user-name">{user}</div>
-                                            <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button><span>
-                                            <button id="visit-profile-button" onClick={()=>{this.viewProfileBtn(user)}}>Profile</button>
-                                            </span>
+                                            <Link onClick={()=>{this.viewProfileBtn(user)}}><div id="other-user-name">{user}</div></Link>
+                                            {/* <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button> */}
+                                            {isUnfollow==true ? 
+                                                <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>: 
+                                                <button id="follow-button" onClick={()=>{this.unfollowUserBtn(user)}}>Unfollow</button>}
+                                            {/* <button id="visit-profile-button" onClick={()=>{this.viewProfileBtn(user)}}>Profile</button> */}
+                                            
                                         </h4>
                                     </div>
                                 ))}

@@ -8,11 +8,12 @@
    
  margin-left: 30px;
 height: 100%; 
-text-align: center; 
+text-align: left; 
 margin-right: 30px; 
 
 }
 .sideMenu img{
+    margin-left: 70px;
     width: 30px;
     margin-bottom: 20px;
 }
@@ -42,7 +43,18 @@ margin-right: 30px;
 
 }
 
-.sideMenu h3{
+#user-info{
+
+    text-align: center;
+    margin-top: 30px;
+    font-style: italic;
+    font-size: 20px;
+    font-weight: bolder;
+    color:rgb(35, 154, 233);
+    margin-bottom: 40px;
+}
+
+/* .sideMenu h3{
     font-style: italic;
     font-size: 30px;
     font-weight: bolder;
@@ -50,7 +62,7 @@ margin-right: 30px;
     background-color: white;
     padding: 15px 60px;
     margin-bottom: 40px;
-}
+} */
 
 /* .sideMenu h3:hover{
     font-style: italic;
@@ -68,39 +80,55 @@ margin-right: 30px;
    align-content: flex-start;
    flex-direction: column; 
 }*/
+
+#top-label{
+    font-size: 20px;
+    font-weight: bolder;
+    border-bottom:2px solid rgba(0,0,0,.1) ;
+    
+}
 .tweetBox{
   height:20% ;
   width: 1000px;
   padding: 10px 50px;
   box-sizing: border-box;
-  border: 1px rgba(0,0,0,.1);
-  box-shadow: 0 5px 10px rgba(0,0,0,.2);
+  border: 2px solid rgba(0,0,0,.1);
+  border-bottom: 10px solid skyblue;
+  /* border: 1px rgba(0,0,0,.1); */
+  /* box-shadow: 0 5px 10px rgba(0,0,0,.2); */
   text-align: center;
-  margin-bottom: 20px;
+  
+  
 }
+  
 
 .tweetBox textarea{
-    height: 30px;
-    width: 400px;
-    /* border-radius: 50px; */
+    height: 40px;
+    width: 100%;
     color: black;
     font-weight: bolder;
-    font-size: 20px;
+    font-size: 15px;
     cursor: pointer;
     margin-top: 20px;
-    padding: 20px 20px;
+    padding: 8px 20px;
     /* border:3px solid skyblue; */
     border: none;
-    box-shadow: 0 5px 10px rgb(99, 99, 219);
+    /* box-shadow: 0 5px 10px rgb(99, 99, 219); */
 }
 ::placeholder{
+   
     color:black;
     font-size: 20px;
-    font-weight: bolder;
+    font-weight: lighter;
+    text-align: left;
+}
+
+#tweetError{
+    color: red;
 }
 
 .tweetBox button:hover{
-    height: 40px;
+    height: 35px;
     background-color: rgb(35, 154, 233) ;
     border-radius: 50px;
     border: none;
@@ -110,7 +138,7 @@ margin-right: 30px;
 
 .tweetBox button{
    
-    height: 40px;
+    height: 35px;
     background-color:white ;
     border-radius: 50px;
     border:2px solid skyblue;
@@ -118,6 +146,7 @@ margin-right: 30px;
     font-weight: bolder;
     cursor: pointer;
     margin-left: 20px;
+    
 }
  .Pages{
     height: 100%;
@@ -132,8 +161,8 @@ margin-right: 30px;
     margin-left: 20px;
     width: 500px;
     padding: 20px 20px;
-    border: 1px rgba(0,0,0,.1);
-    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    /* border: 1px rgba(0,0,0,.1); */
+    /* box-shadow: 0 5px 10px rgba(0,0,0,.2); */
     text-align:center;
     
 
@@ -180,11 +209,11 @@ margin-right: 30px;
 
 .users{
 
-    margin-top: 20px;
+    /* margin-top: 20px; */
     height: 700px;
     width: 100%; 
     
-    border-bottom:20px solid rgb(35, 154, 233);
+    /* border-bottom:20px solid rgb(35, 154, 233); */
     text-align: left;
     overflow-y: scroll;
     
@@ -193,27 +222,42 @@ margin-right: 30px;
 #other-users-list{
 
     font-weight: bolder;
-    color:rgb(35, 154, 233);
+    color:black;
     overflow-y: scroll;
+    /* border-radius: 20px 20px; */
+    /* border-start-end-radius: 20px; */
+    border-top-right-radius: 40px;
+    
 
 }
+
 #other-user-name{
-    padding: 5px 5px;
+    padding: 5px 0px;
     font-weight: bolder;
-    font-size: 25px;
-    color:rgb(35, 154, 233);
+    font-size: 18px;
+    color:black;
+   
 }
 #for-each{
 
-    border-top: 2px solid blue;
-    border-bottom: 2px solid blue;
-   
-    
+    border-top: 1px solid rgba(0,0,0,.1);
+    border-bottom: 1px solid rgba(0,0,0,.1);
+    background-color: rgb(233, 246, 255) ;
+    padding:10px 10px;
+       
 }
+
+/* link:link{
+    color: blue;
+    text-decoration: none;
+}
+link:visited{
+    text-decoration: none;
+} */
 #for-each:hover{
 
-    border-top: 4px solid blue;
-    background-color:rgb(233, 246, 255);
+    
+    background-color:rgb(245, 245, 245);
       
 }
 /* rgb(215, 239, 255) */
@@ -227,7 +271,7 @@ margin-right: 30px;
     color: white;
     font-weight: bolder;
 }
-#visit-profile-button{
+/* #visit-profile-button{
 
     margin-left: 10px;
     text-align: center;
@@ -236,4 +280,4 @@ margin-right: 30px;
     background-color: rgb(35, 154, 233);
     color: white;
     font-weight: bolder;
-}
+} */

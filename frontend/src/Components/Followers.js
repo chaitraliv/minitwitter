@@ -50,10 +50,10 @@ componentDidMount(){
             }
         })
         .catch(error=>{
-            // console.log(error.response['status']);
-            // if(error.response['status']==504){
-            //     history.push('/')
-            // }
+            console.log(error.response['status']);
+            if(error.response['status']==504){
+                history.push('/')
+            }
         })
         
     }

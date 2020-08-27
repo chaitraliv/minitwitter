@@ -9,7 +9,7 @@ class UserData(models.Model):
     
 class TweetData(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
-    tweet=models.CharField(max_length= 500)
+    tweet=models.CharField(max_length= 100)
     time_created = models.DateTimeField(auto_now_add=True)
 
 class Follow(models.Model): #User I will follow
@@ -23,10 +23,6 @@ class Follow(models.Model): #User I will follow
         obj, create = cls.objects.get_or_create(user=user)
         obj.followed.add(another_user)
 
-    # @classmethod
-    # def unfollow(cls, user, another_user):
-    #     obj, create = cls.objects.get_or_create(user=user)
-    #     obj.followed.remove(another_user)
 
     #to get following users of current user
     @classmethod
@@ -43,4 +39,10 @@ class Follow(models.Model): #User I will follow
     @classmethod
     def get_follower(cls, user):
         followerobj,create = cls.objects.get_or_create(user=user)
-        return followerobj.followed.all()
+        return followerobj.follower.all()
+
+
+    # @classmethod
+    # def unfollow(cls, user, another_user):
+    #     obj, create = cls.objects.get_or_create(user=user)
+    #     obj.followed.remove(another_user)

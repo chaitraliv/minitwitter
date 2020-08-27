@@ -75,7 +75,7 @@ export class Menu extends Component {
 
         console.log(this.state)
         axios
-        .post('http://127.0.0.1:8000/Menu/',this.state)
+        .post('http://127.0.0.1:8000/Menu/Tweets/',this.state)
         .then(response=>{
             console.log(response)
             if(response['status']==200){
@@ -133,7 +133,7 @@ export class Menu extends Component {
 
 
         axios
-        .post('http://127.0.0.1:8000/Menu/',followuser)
+        .post('http://127.0.0.1:8000/Menu/Follow/',followuser)
         .then(response=>{
             console.log(response)    // will return 200 code if token is null
             if(response['status']==200){
@@ -161,41 +161,41 @@ export class Menu extends Component {
     }
 
 
-    // onclick function to unfollow the user
-    unfollowUserBtn=(user,event)=>{
+    // // onclick function to unfollow the user
+    // unfollowUserBtn=(user,event)=>{
 
-        console.log(user)
-        const unfollowuser={
-            token:this.state.token,
-            otheruser:user
+    //     console.log(user)
+    //     const unfollowuser={
+    //         token:this.state.token,
+    //         otheruser:user
 
-        }
+    //     }
 
-        axios
-        .post('http://127.0.0.1:8000/Menu/',unfollowuser)
-        .then(response=>{
-            console.log(response)    // will return 200 code if token is null
-            if(response['status']==200){
-               console.log('UnFollowed Successfully!')
-                history.push('/HomePage')
+    //     axios
+    //     .post('http://127.0.0.1:8000/Menu/',unfollowuser)
+    //     .then(response=>{
+    //         console.log(response)    // will return 200 code if token is null
+    //         if(response['status']==200){
+    //            console.log('UnFollowed Successfully!')
+    //             history.push('/HomePage')
 
-            }
+    //         }
             
-        })
-        .catch(error=>{
-            if(error.response['status']==406){
-                console.log('already unfollowed')
-                history.push('/Followings')
-            }
-            else if(error.response['status']==400){
-                console.log('unfollowing yourself')
-                history.push('/UserProfile')
-            }
-        })
+    //     })
+    //     .catch(error=>{
+    //         if(error.response['status']==406){
+    //             console.log('already unfollowed')
+    //             history.push('/Followings')
+    //         }
+    //         else if(error.response['status']==400){
+    //             console.log('unfollowing yourself')
+    //             history.push('/UserProfile')
+    //         }
+    //     })
 
 
 
-    }
+    // }
 
 
     //onclick function to view the profile of other user
@@ -238,7 +238,7 @@ export class Menu extends Component {
     componentDidMount=()=>{
 
         axios
-        .post('http://127.0.0.1:8000/Menu/',this.state)
+        .post('http://127.0.0.1:8000/Menu/Allusers/',this.state)
         .then( response=>{
                 console.log(response)
 

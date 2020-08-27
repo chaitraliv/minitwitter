@@ -35,6 +35,8 @@ margin-top: 9.7%;
 }
 
 #followers-name{
+    
+    text-align: left;
     font-size: 25px;
     color: blue;
     margin-top: 15px;

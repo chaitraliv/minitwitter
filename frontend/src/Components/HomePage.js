@@ -13,25 +13,38 @@ export class HomePage extends Component {
              fistname:'',
              lastname:'',
              username:'',
-             token:localStorage.getItem('token')
+             token:localStorage.getItem('token'),
+             timelineArray:[{}]
+                 
+            
         }
     }
 
     componentDidMount=()=>{
 
         axios
-        .post('http://127.0.0.1:8000/HomePage/',this.state)
+        .post('http://127.0.0.1:8000/HomePage/Timeline/',this.state)
         .then(response=>{
             console.log(response)
 
             if(response['status']==200){
 
-                this.setState({
-                    firstname:response.data['firstname'],
-                    lastname:response.data['lastname'],
-                    username:response.data['username'],
-                    bio:response.data['bio']
-                })
+                const tweetArray=response.data
+                const{timelineArray}=this.state
+
+                tweetArray.map(tweet=>(
+
+                    timelineArray.push(tweet)
+                ))
+                
+                console.log(timelineArray)
+
+                // this.setState({
+                //     firstname:response.data['firstname'],
+                //     lastname:response.data['lastname'],
+                //     username:response.data['username'],
+                //     bio:response.data['bio']
+                // })
                 
             }
         })

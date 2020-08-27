@@ -64,7 +64,7 @@ export class CreateEditProfile extends Component {
         console.log(this.state)
 
         axios
-        .post('http://127.0.0.1:8000/CreateEditProfile/',this.state)
+        .post('http://127.0.0.1:8000/CreateEditProfile/Users/',this.state)
         .then(response=>{
             console.log(response)
 

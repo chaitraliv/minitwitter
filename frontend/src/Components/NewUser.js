@@ -28,7 +28,7 @@ export class NewUser extends Component {
             <div>
             <Menu /> 
                <div className="Pages-">
-                   <h1>Welcome To InstaTwitter</h1>
+                   <h1>Welcome To Twitter</h1>
                    <button id="welcome" type="button" onClick={this.buttonClick}>Create Profile</button>
                        
                    

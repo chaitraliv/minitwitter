@@ -29,7 +29,7 @@ export class Menu extends Component {
                 'Empty user',     
             ],
             otheruser:'user',
-            isUnfollow:true,
+            isUnfollow:'',
             tweetError:"",
             token:localStorage.getItem('token')
         }
@@ -130,6 +130,9 @@ export class Menu extends Component {
             otheruser:user
 
         }
+        this.setState({
+            isUnfollow:true
+        })
 
 
         axios
@@ -368,9 +371,9 @@ export class Menu extends Component {
                                         <h4 key={user.id}>
                                             <Link onClick={()=>{this.viewProfileBtn(user)}}><div id="other-user-name">{user}</div></Link>
                                             {/* <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button> */}
-                                            {isUnfollow==true ? 
-                                                <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>: 
-                                                <button id="follow-button" onClick={()=>{this.unfollowUserBtn(user)}}>Unfollow</button>}
+                                            {isUnfollow==true ?
+                                                <button id="follow-button" onClick={()=>{this.unfollowUserBtn(user)}}>Unfollow</button>:
+                                                <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>}
                                             {/* <button id="visit-profile-button" onClick={()=>{this.viewProfileBtn(user)}}>Profile</button> */}
                                             
                                         </h4>

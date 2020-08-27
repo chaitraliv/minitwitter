@@ -15,9 +15,9 @@ export class HomePage extends Component {
              lastname:'',
              username:'',
              token:localStorage.getItem('token'),
-             timelineArray:[]
-     
-                 
+             timelineArray:[],
+             timelineContent:[]
+                  
             
         }
     }
@@ -32,7 +32,7 @@ export class HomePage extends Component {
             if(response['status']==200){
 
                 const tweetArray=response.data
-                const{timelineArray}=this.state
+                const{timelineArray,timelineContent}=this.state
 
                 tweetArray.map(tweet=>(
 
@@ -40,6 +40,12 @@ export class HomePage extends Component {
                 ))
                 
                 console.log(timelineArray)
+
+                timelineArray.map(content=>(
+                    timelineContent.push(timelineArray[content])
+
+                ))
+                console.log(timelineContent)
 
                 
             }
@@ -62,7 +68,7 @@ export class HomePage extends Component {
     
 
     render() {
-        const{timelineArray}=this.state
+        const{timelineArray,timelineContent}=this.state
         return (
             <div>
                 
@@ -72,7 +78,7 @@ export class HomePage extends Component {
 
                     <div id="label">timeline</div>
 
-                    <div className="tweets-timeline"><div id="tweets-timeline-content">{timelineArray.map(tweet => (
+                    <div className="tweets-timeline"><div id="tweets-timeline-content">{timelineContent.map(tweet => (
                                 <h4 key={tweet.id}>
                                     <div id="tweet-full-name">
                                         {tweet.firstname} {tweet.lastname} 

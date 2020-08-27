@@ -3,6 +3,7 @@ import Menu from './Menu'
 import history from './../history';
 import axios from 'axios'
 import './HomePage.css'
+import { Link } from 'react-router-dom';
 
 export class HomePage extends Component {
 
@@ -14,7 +15,8 @@ export class HomePage extends Component {
              lastname:'',
              username:'',
              token:localStorage.getItem('token'),
-             timelineArray:[{}]
+             timelineArray:[]
+     
                  
             
         }
@@ -39,12 +41,6 @@ export class HomePage extends Component {
                 
                 console.log(timelineArray)
 
-                // this.setState({
-                //     firstname:response.data['firstname'],
-                //     lastname:response.data['lastname'],
-                //     username:response.data['username'],
-                //     bio:response.data['bio']
-                // })
                 
             }
         })
@@ -56,9 +52,17 @@ export class HomePage extends Component {
         })
         
     }
+
+    viewProfile=(otherUserName,event)=>{
+
+        console.log(otherUserName)
+        localStorage.setItem('otheUserName',otherUserName)
+        history.push('/OtherUserProfile')
+    }
     
 
     render() {
+        const{timelineArray}=this.state
         return (
             <div>
                 
@@ -67,6 +71,25 @@ export class HomePage extends Component {
                 <div className="timeline">
 
                     <div id="label">timeline</div>
+
+                    <div className="tweets-timeline"><div id="tweets-timeline-content">{timelineArray.map(tweet => (
+                                <h4 key={tweet.id}>
+                                    <div id="tweet-full-name">
+                                        {tweet.firstname} {tweet.lastname} 
+                                        {/* <div id="tweet-user-name"> */}
+                                            <Link id="tweet-user-name" onClick={()=>{this.viewProfile(tweet.username)}}>
+                                              <span>@{tweet.username}</span>
+                                            </Link> 
+                                        {/* </div> */}
+                                    </div>
+                                    
+                                    <div id="tweet-content">
+                                        {tweet.tweet}
+                                    </div>
+                                </h4>
+                            ))}
+                        </div>
+                </div>
 
                 </div>
             </div>

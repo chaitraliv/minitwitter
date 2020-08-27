@@ -23,3 +23,36 @@ margin-top: 9.7%;
  text-align: center;
  overflow: scroll;
 }
+
+.tweets-timeline{
+    text-align: left;
+    overflow: scroll;
+}
+#tweets-timeline-content{
+    border-bottom: 2px solid rgba(0,0,0,.1);
+    padding-top: 3px;
+}
+#tweets-timeline-content:hover{
+    border-bottom: 2px solid rgba(0,0,0,.1);
+    background-color: rgb(241, 251, 255);
+}
+#tweet-user-name{
+    color: rgb(100, 99, 99);
+    font-weight: lighter;
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+#tweet-full-name{
+    color: black;
+    font-weight: bolder;
+    font-size: 20px;
+    margin-left: 10px;
+
+}
+
+#tweet-content{
+    margin-left: 10px;
+    font-weight: lighter;
+    margin-top: 5px;
+}

@@ -56,6 +56,7 @@ export class HomePage extends Component {
             }
         })
         .catch(error=>{
+           
             // console.log(error.response['status'])
             // if(error.response['status']==504){
             //     history.push('/')
@@ -96,11 +97,9 @@ export class HomePage extends Component {
                                             {/* </div> */}
                                         </div>
 
-                                    </div>
-                                    
-                                    
-                                    <div id="tweet-content">
-                                        {tweet.tweet}
+                                        <div id="tweet-content">
+                                            {tweet.tweet}
+                                        </div>
                                     </div>
                                 </h4>
                             ))}

@@ -36,7 +36,7 @@ componentDidMount(){
     else{
 
         axios
-        .post('http://127.0.0.1:8000/Followers/Users/',this.state)
+        .post('http://127.0.0.1:8000/User/Followers/',this.state)
         .then(response=>{
             console.log(response)
             const followingsArray=response.data

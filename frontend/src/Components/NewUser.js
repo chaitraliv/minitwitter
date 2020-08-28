@@ -8,10 +8,10 @@ export class NewUser extends Component {
         super(props)
     
         this.state = {
-             firstname:'',
-             lastname:'',
-             username:'',
-             bio:''
+             firstname:null,
+             lastname:null,
+             username:null,
+             bio:null
              
         }
     }

@@ -11,10 +11,10 @@ export class CreateEditProfile extends Component {
         super(props)
 
         this.state = {
-            firstname:'',
-            lastname:'',
+            firstname:null,
+            lastname:null,
             username:'',
-            bio:'edit',
+            bio:null,
             token:localStorage.getItem('token')
 
         }
@@ -24,7 +24,7 @@ export class CreateEditProfile extends Component {
     componentDidMount=()=>{
 
         axios
-        .post('http://127.0.0.1:8000/CreateEditProfile/',this.state)
+        .post('http://127.0.0.1:8000/User/CreateEditProfile/',this.state)
         .then(response=>{
             console.log(response)
 
@@ -64,7 +64,7 @@ export class CreateEditProfile extends Component {
         console.log(this.state)
 
         axios
-        .post('http://127.0.0.1:8000/CreateEditProfile/Users/',this.state)
+        .post('http://127.0.0.1:8000/User/CreateEditProfile/',this.state)
         .then(response=>{
             console.log(response)
 

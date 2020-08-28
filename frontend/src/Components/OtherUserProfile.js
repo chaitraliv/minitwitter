@@ -12,8 +12,8 @@ export class OtherUserProfile extends Component {
         this.state = {
              otherUserName:localStorage.getItem('otheUserName'),
              token:localStorage.getItem('token'),
-             firstname:'',
-             lastname:'',
+             firstname:null,
+             lastname:null,
              username:'',
              bio:'',
              tweets:[]

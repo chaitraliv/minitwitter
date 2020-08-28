@@ -23,14 +23,14 @@ export class HomePage extends Component {
     componentDidMount=()=>{
 
         axios
-        .post('http://127.0.0.1:8000/HomePage/Timeline/',this.state)
+        .post('http://127.0.0.1:8000/HomePage/',this.state)
         .then(response=>{
             console.log(response)
 
             if(response['status']==200){
 
                 const tweetArray=response.data
-                const{timelineArray}=this.state
+                const{timelineArray,timelineContent}=this.state
 
                 tweetArray.map(tweet=>(
 

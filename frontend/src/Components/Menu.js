@@ -247,13 +247,25 @@ export class Menu extends Component {
 
                 const setusername=response.data[0]
                 const userArray=response.data[1]
+                var excluded=[]
 
                 this.setState({
                     username:setusername.username,
                     firstname:setusername.firstname,
                     lastname:setusername.lastname,
-                    allUsers:userArray
+                    // allUsers:userArray
                 })
+
+                userArray.map(names=>(
+                    excluded.push(names)
+                ))
+
+                this.setState({
+                    allUsers:excluded
+                })
+
+
+
         })
     }
 

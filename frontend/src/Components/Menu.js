@@ -20,7 +20,6 @@ export class Menu extends Component {
             tweets:null,
             allUsers:[],
             otheruser:'user',
-            isUnfollow:'',
             tweetError:"",
             token:localStorage.getItem('token')
         }
@@ -121,9 +120,7 @@ export class Menu extends Component {
             otheruser:user
 
         }
-        this.setState({
-            isUnfollow:true
-        })
+        
 
 
         axios
@@ -250,12 +247,19 @@ export class Menu extends Component {
                 })
 
         })
+        .catch(error=>{
+           
+            console.log(error.response['status'])
+            if(error.response['status']==504){
+                history.push('/')
+            }
+        })
     }
 
 
     render() {
 
-        const{tweets,allUsers,isUnfollow}=this.state
+        const{tweets,allUsers}=this.state
         
         return (
             <div className="Menu">
@@ -366,10 +370,11 @@ export class Menu extends Component {
                                    <div id="for-each"> 
                                         <h4 key={user.id}>
                                             <Link onClick={()=>{this.viewProfileBtn(user)}}><div id="other-user-name">{user}</div></Link>
+                                            <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>
                                             
-                                            {isUnfollow==true ?
+                                            {/* {isUnfollow==true ?
                                                 <button id="follow-button" onClick={()=>{this.unfollowUserBtn(user)}}>Unfollow</button>:
-                                                <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>}
+                                                <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>} */}
                                              {/* <button id="visit-profile-button" onClick={()=>{this.viewProfileBtn(user)}}>Profile</button>  */}
                                             
                                         </h4>

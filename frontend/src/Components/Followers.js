@@ -13,7 +13,8 @@ constructor(props) {
     this.state = {
 
         token:localStorage.getItem('token'),
-         followers:[]
+         followers:[],
+         isFollowing:false
     }
 
 }
@@ -47,17 +48,60 @@ followUserBtn=(user,event)=>{
             history.push('/HomePage')
 
         }
+        else if(response['status']==208){
+            this.setState({
+                isFollowing:true
+            })
+            console.log('User already followed!!')
+            history.push('/Folllowings')
+
+        }
+        
+    })
+    .catch(error=>{
+        console.log(error.response)
+    })
+
+
+
+}
+
+// onclick function to unfollow the user
+unfollowUserBtn=(user,event)=>{
+
+    console.log(user)
+    const unfollowuser={
+        token:this.state.token,
+        otheruser:user
+
+    }
+
+    axios
+    .post('http://127.0.0.1:8000/User/Followers/Unfollow/',unfollowuser)
+    .then(response=>{
+        console.log(response)    
+        if(response['status']==200){
+           console.log('UnFollowed Successfully!')
+            history.push('/HomePage')
+
+        }
+        else if(response['status']==208){
+            this.setState({
+                isFollowing:false
+            })
+            console.log('User already followed!!')
+            history.push('/Folllowings')
+
+        }
         
     })
     .catch(error=>{
         if(error.response['status']==406){
-            console.log('already followed')
-            alert('User already followed!')
+            console.log('already unfollowed')
             history.push('/Followings')
         }
         else if(error.response['status']==400){
-            console.log('following yourself')
-            alert('You cannot follow yourself!')
+            console.log('unfollowing yourself')
             history.push('/UserProfile')
         }
     })
@@ -65,6 +109,7 @@ followUserBtn=(user,event)=>{
 
 
 }
+
 
 
 componentDidMount(){
@@ -101,6 +146,7 @@ componentDidMount(){
 }
 
     render() {
+        const{isFollowing}=this.state
         return (
             <div>
                 <Menu />
@@ -114,13 +160,22 @@ componentDidMount(){
                                     <Link onClick={()=>{
                                         this.viewProfile(follow)
                                     }}>@{follow}</Link>
-                                <div id="view-profile-btn">
-                                    <button type="button"
-                                    onClick={()=>{
-                                        this.followUserBtn(follow)
-                                    }}>
-                                        follow
+                                    {
+                                        isFollowing==true ?
+                                        <div id="view-profile-btn">
+                                        <button type="button"
+                                        onClick={()=>{this.unfollowUserBtn(follow)}}>
+                                        Unfollow
+                                    </button></div>:
+                                    <div id="view-profile-btn">
+                                        <button type="button"
+                                        onClick={()=>{this.followUserBtn(follow)}}>
+                                    follow
                                     </button></div>
+
+
+                                    }
+                                
                                 </div>
                                 </div>
                             ))}

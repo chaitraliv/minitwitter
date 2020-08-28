@@ -107,7 +107,7 @@ and current user to followers list of requested user
 
 @api_view(['POST'])
 @csrf_exempt
-def follow_api(request):   
+def follow_unfollow_api(request):   
     
     receivedtoken = request.data.get('token',None)
     userto_follow = request.data.get('otheruser',None)
@@ -130,7 +130,7 @@ def follow_api(request):
         if is_following:
             Follow.unfollow(user= current_user,another_user=user_to_follow)
             is_following= False
-            return Response(status= status.HTTP_406_NOT_ACCEPTABLE)
+            return Response(status= status.HTTP_200_OK)
 
         else:
             #if not following, follow the user

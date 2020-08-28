@@ -134,12 +134,12 @@ def follower_api(request):
 
         #retrive user related to that token
         followertoken = Token.objects.get(key=token)
-        currentuser_ = followertoken.user
+        current_user = followertoken.user
 
 
         try:
             #create onject of the requested follower
-            followerobj = Follow.get_follower(user=currentuser_)
+            followerobj = Follow.get_follower(user=current_user)
             output_list=[]
 
             #for every id number present in follower object; which is a user, retrive it's data
@@ -197,3 +197,60 @@ def view_profile_api(request):
             return Response([requested_data,response_message],status= status.HTTP_204_NO_CONTENT)
 
     return Response(status= status.HTTP_400_BAD_REQUEST)
+
+
+'''
+API to unfollow requested user.
+'''
+@api_view(['POST'])
+@csrf_exempt
+def unfollow_api(request):
+    token = request.data.get('token',None)
+    userto_unfollow = request.data.get('otheruser',None)
+
+    if token is not None:
+        unfollow_token = Token.objects.get(key=token)
+        current_user = unfollow_token.user
+        user_to_unfollow = User.objects.get(username=userto_unfollow)
+
+        #check if already following
+        following= Follow.objects.filter(user= current_user,followed= user_to_unfollow)
+        is_following = True if following else False
+
+
+        #if already following, unfollow him and set the negative value to is_following
+        if is_following:
+            Follow.unfollow(user= current_user,another_user=user_to_unfollow)
+            is_following= False
+            return Response(status= status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@csrf_exempt
+def follow_api(request):
+    token = request.data.get('token',None)
+    userto_follow = request.data.get('otheruser',None)
+
+    if token is not None:
+        follow_token = Token.objects.get(key=token)
+        current_user = follow_token.user
+        user_to_follow = User.objects.get(username=userto_follow)
+
+        #check if already following
+        following= Follow.objects.filter(user= current_user,followed= user_to_follow)
+        is_following = True if following else False
+
+
+        #if already following, unfollow him and set the negative value to is_following
+        if is_following:
+            # Follow.unfollow(user= current_user,another_user=user_to_unfollow)
+            
+            is_following= False
+            return Response(status= status.HTTP_208_ALREADY_REPORTED)
+        else:
+            Follow.follow(user=current_user,another_user=user_to_follow)
+            return Response(status= status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+

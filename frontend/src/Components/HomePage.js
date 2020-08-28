@@ -14,6 +14,7 @@ export class HomePage extends Component {
              
              token:localStorage.getItem('token'),
              timelineArray:[],
+             timelineContent:[]
                   
             
         }
@@ -33,12 +34,23 @@ export class HomePage extends Component {
 
                 tweetArray.map(tweet=>(
 
-                    this.setState({
-                        timelineArray:tweet
-                    })
+                    timelineArray.push(tweet)
+                    // timelineArray.push(tweetArray[tweet])
+                    // this.setState({
+                    //     timelineArray:tweetArray[tweet]
+                    // })
                 ))
                 
                 console.log(timelineArray)
+
+                // timelineArray.map(content=>(
+                //     timelineContent.push(timelineArray[content])
+
+                // ))
+                this.setState({
+                    timelineContent:timelineArray
+                })
+                console.log(timelineContent)
 
                 
             }
@@ -71,7 +83,7 @@ export class HomePage extends Component {
 
                     <div id="label">timeline</div>
 
-                    <div className="tweets-timeline"><div id="tweets-timeline-content">{timelineArray.map(tweet => (
+                    <div className="tweets-timeline"><div id="tweets-timeline-content">{timelineContent.map(tweet => (
                                 <h4 key={tweet.id}>
                                     <div id="each-content">
 

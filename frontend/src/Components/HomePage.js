@@ -11,12 +11,9 @@ export class HomePage extends Component {
         super(props)
     
         this.state = {
-             fistname:'',
-             lastname:'',
-             username:'',
+             
              token:localStorage.getItem('token'),
              timelineArray:[],
-             timelineContent:[]
                   
             
         }
@@ -32,29 +29,25 @@ export class HomePage extends Component {
             if(response['status']==200){
 
                 const tweetArray=response.data
-                const{timelineArray,timelineContent}=this.state
+                const{timelineArray}=this.state
 
                 tweetArray.map(tweet=>(
 
-                    timelineArray.push(tweet)
+                    this.setState({
+                        timelineArray:tweet
+                    })
                 ))
                 
                 console.log(timelineArray)
-
-                timelineArray.map(content=>(
-                    timelineContent.push(timelineArray[content])
-
-                ))
-                console.log(timelineContent)
 
                 
             }
         })
         .catch(error=>{
-            console.log(error.response['status'])
-            if(error.response['status']==504){
-                history.push('/')
-            }
+            // console.log(error.response['status'])
+            // if(error.response['status']==504){
+            //     history.push('/')
+            // }
         })
         
     }
@@ -78,16 +71,21 @@ export class HomePage extends Component {
 
                     <div id="label">timeline</div>
 
-                    <div className="tweets-timeline"><div id="tweets-timeline-content">{timelineContent.map(tweet => (
+                    <div className="tweets-timeline"><div id="tweets-timeline-content">{timelineArray.map(tweet => (
                                 <h4 key={tweet.id}>
-                                    <div id="tweet-full-name">
-                                        {tweet.firstname} {tweet.lastname} 
-                                        {/* <div id="tweet-user-name"> */}
-                                            <Link id="tweet-user-name" onClick={()=>{this.viewProfile(tweet.username)}}>
-                                              <span>@{tweet.username}</span>
-                                            </Link> 
-                                        {/* </div> */}
+                                    <div id="each-content">
+
+                                        <div id="tweet-full-name">
+                                            {tweet.firstname} {tweet.lastname} 
+                                            {/* <div id="tweet-user-name"> */}
+                                                <Link id="tweet-user-name" onClick={()=>{this.viewProfile(tweet.username)}}>
+                                                <span>@{tweet.username}</span>
+                                                </Link> 
+                                            {/* </div> */}
+                                        </div>
+
                                     </div>
+                                    
                                     
                                     <div id="tweet-content">
                                         {tweet.tweet}

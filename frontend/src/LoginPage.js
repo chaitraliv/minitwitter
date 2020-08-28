@@ -33,10 +33,10 @@ class LoginPage extends Component {
                 // alert(`Welcome ${this.state.userName}  !`)
                 console.log(this.state);
                 history.push('/HomePage')
-                event.preventDefault()
+                // event.preventDefault()
        
                 }
-                event.preventDefault()
+                // event.preventDefault()
            
 
 

@@ -16,7 +16,7 @@ from django.utils import timezone
 @csrf_exempt
 def new_user_api(request):
     receivedtoken = request.data.get('token',None)
-    print(receivedtoken)
+    # print(receivedtoken)
     
     if receivedtoken is None:
          return Response(status= status.HTTP_504_GATEWAY_TIMEOUT)
@@ -36,7 +36,7 @@ def new_user_api(request):
         receivedfirstname = request.data.get('firstname',None)
         receivedlastname = request.data.get('lastname',None)
 
-        if receivedbio != 'edit' :
+        if receivedbio is not None :
             if receivedfirstname is not None or receivedlastname is not None:
                 user.first_name = receivedfirstname
                 user.last_name = receivedlastname
@@ -55,7 +55,7 @@ def new_user_api(request):
             return Response(data,status= status.HTTP_200_OK)
         
 
-        return Response(data)
+        return Response(data=data)
           
     
         
@@ -63,7 +63,7 @@ def new_user_api(request):
 @csrf_exempt
 def user_profile_api(request):
     received_token_ = request.data.get('token',None)
-    print(received_token_)
+    # print(received_token_)
     if received_token_ is None:
         return Response(status= status.HTTP_504_GATEWAY_TIMEOUT)
     else:
@@ -93,8 +93,9 @@ def user_profile_api(request):
 
 def following_api(request):
     #retrive token from the data
+    #retrive token from the data
     receivedToken = request.data.get('token',None)
-    print(receivedToken)
+    # print(receivedToken)
     
     #Proceed only if received token is not empty
     if receivedToken is not None:
@@ -111,8 +112,7 @@ def following_api(request):
            #for every user present in following object, retrive it's data
             serializer = UserSerializer(instance= eachuser)
             output.append(serializer.data)
-
-       
+            # print(output)
         return Response([serializer.data,output],status= status.HTTP_200_OK)
     return Response(status= status.HTTP_400_BAD_REQUEST)
 
@@ -122,7 +122,7 @@ def following_api(request):
 def follower_api(request):
     #retrive the given token
     token = request.data.get('token',None)
-    print(token)
+    # print(token)
 
     #Proceed only if received token is not empty
     if token is not None:
@@ -180,4 +180,3 @@ def view_profile_api(request):
         #send the user information and tweets
         return Response([requesteddata,alltweets.data],status= status.HTTP_200_OK)
     return Response(status= status.HTTP_400_BAD_REQUEST)
-

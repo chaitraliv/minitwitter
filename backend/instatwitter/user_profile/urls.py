@@ -15,5 +15,6 @@ urlpatterns = [
     path('Followers/',follower_api),
     path('Followings/Unfollow/',unfollow_api),
     path('Followers/Follow/',follow_api),
+    path('Followers/Unollow/',unfollow_api),
     path('OtherUserProfile/',view_profile_api),
 ]

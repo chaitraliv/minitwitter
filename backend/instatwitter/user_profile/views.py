@@ -216,13 +216,17 @@ def unfollow_api(request):
         #check if already following
         following= Follow.objects.filter(user= current_user,followed= user_to_unfollow)
         is_following = True if following else False
+        # data={}
 
 
         #if already following, unfollow him and set the negative value to is_following
         if is_following:
             Follow.unfollow(user= current_user,another_user=user_to_unfollow)
             is_following= False
+            # data['is_following'] = False
             return Response(status= status.HTTP_200_OK)
+        else:
+            return Response(status= status.HTTP_208_ALREADY_REPORTED)
 
 
 @api_view(['POST'])
@@ -239,17 +243,19 @@ def follow_api(request):
         #check if already following
         following= Follow.objects.filter(user= current_user,followed= user_to_follow)
         is_following = True if following else False
+        data={}
 
 
-        #if already following, unfollow him and set the negative value to is_following
+        #if already following, prompt so and set the negative value to is_following
         if is_following:
-            # Follow.unfollow(user= current_user,another_user=user_to_unfollow)
-            
+            Follow.unfollow(user= current_user,another_user=user_to_follow)
             is_following= False
-            return Response(status= status.HTTP_208_ALREADY_REPORTED)
+            data['is_following'] = True
+            return Response(data,status= status.HTTP_208_ALREADY_REPORTED)
         else:
             Follow.follow(user=current_user,another_user=user_to_follow)
-            return Response(status= status.HTTP_200_OK)
+            data['is_following']= False
+            return Response(data,status= status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 
 

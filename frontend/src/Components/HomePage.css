@@ -28,14 +28,29 @@ margin-top: 9.7%;
     text-align: left;
     overflow: scroll;
 }
-#tweets-timeline-content{
+/* #tweets-timeline-content{
     border-bottom: 2px solid rgba(0,0,0,.1);
     padding-top: 3px;
+} */
+
+#each-content{
+
+    border-bottom: 2px solid rgba(0,0,0,.1);
+
+
 }
-#tweets-timeline-content:hover{
+
+#each-content:hover{
+
     border-bottom: 2px solid rgba(0,0,0,.1);
     background-color: rgb(241, 251, 255);
+
+
 }
+/* #tweets-timeline-content:hover{
+    border-bottom: 2px solid rgba(0,0,0,.1);
+    background-color: rgb(241, 251, 255);
+} */
 #tweet-user-name{
     color: rgb(100, 99, 99);
     font-weight: lighter;

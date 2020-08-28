@@ -26,6 +26,46 @@ viewProfile=(otherUserName,event)=>{
 }
 
 
+// onclick function to follow the user
+followUserBtn=(user,event)=>{
+
+    console.log(user)
+    const followuser={
+        token:this.state.token,
+        otheruser:user
+
+    }
+    
+
+
+    axios
+    .post('http://127.0.0.1:8000/User/Followers/Follow/',followuser)
+    .then(response=>{
+        console.log(response)    // will return 200 code if token is null
+        if(response['status']==200){
+            console.log('Followed Successfully!')
+            history.push('/HomePage')
+
+        }
+        
+    })
+    .catch(error=>{
+        if(error.response['status']==406){
+            console.log('already followed')
+            alert('User already followed!')
+            history.push('/Followings')
+        }
+        else if(error.response['status']==400){
+            console.log('following yourself')
+            alert('You cannot follow yourself!')
+            history.push('/UserProfile')
+        }
+    })
+
+
+
+}
+
 
 componentDidMount(){
     if(this.state.followers[0]==''){
@@ -74,13 +114,13 @@ componentDidMount(){
                                     <Link onClick={()=>{
                                         this.viewProfile(follow)
                                     }}>@{follow}</Link>
-                                {/* <div id="view-profile-btn">
+                                <div id="view-profile-btn">
                                     <button type="button"
                                     onClick={()=>{
-                                        this.viewProfile(follow)
+                                        this.followUserBtn(follow)
                                     }}>
-                                        Profile
-                                    </button></div> */}
+                                        follow
+                                    </button></div>
                                 </div>
                                 </div>
                             ))}

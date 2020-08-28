@@ -68,6 +68,42 @@ export class Followings extends Component {
             
         }
     }
+    
+    // onclick function to unfollow the user
+    unfollowUserBtn=(user,event)=>{
+
+        console.log(user)
+        const unfollowuser={
+            token:this.state.token,
+            otheruser:user
+
+        }
+
+        axios
+        .post('http://127.0.0.1:8000/User/Followings/Unfollow/',unfollowuser)
+        .then(response=>{
+            console.log(response)    
+            if(response['status']==200){
+               console.log('UnFollowed Successfully!')
+                history.push('/HomePage')
+
+            }
+            
+        })
+        .catch(error=>{
+            if(error.response['status']==406){
+                console.log('already unfollowed')
+                history.push('/Followings')
+            }
+            else if(error.response['status']==400){
+                console.log('unfollowing yourself')
+                history.push('/UserProfile')
+            }
+        })
+
+
+
+    }
 
     render() {
         const{followings,username}=this.state
@@ -90,7 +126,8 @@ export class Followings extends Component {
                                         </button>
                                         </div> */}
                                         <div id="unfollow-btn">
-                                            <button type="button">
+                                            <button type="button"
+                                            onClick={()=>{this.unfollowUserBtn(follow.username)}}>
                                                 Unfollow
                                             </button>
                                         </div>

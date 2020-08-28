@@ -19,6 +19,7 @@ export class Menu extends Component {
             lastname:'last name',
             tweets:null,
             allUsers:[],
+            allUserFullname:[],
             otheruser:'user',
             tweetError:"",
             token:localStorage.getItem('token')
@@ -236,6 +237,7 @@ export class Menu extends Component {
 
                 const setusername=response.data[0]
                 const userArray=response.data[1]
+                const userDetails=response.data[2]
 
                 
 
@@ -243,8 +245,10 @@ export class Menu extends Component {
                     username:setusername.username,
                     firstname:setusername.firstname,
                     lastname:setusername.lastname,
-                    allUsers:Object.values(userArray)
+                    allUsers:Object.values(userArray),
+                    allUserFullname:Object.values(userDetails)
                 })
+                console.log(this.state.allUserFullname)
 
         })
         .catch(error=>{
@@ -259,7 +263,7 @@ export class Menu extends Component {
 
     render() {
 
-        const{tweets,allUsers}=this.state
+        const{tweets,allUsers,allUserFullname}=this.state
         
         return (
             <div className="Menu">
@@ -366,12 +370,13 @@ export class Menu extends Component {
                         <div className="users">
                             <h4 id="other-users-list">
                             
-                             {allUsers.map(user => (
+                             {allUsers.map((user) => (
                                    <div id="for-each"> 
                                         <h4 key={user.id}>
+                                            
                                             <Link onClick={()=>{this.viewProfileBtn(user)}}><div id="other-user-name">{user}</div></Link>
                                             <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>
-                                            
+                                            <Link>{allUserFullname[user]}</Link>
                                             {/* {isUnfollow==true ?
                                                 <button id="follow-button" onClick={()=>{this.unfollowUserBtn(user)}}>Unfollow</button>:
                                                 <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>} */}

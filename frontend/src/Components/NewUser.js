@@ -3,6 +3,8 @@ import './NewUser.css'
 import Menu from './Menu'
 import history from './../history'
 
+// This component will render welcome note and option of create profile whenever  
+
 export class NewUser extends Component {
     constructor(props) {
         super(props)

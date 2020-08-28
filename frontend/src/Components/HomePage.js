@@ -5,6 +5,8 @@ import axios from 'axios'
 import './HomePage.css'
 import { Link } from 'react-router-dom';
 
+// This component render the timeline page which is home page of twitter
+
 export class HomePage extends Component {
 
     constructor(props) {
@@ -20,6 +22,7 @@ export class HomePage extends Component {
         }
     }
 
+    // This function will get call automatically whenever this component will maount and will set the required feilds
     componentDidMount=()=>{
 
         axios
@@ -35,36 +38,29 @@ export class HomePage extends Component {
                 tweetArray.map(tweet=>(
 
                     timelineArray.push(tweet)
-                    // timelineArray.push(tweetArray[tweet])
-                    // this.setState({
-                    //     timelineArray:tweetArray[tweet]
-                    // })
                 ))
                 
                 console.log(timelineArray)
-
-                // timelineArray.map(content=>(
-                //     timelineContent.push(timelineArray[content])
-
-                // ))
                 this.setState({
                     timelineContent:timelineArray
                 })
-                console.log(timelineContent)
 
+                // it will return the array which have data of timeline
+                console.log(timelineContent)  
                 
             }
         })
         .catch(error=>{
            
-            // console.log(error.response['status'])
-            // if(error.response['status']==504){
-            //     history.push('/')
-            // }
+            console.log(error.response['status'])
+            if(error.response['status']==504){
+                history.push('/')
+            }
         })
         
     }
 
+    // This function will provide the profile details of clicked user
     viewProfile=(otherUserName,event)=>{
 
         console.log(otherUserName)

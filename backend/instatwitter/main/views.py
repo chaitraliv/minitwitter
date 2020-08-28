@@ -123,12 +123,13 @@ def follow_api(request):
         following= Follow.objects.filter(user=current_user,followed= user_to_follow)
         is_following = True if following else False
 
-        # if current_user is not user_to_follow:
-        #if already following, promt so and set the negative value to is_following
+
+        #if already following, unfollow him and set the negative value to is_following
         if is_following:
             Follow.unfollow(user=current_user,another_user=user_to_follow)
             is_following= False
             return Response(status= status.HTTP_406_NOT_ACCEPTABLE)
+
         else:
             #if not following, follow the user
             Follow.follow(user= current_user,another_user=user_to_follow)
@@ -137,6 +138,7 @@ def follow_api(request):
             is_following = True
             return Response(status= status.HTTP_200_OK)
         return Response(status= status.HTTP_400_BAD_REQUEST)
+    return Response(status= status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -159,7 +161,8 @@ def tweet_api(request):
             if receivedtweet is not None:
                 mytweet = TweetData(user= user, tweet=receivedtweet,time_created=timezone.now())
                 mytweet.save()      #save the tweet for respective user
-                return Response(status= status.HTTP_200_OK)          
+                return Response(status= status.HTTP_200_OK)  
+    return Response(status= status.HTTP_400_BAD_REQUEST)        
                 
 
 
@@ -171,6 +174,8 @@ API to display list of all the available users who current user does not follow
 @csrf_exempt
 def all_users_api(request):
     receivedtoken = request.data.get('token',None)
+
+    #Proceed only if received token is not empty
     if receivedtoken is not None:        
         all_user_token = Token.objects.get(key=receivedtoken)
         user= all_user_token.user    
@@ -181,19 +186,34 @@ def all_users_api(request):
         data['firstname'] = user.first_name
         data['lastname'] = user.last_name
         currentuser = user.username   #set that username name as current 
-        following_users = Follow.get_following(user=user)
-        # DO NOT print(following_users)
-        all_users = User.objects.exclude(pk__in=following_users)
-        #DO ONOT INCLUDE# following_users_excluded = all_users.exclude(id__in= following_users.values_list('id',flat=True))
-        # DO NOT INCLUDE print(all_users)
-        all_users_data={}
-        j=0
-        for i in all_users:
-            all_users_data[j]= i.username
-            j+=1
-        print(data)
-        return Response([data,all_users_data],status=status.HTTP_200_OK)
-       
+        
+
+        '''Function to get list of all user's, the logged in user is
+        not following'''
+
+        def getAllUser(user_list):
+            all_user_data={}
+            counter=0
+            for single_user in user_list:
+                all_user_data['username'+str(counter)]= single_user.username
+                counter+=1
+            return all_user_data
+
+        #Exclude the following users from the list    
+        try:
+            following_users = Follow.get_following(user=user)
+            all_users = User.objects.exclude(pk__in=following_users)
+            all_users_data = getAllUser(all_users)
+            print(all_users_data)
+            return Response([data,all_users_data],status=status.HTTP_200_OK)
+
+        #Else diaplay all the users from the database
+        except:
+            all_users = User.objects.all().exclude(username= currentuser)
+            all_users_data = getAllUser(all_users)
+            print(all_users_data)
+            return Response([data,all_users_data],status=status.HTTP_200_OK)
+    return Response(status= status.HTTP_400_BAD_REQUEST)
 
         
 
@@ -214,18 +234,23 @@ def timeline_api(request):
         #Get the logged in user's object from the token
         timeline_token = Token.objects.get(key=token)
         current_user= timeline_token.user
-        followingobj = Follow.get_following(user= current_user)
-        all_tweets = TweetData.objects.all().order_by('-time_created')
-        print(all_tweets)
-        tweets=[]
-        for tweet in all_tweets:
-            if tweet.user in followingobj or tweet.user == current_user:
-                
-                serializer= TweetSerializer(tweet).data
-                serializer['username']= tweet.user.username
-                serializer['firstname'] = tweet.user.first_name
-                serializer['lastname'] = tweet.user.last_name
-                tweets.append(serializer)
-        # length = len(tweets)
-        # print(tweets,'/n',serializer.data)
-        return Response(tweets,status= status.HTTP_200_OK)
+        try:
+            followingobj = Follow.get_following(user= current_user)
+            all_tweets = TweetData.objects.all().order_by('-time_created')
+            print(all_tweets)
+            tweets=[]
+            for tweet in all_tweets:
+                if tweet.user in followingobj or tweet.user == current_user:
+                    
+                    serializer= TweetSerializer(tweet).data
+                    serializer['username']= tweet.user.username
+                    serializer['firstname'] = tweet.user.first_name
+                    serializer['lastname'] = tweet.user.last_name
+                    tweets.append(serializer)
+            return Response(tweets,status= status.HTTP_200_OK)
+
+        except:
+            response_message={'message':'Your feed is empty. Start browsing!'}
+            return Response(response_message,status=status.HTTP_204_NO_CONTENT)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+

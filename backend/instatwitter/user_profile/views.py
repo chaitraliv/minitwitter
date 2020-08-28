@@ -16,8 +16,9 @@ from django.utils import timezone
 @csrf_exempt
 def new_user_api(request):
     receivedtoken = request.data.get('token',None)
-    # print(receivedtoken)
     
+    
+    #Proceed only is 
     if receivedtoken is None:
          return Response(status= status.HTTP_504_GATEWAY_TIMEOUT)
     else:
@@ -104,16 +105,20 @@ def following_api(request):
         followuser = Token.objects.get(key=receivedToken)
         currentUser = followuser.user
 
-        #create object of the requested following user 
-        followingobj = Follow.get_following(user=currentUser)
-        output =[]
-        
-        for eachuser in followingobj:
-           #for every user present in following object, retrive it's data
-            serializer = UserSerializer(instance= eachuser)
-            output.append(serializer.data)
-            # print(output)
-        return Response([serializer.data,output],status= status.HTTP_200_OK)
+        try:#create object of the requested following user 
+            followingobj = Follow.get_following(user=currentUser)
+            output =[]
+            
+            for eachuser in followingobj:
+            #for every user present in following object, retrive it's data
+                serializer = UserSerializer(instance= eachuser)
+                output.append(serializer.data)
+                # print(output)
+            return Response([serializer.data,output],status= status.HTTP_200_OK)
+        except:
+            data={}
+            data['message']= 'Start following !!'
+            return Response(data,status=status.HTTP_204_NO_CONTENT)
     return Response(status= status.HTTP_400_BAD_REQUEST)
 
 
@@ -131,22 +136,28 @@ def follower_api(request):
         followertoken = Token.objects.get(key=token)
         currentuser_ = followertoken.user
 
-        #create onject of the requested follower
-        followerobj = Follow.get_follower(user=currentuser_)
-        output_list=[]
 
-        #for every id number present in follower object; which is a user, retrive it's data
-        for i_d in followerobj:
-            serializer = UserSerializer(instance=i_d)
-            #get only the user name of the user, append it output list and send that list 
-            output_list.append(serializer.data['username'])
-            
+        try:
+            #create onject of the requested follower
+            followerobj = Follow.get_follower(user=currentuser_)
+            output_list=[]
 
-        return Response(output_list,status=status.HTTP_200_OK)
-    return Response(status=status.HTTP_400_BAD_REQUEST)
+            #for every id number present in follower object; which is a user, retrive it's data
+            for i_d in followerobj:
+                serializer = UserSerializer(instance=i_d)
+                #get only the user name of the user, append it output list and send that list 
+                output_list.append(serializer.data['username'])
+            return Response(output_list,status=status.HTTP_200_OK)
+        except:
+            data={'message':'Help people find you !'}
+    return Response(data,status=status.HTTP_400_BAD_REQUEST)
 
 
 
+'''
+API for displaying user's profile containing, 
+it's full name,username and tweets made by him.
+'''
 @api_view(['POST'])
 @csrf_exempt
 
@@ -162,21 +173,25 @@ def view_profile_api(request):
         #from the received username, get the matching data of that user
         requsted_user = User.objects.get(username=requsteduser)
         
-        requesteddata={}
-        requesteddata['firstname']= requsted_user.first_name
-        requesteddata['lastname']= requsted_user.last_name
-        requesteddata['username']= requsted_user.username
+        requested_data={}
+        requested_data['firstname']= requsted_user.first_name
+        requested_data['lastname']= requsted_user.last_name
+        requested_data['username']= requsted_user.username
         
         #retrive bio of that user,depending on its username
-        requstedbio = UserData.objects.get(user=requsted_user.id)
+        requsted_bio = UserData.objects.get(user=requsted_user.id)
       
-        requesteddata['bio']= requstedbio.userbio
+        requested_data['bio']= requsted_bio.userbio
         # requested_user_id=(requsted_user.id)
 
-        #retrive fields of that user depending on its username
-        requestedtweets = TweetData.objects.filter(user= requsted_user).order_by('-time_created')
-        alltweets= TweetSerializer(requestedtweets,many=True)
+        try:
+            #retrive tweets of that user depending on its username
+            requested_tweets = TweetData.objects.filter(user= requsted_user).order_by('-time_created')
+            all_tweets= TweetSerializer(requested_tweets,many=True)
+            #send the user information and tweets
+            return Response([requested_data,all_tweets.data],status= status.HTTP_200_OK)
+        except:
+            response_message={'message':'Start tweeting !'}
+            return Response([requested_data,response_message],status= status.HTTP_204_NO_CONTENT)
 
-        #send the user information and tweets
-        return Response([requesteddata,alltweets.data],status= status.HTTP_200_OK)
     return Response(status= status.HTTP_400_BAD_REQUEST)

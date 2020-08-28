@@ -18,16 +18,7 @@ export class Menu extends Component {
             firstname:'first name',
             lastname:'last name',
             tweets:null,
-            allUsers:[
-                'Empty user',
-                'Empty user',
-                'Empty user',
-                'Empty user',
-                'Empty user',
-                'Empty user',
-                'Empty user',
-                'Empty user',     
-            ],
+            allUsers:[],
             otheruser:'user',
             isUnfollow:'',
             tweetError:"",
@@ -244,27 +235,19 @@ export class Menu extends Component {
         .post('http://127.0.0.1:8000/Menu/Allusers/',this.state)
         .then( response=>{
                 console.log(response)
+                
 
                 const setusername=response.data[0]
                 const userArray=response.data[1]
-                var excluded=[]
+
+                
 
                 this.setState({
                     username:setusername.username,
                     firstname:setusername.firstname,
                     lastname:setusername.lastname,
-                    // allUsers:userArray
+                    allUsers:Object.values(userArray)
                 })
-
-                userArray.map(names=>(
-                    excluded.push(names)
-                ))
-
-                this.setState({
-                    allUsers:excluded
-                })
-
-
 
         })
     }
@@ -273,6 +256,7 @@ export class Menu extends Component {
     render() {
 
         const{tweets,allUsers,isUnfollow}=this.state
+        
         return (
             <div className="Menu">
                 {/* Renders the side menu */}
@@ -378,19 +362,19 @@ export class Menu extends Component {
                         <div className="users">
                             <h4 id="other-users-list">
                             
-                            {allUsers.map(user => (
+                             {allUsers.map(user => (
                                    <div id="for-each"> 
                                         <h4 key={user.id}>
                                             <Link onClick={()=>{this.viewProfileBtn(user)}}><div id="other-user-name">{user}</div></Link>
-                                            {/* <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button> */}
+                                            
                                             {isUnfollow==true ?
                                                 <button id="follow-button" onClick={()=>{this.unfollowUserBtn(user)}}>Unfollow</button>:
                                                 <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>}
-                                            {/* <button id="visit-profile-button" onClick={()=>{this.viewProfileBtn(user)}}>Profile</button> */}
+                                             {/* <button id="visit-profile-button" onClick={()=>{this.viewProfileBtn(user)}}>Profile</button>  */}
                                             
                                         </h4>
-                                    </div>
-                                ))}
+                                    </div> 
+                                ))} 
                             </h4>
                         </div>
                     </div>

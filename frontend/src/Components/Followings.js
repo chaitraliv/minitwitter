@@ -34,7 +34,7 @@ export class Followings extends Component {
         else{
 
             axios
-            .post('http://127.0.0.1:8000/Followings/Users/',this.state)
+            .post('http://127.0.0.1:8000/User/Followings/',this.state)
             .then(response=>{
                 console.log(response)
                 const userData=response.data[0]

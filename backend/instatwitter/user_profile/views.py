@@ -93,7 +93,7 @@ def user_profile_api(request):
 @csrf_exempt
 
 def following_api(request):
-    #retrive token from the data
+    
     #retrive token from the data
     receivedToken = request.data.get('token',None)
     # print(receivedToken)
@@ -150,6 +150,8 @@ def follower_api(request):
             return Response(output_list,status=status.HTTP_200_OK)
         except:
             data={'message':'Help people find you !'}
+            return Response(data,status=status.HTTP_204_NO_CONTENT)
+
     return Response(data,status=status.HTTP_400_BAD_REQUEST)
 
 

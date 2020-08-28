@@ -116,22 +116,25 @@ def follow_api(request):
         #retrive current user from token received 
         followingtoken = Token.objects.get(key=receivedtoken)
         current_user = followingtoken.user
+        
 
         #retrive object of user to be followed
         user_to_follow = User.objects.get(username=userto_follow)
+
         #check if already following
-        following= Follow.objects.filter(user=current_user,followed= user_to_follow)
+        following= Follow.objects.filter(user= current_user,followed= user_to_follow)
         is_following = True if following else False
 
 
         #if already following, unfollow him and set the negative value to is_following
         if is_following:
-            Follow.unfollow(user=current_user,another_user=user_to_follow)
+            Follow.unfollow(user= current_user,another_user=user_to_follow)
             is_following= False
             return Response(status= status.HTTP_406_NOT_ACCEPTABLE)
 
         else:
             #if not following, follow the user
+
             Follow.follow(user= current_user,another_user=user_to_follow)
             #add the current user to requsted user's follower
             Follow.followers(user=user_to_follow,another_user=current_user)
@@ -195,31 +198,40 @@ def all_users_api(request):
             all_user_data={}
             counter=0
             for single_user in user_list:
-                all_user_data['username'+str(counter)]= single_user.username
+                all_user_data[counter]= single_user.username 
                 counter+=1
             return all_user_data
+
+        # function to retrive following user's full name
+        def getFullNames(user_List):
+            user_full_name = {}
+            counter1 = 0
+            for every_user in user_List:
+                user_full_name[counter1]= every_user.get_full_name()
+                counter1 +=1
+            return user_full_name
 
         #Exclude the following users from the list    
         try:
             following_users = Follow.get_following(user=user)
-            all_users = User.objects.exclude(pk__in=following_users)
+            all_users = User.objects.exclude(pk__in=following_users).exclude(username= user.username)
             all_users_data = getAllUser(all_users)
-            print(all_users_data)
-            return Response([data,all_users_data],status=status.HTTP_200_OK)
+            user_fullnames = getFullNames(all_users)
+            return Response([data,all_users_data,user_fullnames],status=status.HTTP_200_OK)
 
         #Else diaplay all the users from the database
         except:
             all_users = User.objects.all().exclude(username= currentuser)
             all_users_data = getAllUser(all_users)
-            print(all_users_data)
-            return Response([data,all_users_data],status=status.HTTP_200_OK)
+            user_fullnames = getFullNames(all_users)
+            return Response([data,all_users_data,user_fullnames],status=status.HTTP_200_OK)
     return Response(status= status.HTTP_400_BAD_REQUEST)
 
         
 
 
 '''
-To display posts (tweets) of the users, logged in user follows,and his own tweets
+To display posts (tweets) of the users; logged in user follows, and his own tweets.
 '''
 
 @api_view(['POST'])
@@ -237,7 +249,6 @@ def timeline_api(request):
         try:
             followingobj = Follow.get_following(user= current_user)
             all_tweets = TweetData.objects.all().order_by('-time_created')
-            print(all_tweets)
             tweets=[]
             for tweet in all_tweets:
                 if tweet.user in followingobj or tweet.user == current_user:
@@ -250,7 +261,8 @@ def timeline_api(request):
             return Response(tweets,status= status.HTTP_200_OK)
 
         except:
-            response_message={'message':'Your feed is empty. Start browsing!'}
-            return Response(response_message,status=status.HTTP_204_NO_CONTENT)
+            response_message={}
+            response_message['message']='Your feed is empty. Start browsing!'
+            return Response(data=response_message,status=status.HTTP_202_ACCEPTED)
     return Response(status=status.HTTP_400_BAD_REQUEST)
 

@@ -20,29 +20,29 @@ class Follow(models.Model): #User I will follow
     #Another user logged in user will follow
     @classmethod
     def follow(cls, user, another_user):
-        obj, create = cls.objects.get_or_create(user=user)
+        obj = cls.objects.get(user=user)
         obj.followed.add(another_user)
 
 
     #to get following users of current user
     @classmethod
     def get_following(cls, user):
-        followingobj,create = cls.objects.get_or_create(user=user)
+        followingobj= cls.objects.get(user=user)
         return followingobj.followed.all()
 
     #to add the current user to another user's following
     @classmethod
     def followers(cls, user, another_user):
-        obj, create = cls.objects.get_or_create(user=another_user)
+        obj= cls.objects.get(user=another_user)
         obj.follower.add(user)
     
     @classmethod
     def get_follower(cls, user):
-        followerobj,create = cls.objects.get_or_create(user=user)
+        followerobj = cls.objects.get(user=user)
         return followerobj.follower.all()
 
-
-    # @classmethod
-    # def unfollow(cls, user, another_user):
-    #     obj, create = cls.objects.get_or_create(user=user)
-    #     obj.followed.remove(another_user)
+    # to delete the another user from logged in user's followings
+    @classmethod
+    def unfollow(cls, user, another_user):
+        obj = cls.objects.get(user= user)
+        obj.followed.remove(another_user)

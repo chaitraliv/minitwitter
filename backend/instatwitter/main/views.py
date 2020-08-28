@@ -14,6 +14,9 @@ from django.utils import timezone
 # Create your views here.
 
 
+'''
+API to check login credentials of user and log him in. 
+'''
 
 @api_view(['POST'])
 @csrf_exempt
@@ -21,7 +24,8 @@ def login_api(request):
     #retrive the username and password from request.
     userName = request.data.get('userName',None)
     passWord = request.data.get('passWord',None)
-    print(userName,passWord)
+    
+    
     if userName is None or passWord is None:                         #if fields are blank
         return Response(status= status.HTTP_400_BAD_REQUEST)
 
@@ -32,11 +36,16 @@ def login_api(request):
 
     logintoken, created = Token.objects.get_or_create(user=user)
     data={}
+    #Return the token again after registration
     data['token'] = logintoken.key   
          
     # login is successful
     return Response(data,status=status.HTTP_200_OK)
-    
+
+
+'''
+API to register a new user, check if the requested username is available, if so register it.
+'''
 
 
 @api_view(['POST'])
@@ -65,78 +74,59 @@ def registration_api(request):
                                  last_name = lastname)
         token, created = Token.objects.get_or_create(user=user)         #create token for the user
         data = {}
-        data['token']=token.key 
-        userdata = UserData.objects.create(user=user, userbio='create your bio')
+        data['token']=token.key                                 #send the token to backend
+        userdata = UserData.objects.create(user=user, userbio='create your bio')         #createe instance for that user
        
         return Response(data, status= status.HTTP_201_CREATED)        #user is created
     return Response(status= status.HTTP_226_IM_USED)          #user already taken 
 
 
-@api_view(['POST'])
-@csrf_exempt
-def home_page_api(request):
-    #retrive the token 
-    received_token = request.data.get('token',None)
-    print(received_token)
-    
-    #Proceed only if received token is not empty
-    if received_token is not None:
-        usernametoken = Token.objects.get(key= received_token)
-        user = usernametoken.user
-        data={}
-        data['username'] = user.username
-        data['firstname'] = user.first_name
-        data['lastname'] = user.last_name
 
+'''
+API to log out
+'''
 
-        usertweets=[]
-
-        mefollowing = Follow.get_following(user= user)
-        for each_user in mefollowing:
-            myuser= UserSerializer(instance=each_user)
-            user_tweets= TweetData.objects.filter(user=each_user).order_by('-time_created')
-            serializer= TweetSerializer(user_tweets,many=True)
-            usertweets.append(serializer.data)
-        print(usertweets)
-
-        return Response([data,usertweets],status= status.HTTP_200_OK)
-
-        # return Response(data,status= status.HTTP_200_OK)
-    return Response(status= status.HTTP_504_GATEWAY_TIMEOUT)
-
-
-@api_view(['POST'])
+@api_view(['POST','GET'])
 @csrf_exempt
 def menu_api(request):
     #retrive the given data from request
     receivedtoken = request.data.get('token',None)
-    receivedtweet = request.data.get('tweets',None)
-    userto_follow = request.data.get('otheruser',None)
-    status_flag = request.data.get('viewFlag',None)
-    print(receivedtoken)
-
-    # print(receivedtoken)
-    # print(userto_follow)
-    #if token is not received, do not proceed
-    if receivedtoken is None:
+ 
+    #if token is not received, log the user out
+    if receivedtoken is  None:
         return Response(status= status.HTTP_504_GATEWAY_TIMEOUT)
-    elif userto_follow != 'user' and receivedtoken is not None:
-        # print('\n',userto_follow, receivedtoken)
+    return Response(status= status.HTTP_200_OK)
+
+
+
+'''
+To follow the requested user from the current user's profile
+and add that to the following list of current user
+and current user to followers list of requested user
+'''
+
+@api_view(['POST'])
+@csrf_exempt
+def follow_api(request):   
     
+    receivedtoken = request.data.get('token',None)
+    userto_follow = request.data.get('otheruser',None)
+
+    if userto_follow != 'user' and receivedtoken is not None:
         #retrive current user from token received 
         followingtoken = Token.objects.get(key=receivedtoken)
         current_user = followingtoken.user
 
-        #retrive onject of user to be followed
+        #retrive object of user to be followed
         user_to_follow = User.objects.get(username=userto_follow)
-
         #check if already following
         following= Follow.objects.filter(user=current_user,followed= user_to_follow)
         is_following = True if following else False
 
         # if current_user is not user_to_follow:
-            #if already following, promt so and set the negative value to is_following
+        #if already following, promt so and set the negative value to is_following
         if is_following:
+            Follow.unfollow(user=current_user,another_user=user_to_follow)
             is_following= False
             return Response(status= status.HTTP_406_NOT_ACCEPTABLE)
         else:
@@ -146,31 +136,96 @@ def menu_api(request):
             Follow.followers(user=user_to_follow,another_user=current_user)
             is_following = True
             return Response(status= status.HTTP_200_OK)
-        return Response(status= status.HTTP_400_BAD_REQUEST)            #already following
-       
-    elif receivedtoken is not None:
-        #else, get the user related to that toek
-        tweettoken = Token.objects.get(key=receivedtoken)  
-        user = tweettoken.user
+        return Response(status= status.HTTP_400_BAD_REQUEST)
+
+
+
+'''
+API to save the posted tweet of logged user
+'''
+
+@api_view(['POST'])
+@csrf_exempt
+def tweet_api(request):
+    receivedtweet = request.data.get('tweets',None)
+    receivedtoken = request.data.get('token',None)
+    
+    if receivedtoken is not None:
+            #else, get the user related to that token
+            tweettoken = Token.objects.get(key=receivedtoken)  
+            user = tweettoken.user
+
+            #Check if tweet is not empty, only procced if it has some content
+            if receivedtweet is not None:
+                mytweet = TweetData(user= user, tweet=receivedtweet,time_created=timezone.now())
+                mytweet.save()      #save the tweet for respective user
+                return Response(status= status.HTTP_200_OK)          
+                
+
+
+'''
+API to display list of all the available users who current user does not follow
+'''
+
+@api_view(['POST'])
+@csrf_exempt
+def all_users_api(request):
+    receivedtoken = request.data.get('token',None)
+    if receivedtoken is not None:        
+        all_user_token = Token.objects.get(key=receivedtoken)
+        user= all_user_token.user    
         data={}
+
         #pass the username of that object
         data['username'] = user.username
         data['firstname'] = user.first_name
         data['lastname'] = user.last_name
         currentuser = user.username   #set that username name as current 
-        #get a list of all the users present, except the logged in one
-        myusers = User.objects.values_list('username',flat=True).exclude(username=currentuser)  
+        following_users = Follow.get_following(user=user)
+        # DO NOT print(following_users)
+        all_users = User.objects.exclude(pk__in=following_users)
+        #DO ONOT INCLUDE# following_users_excluded = all_users.exclude(id__in= following_users.values_list('id',flat=True))
+        # DO NOT INCLUDE print(all_users)
+        all_users_data={}
+        j=0
+        for i in all_users:
+            all_users_data[j]= i.username
+            j+=1
+        print(data)
+        return Response([data,all_users_data],status=status.HTTP_200_OK)
+       
 
-        #Check if tweet is not empty, only procced if it has some content
-        if receivedtweet is not None:
-            mytweet = TweetData(user= user, tweet=receivedtweet,time_created=timezone.now())
-            mytweet.save()      #save the tweet for respective user
+        
 
-            #return a list of all users and username of current user along with appropriate response code
-            return Response([data,myusers],status= status.HTTP_201_CREATED)  
-        # else:
-        #     return Response(status=status.HTTP_204_NO_CONTENT)        
-        return Response([data,myusers])     #otherwise send the same data without status code, resulting failure.
-    #check if flag is set    
-    elif  status_flag is True:
-        return Response(status= status.HTTP_200_OK)
+
+'''
+To display posts (tweets) of the users, logged in user follows,and his own tweets
+'''
+
+@api_view(['POST'])
+@csrf_exempt
+def timeline_api(request):
+
+    #retrive the token from the request data
+    token = request.data.get('token',None)
+
+    #Proceed only if received token is not empty
+    if token is not None:
+        #Get the logged in user's object from the token
+        timeline_token = Token.objects.get(key=token)
+        current_user= timeline_token.user
+        followingobj = Follow.get_following(user= current_user)
+        all_tweets = TweetData.objects.all().order_by('-time_created')
+        print(all_tweets)
+        tweets=[]
+        for tweet in all_tweets:
+            if tweet.user in followingobj or tweet.user == current_user:
+                
+                serializer= TweetSerializer(tweet).data
+                serializer['username']= tweet.user.username
+                serializer['firstname'] = tweet.user.first_name
+                serializer['lastname'] = tweet.user.last_name
+                tweets.append(serializer)
+        # length = len(tweets)
+        # print(tweets,'/n',serializer.data)
+        return Response(tweets,status= status.HTTP_200_OK)

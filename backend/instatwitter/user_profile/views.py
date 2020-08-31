@@ -145,7 +145,6 @@ def follower_api(request):
             #for every id number present in follower object; which is a user, retrive it's data
             for i_d in followerobj:
                 serializer = UserSerializer(instance=i_d)
-                #get only the user name of the user, append it output list and send that list 
                 output_list.append(serializer.data)
             return Response(output_list,status=status.HTTP_200_OK)
         except:
@@ -254,6 +253,7 @@ def follow_api(request):
             return Response(data,status= status.HTTP_208_ALREADY_REPORTED)
         else:
             Follow.follow(user=current_user,another_user=user_to_follow)
+            Follow.user_followers(user=user_to_follow,another_user=current_user)
             data['is_following']= False
             return Response(data,status= status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)

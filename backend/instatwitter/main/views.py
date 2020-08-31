@@ -1,14 +1,14 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
-from .models import UserData, TweetData, Follow
-from .serializers import UserSerializer, TweetSerializer, FollowSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from rest_framework.authtoken.models import Token
 from django.utils import timezone
+from .models import UserData, TweetData, Follow
+from .serializers import UserSerializer, TweetSerializer, FollowSerializer
 
 
 # Create your views here.
@@ -86,7 +86,7 @@ def registration_api(request):
 API to log out
 '''
 
-@api_view(['POST','GET'])
+@api_view(['POST'])
 @csrf_exempt
 def menu_api(request):
     #retrive the given data from request
@@ -136,8 +136,8 @@ def follow_unfollow_api(request):
             #if not following, follow the user
 
             Follow.follow(user= current_user,another_user=user_to_follow)
-            #add the current user to requsted user's follower
-            Follow.followers(user=user_to_follow,another_user=current_user)
+            #add the current user to requsted user's followers
+            Follow.user_followers(user=user_to_follow,another_user=current_user)
             is_following = True
             return Response(status= status.HTTP_200_OK)
         return Response(status= status.HTTP_400_BAD_REQUEST)

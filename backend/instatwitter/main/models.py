@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class UserData(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     userbio = models.CharField(max_length=100)
     
 class TweetData(models.Model):
@@ -14,10 +14,10 @@ class TweetData(models.Model):
 
 class Follow(models.Model): #User I will follow
     user=models.OneToOneField(User,on_delete=models.CASCADE)
-    followed = models.ManyToManyField(User,related_name= 'followed')
-    follower = models.ManyToManyField(User, related_name= 'follower')
+    followed = models.ManyToManyField(User,related_name= 'follows')
+    follower = models.ManyToManyField(User, related_name= 'followers')
 
-    #Another user logged in user will follow
+    #Another user, logged in user will follow
     @classmethod
     def follow(cls, user, another_user):
         followsobj,create = cls.objects.get_or_create(user=user)
@@ -32,7 +32,7 @@ class Follow(models.Model): #User I will follow
 
     #to add the current user to another user's following
     @classmethod
-    def followers(cls, user, another_user):
+    def user_followers(cls, user, another_user):
         obj,create = cls.objects.get_or_create(user=user)
         return obj.follower.add(another_user)
     

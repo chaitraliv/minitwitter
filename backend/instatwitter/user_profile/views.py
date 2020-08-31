@@ -118,7 +118,7 @@ def following_api(request):
         except:
             data={}
             data['message']= 'Start following !!'
-            return Response(data,status=status.HTTP_204_NO_CONTENT)
+            return Response(data,status=status.HTTP_206_PARTIAL_CONTENT)
     return Response(status= status.HTTP_400_BAD_REQUEST)
 
 
@@ -146,13 +146,13 @@ def follower_api(request):
             for i_d in followerobj:
                 serializer = UserSerializer(instance=i_d)
                 #get only the user name of the user, append it output list and send that list 
-                output_list.append(serializer.data['username'])
+                output_list.append(serializer.data)
             return Response(output_list,status=status.HTTP_200_OK)
         except:
             data={'message':'Help people find you !'}
-            return Response(data,status=status.HTTP_204_NO_CONTENT)
+            return Response(data,status=status.HTTP_206_PARTIAL_CONTENT)
 
-    return Response(data,status=status.HTTP_400_BAD_REQUEST)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -194,7 +194,7 @@ def view_profile_api(request):
             return Response([requested_data,all_tweets.data],status= status.HTTP_200_OK)
         except:
             response_message={'message':'Start tweeting !'}
-            return Response([requested_data,response_message],status= status.HTTP_204_NO_CONTENT)
+            return Response([requested_data,response_message],status= status.HTTP_206_PARTIAL_CONTENT)
 
     return Response(status= status.HTTP_400_BAD_REQUEST)
 

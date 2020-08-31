@@ -5,12 +5,12 @@ from .models import TweetData,UserData, Follow
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id','first_name','last_name','username',]
 
 class TweetSerializer(serializers.ModelSerializer):
     class Meta:
         model = TweetData
-        fields = '__all__'
+        fields = ['user','tweet','time_created',]
 
 class FollowSerializer(serializers.ModelSerializer):
     class Meta:

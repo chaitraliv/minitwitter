@@ -62,6 +62,10 @@ def registration_api(request):
     if username is None or password is None or firstname is None or lastname is None or email is None:
         return Response(status= status.HTTP_400_BAD_REQUEST)
     
+    if not (firstname.isalpha() and lastname.isalpha() and username.isalpha()):        
+        return Response({'message':'Only alphabates are allowed'},status=status.HTTP_400_BAD_REQUEST)
+    
+
     #check if username already exists
     try:
         user = User.objects.get(username=username)

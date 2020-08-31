@@ -10,9 +10,9 @@ class UserSerializer(serializers.ModelSerializer):
 class TweetSerializer(serializers.ModelSerializer):
     class Meta:
         model = TweetData
-        fields = ['user','tweet','time_created',]
+        fields = ['id','user','tweet','time_created',]
 
 class FollowSerializer(serializers.ModelSerializer):
     class Meta:
         model = Follow
-        fields = '__all__'
+        fields = ['id','user','followed','follower']

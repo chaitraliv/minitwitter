@@ -17,7 +17,7 @@ class Follow(models.Model): #User I will follow
     followed = models.ManyToManyField(User,related_name= 'followed')
     follower = models.ManyToManyField(User, related_name= 'follower')
 
-    #Another user logged in user will follow
+    #Another user, logged in user will follow
     @classmethod
     def follow(cls, user, another_user):
         followsobj,create = cls.objects.get_or_create(user=user)

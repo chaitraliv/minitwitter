@@ -145,7 +145,6 @@ def follower_api(request):
             #for every id number present in follower object; which is a user, retrive it's data
             for i_d in followerobj:
                 serializer = UserSerializer(instance=i_d)
-                #get only the user name of the user, append it output list and send that list 
                 output_list.append(serializer.data)
             return Response(output_list,status=status.HTTP_200_OK)
         except:

@@ -136,8 +136,8 @@ def follow_unfollow_api(request):
             #if not following, follow the user
 
             Follow.follow(user= current_user,another_user=user_to_follow)
-            #add the current user to requsted user's follower
-            Follow.followers(user=user_to_follow,another_user=current_user)
+            #add the current user to requsted user's followers
+            Follow.user_followers(user=user_to_follow,another_user=current_user)
             is_following = True
             return Response(status= status.HTTP_200_OK)
         return Response(status= status.HTTP_400_BAD_REQUEST)

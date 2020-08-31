@@ -253,6 +253,7 @@ def follow_api(request):
             return Response(data,status= status.HTTP_208_ALREADY_REPORTED)
         else:
             Follow.follow(user=current_user,another_user=user_to_follow)
+            Follow.user_followers(user=user_to_follow,another_user=current_user)
             data['is_following']= False
             return Response(data,status= status.HTTP_200_OK)
     return Response(status=status.HTTP_400_BAD_REQUEST)

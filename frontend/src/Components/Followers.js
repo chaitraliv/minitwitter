@@ -48,7 +48,7 @@ followUserBtn=(user,event)=>{
 
     axios.defaults.headers = {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token')
+        Authorization: "token "+localStorage.getItem('token')
     }
     
     axios
@@ -92,7 +92,7 @@ unfollowUserBtn=(user,event)=>{
 
     axios.defaults.headers = {
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('token')
+        Authorization: "token "+localStorage.getItem('token')
     }
 
     axios
@@ -145,7 +145,7 @@ componentDidMount(){
 
         axios.defaults.headers = {
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token')
+            Authorization: "token "+localStorage.getItem('token')
         }
 
         axios

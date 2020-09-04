@@ -39,7 +39,7 @@ export class Followings extends Component {
 
             axios.defaults.headers = {
                 'Content-Type': 'application/json',
-                Authorization: localStorage.getItem('token')
+                Authorization: "token "+localStorage.getItem('token')
             }
 
             axios
@@ -107,7 +107,7 @@ export class Followings extends Component {
 
         axios.defaults.headers = {
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token')
+            Authorization: "token "+localStorage.getItem('token')
         }
 
         axios

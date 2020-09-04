@@ -47,7 +47,7 @@ export class RegistrationPage extends Component {
         event.preventDefault();
         
         axios
-        .post('http://127.0.0.1:8020/minitwitter/users/register/',{"first_name":this.state.firstname,'last_name':this.state.lastname,'email':this.state.email,'username':this.state.username,'password':this.state.password}) // link of backend api
+        .post('http://127.0.0.1:8020/minitwitter/users/',{"first_name":this.state.firstname,'last_name':this.state.lastname,'email':this.state.email,'username':this.state.username,'password':this.state.password}) // link of backend api
         .then(response=>{
             console.log(response);
            
@@ -59,12 +59,13 @@ export class RegistrationPage extends Component {
               })
               localStorage.setItem('id',this.state.id)
               axios
-               .post('http://127.0.0.1:8020/minitwitter/users/login/',{'username':this.state.username,'password':this.state.password})
+               .post('http://127.0.0.1:8020/minitwitter/login/',{'username':this.state.username,'password':this.state.password})
                .then(response=>{
 
-                  if(response.data['token']!==null){
+                if(response.token!==null){
 
-                    const userToken=response.data['token']
+                    const userToken=response.token
+                    console.log('token after rgtn ',userTokens)
                     localStorage.setItem('token',userToken);
                     alert(`Hey ${this.state.firstname}.... Registration Successful! `);
                     history.push('/NewUser/:'+this.state.id)      //Rendering on next page

@@ -4,6 +4,13 @@ import history from './../history';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 // import history from './../history';
+export var allUsersArray=[];
+export var loggedUserData={
+    firstname:'',
+    lastname:'',
+    username:'',
+    id:0
+}
 
 
 // This component will render the navigation menu , tweet box on upper side and  search bar
@@ -17,17 +24,18 @@ export class Menu extends Component {
             username:'user',
             firstname:'first name',
             lastname:'last name',
+            id:0,
             tweets:null,
             allUsers:[],
             allUserFullname:[],
             otheruser:'user',
             tweetError:"",
-            token:localStorage.getItem('token')
+            token:localStorage.getItem('token'),
+            following_person:''
         }
         // this.followUserBtn.bind(this)
     }
     
-
     // on click function to open the profile of user
     clickEventProfile=event=>{
 
@@ -65,6 +73,12 @@ export class Menu extends Component {
 
 
         console.log(this.state)
+
+        axios.defaults.headers = {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('token')
+        }
+
         axios
         .post('http://127.0.0.1:8000/Menu/Tweets/',this.state)
         .then(response=>{
@@ -88,6 +102,11 @@ export class Menu extends Component {
     clickEventLogout=event=>{
 
         localStorage.clear('token') 
+
+        axios.defaults.headers = {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('token')
+        }
         axios
         .post('http://127.0.0.1:8000/Menu/',this.state)
         .then(response=>{
@@ -122,12 +141,19 @@ export class Menu extends Component {
 
         }
         
+        axios.defaults.headers = {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('token')
+        }
 
 
         axios
         .post('http://127.0.0.1:8000/Menu/Follow/',followuser)
         .then(response=>{
-            console.log(response)    // will return 200 code if token is null
+            console.log(response)   
+            this.setState({
+                following_person:user
+            })
             if(response['status']==200){
                 console.log('Followed Successfully!')
                 history.push('/HomePage')
@@ -151,44 +177,6 @@ export class Menu extends Component {
 
 
     }
-
-
-    // // onclick function to unfollow the user
-    // unfollowUserBtn=(user,event)=>{
-
-    //     console.log(user)
-    //     const unfollowuser={
-    //         token:this.state.token,
-    //         otheruser:user
-
-    //     }
-
-    //     axios
-    //     .post('http://127.0.0.1:8000/Menu/',unfollowuser)
-    //     .then(response=>{
-    //         console.log(response)    // will return 200 code if token is null
-    //         if(response['status']==200){
-    //            console.log('UnFollowed Successfully!')
-    //             history.push('/HomePage')
-
-    //         }
-            
-    //     })
-    //     .catch(error=>{
-    //         if(error.response['status']==406){
-    //             console.log('already unfollowed')
-    //             history.push('/Followings')
-    //         }
-    //         else if(error.response['status']==400){
-    //             console.log('unfollowing yourself')
-    //             history.push('/UserProfile')
-    //         }
-    //     })
-
-
-
-    // }
-
 
     //onclick function to view the profile of other user
     viewProfileBtn=(user,event)=>{
@@ -229,8 +217,53 @@ export class Menu extends Component {
     // function  calls bydefault whenever this component will get call or get mount on screen
     componentDidMount=()=>{
 
+
+        axios.defaults.headers = {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('token')
+        }
+
+
         axios
-        .post('http://127.0.0.1:8000/Menu/Allusers/',this.state)
+        .post('http://127.0.0.1:8020/minitwitter/users/<'+this.state.id+'>/',this.state)
+        .then( response=>{
+                console.log(response)
+                
+
+                // const setusername=response.data[0]
+                // const userArray=response.data[1]
+                // const userDetails=response.data[2]
+
+                
+
+                // this.setState({
+                //     username:setusername.username,
+                //     firstname:setusername.firstname,
+                //     lastname:setusername.lastname,
+                //     id:setusername.id,
+                //     allUsers:Object.values(userArray),
+                //     allUserFullname:Object.values(userDetails)
+                // })
+                // allUsersArray=this.state.allUsers
+                // console.log(this.state.allUserFullname)
+                // loggedUserData.firstname=this.state.firstname
+                // loggedUserData.lastname=this.state.lastname
+                // loggedUserData.username=this.state.username
+                // loggedUserData.id=this.state.id
+
+        })
+        .catch(error=>{
+           
+            console.log(error.response['status'])
+            if(error.response['status']==504){
+                history.push('/')
+            }
+        })
+
+
+
+        axios
+        .post('http://127.0.0.1:8020/minitwitter/allusers/',this.state)
         .then( response=>{
                 console.log(response)
                 
@@ -245,10 +278,16 @@ export class Menu extends Component {
                     username:setusername.username,
                     firstname:setusername.firstname,
                     lastname:setusername.lastname,
+                    id:setusername.id,
                     allUsers:Object.values(userArray),
                     allUserFullname:Object.values(userDetails)
                 })
+                allUsersArray=this.state.allUsers
                 console.log(this.state.allUserFullname)
+                loggedUserData.firstname=this.state.firstname
+                loggedUserData.lastname=this.state.lastname
+                loggedUserData.username=this.state.username
+                loggedUserData.id=this.state.id
 
         })
         .catch(error=>{
@@ -263,15 +302,16 @@ export class Menu extends Component {
 
     render() {
 
-        const{tweets,allUsers,allUserFullname}=this.state
+        const{tweets,allUsers,allUserFullname,following_person}=this.state
         
         return (
             <div className="Menu">
                 {/* Renders the side menu */}
                 <div className="sideMenu">
                     <div id="user-info">
-                        <div>{this.state.username}</div>
-                        <div>{this.state.firstname} {this.state.lastname} </div>
+                        <div id="menu-fullname">{this.state.firstname} {this.state.lastname} </div>
+                        <div id="menu-username">@{this.state.username}</div>
+                        
                     </div>
                     <div>
                         <img src="./logo.png"></img>
@@ -280,6 +320,7 @@ export class Menu extends Component {
                     <div>
                         <button type="button" 
                         onClick={this.clickEventHome}>
+                            {/* <i class="fa fa-home"></i> */}
                             Home
                         </button>
                     </div>
@@ -287,20 +328,23 @@ export class Menu extends Component {
                     <div>
                         <button type="button" 
                         onClick={this.clickEventProfile}>
+                            {/* <i class="fa fa-user"></i> */}
                             Profile
                         </button>
                     </div>
 
-                    <div>
+                    <div id="adjust-f">
                          <button type="button" 
                          onClick={this.clickEventFollowers}>
-                             Followers
+                             {/* <i class="fas fa-user-friends"></i> */}
+                             Follower
                          </button>
                     </div>
 
                     <div>
                         <button type="button" 
                         onClick={this.clickEventFollowings}>
+                            {/* <i class="fa fa-users"></i> */}
                             Following
                         </button>
                     </div>
@@ -322,8 +366,10 @@ export class Menu extends Component {
                 </div>
                 {/* Will render the upper part from where user can tweet */}
                 <div className="tweetContainer">
+                    <div id='home-label'>
+                            <h3>Home</h3>
+                    </div>
                     <div className="tweetBox">
-                        <div id="top-label">InstaTwitter</div>
                         <form>
                         <textarea
                             value={tweets}
@@ -360,14 +406,15 @@ export class Menu extends Component {
                 {/* Will render search bar on opposite side of navigation menu */}
                 <div className="searchUser">
                     <div className="searchBar">
-                        <input type="text"
+                        {/* <input type="text"
                         placeholder="Search">
                         </input>
                         <button type="button">
                             Search
-                        </button>
+                        </button> */}
 
                         <div className="users">
+                        <h2>Who to follow</h2>
                             <h4 id="other-users-list">
                             
                              {allUsers.map((user) => (
@@ -375,8 +422,15 @@ export class Menu extends Component {
                                         <h4 key={user.id}>
                                             
                                             <Link onClick={()=>{this.viewProfileBtn(user)}}><div id="other-user-name">{user}</div></Link>
-                                            <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>
-                                            <Link>{allUserFullname[user]}</Link>
+                                            {
+                                                following_person==user ?
+                                                <button id="follow-button" >following</button>:
+                                                <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>
+
+
+                                            }
+                                            {/* <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button> */}
+                                            {/* <Link>{allUserFullname[user]}</Link> */}
                                             {/* {isUnfollow==true ?
                                                 <button id="follow-button" onClick={()=>{this.unfollowUserBtn(user)}}>Unfollow</button>:
                                                 <button id="follow-button" onClick={()=>{this.followUserBtn(user)}}>follow</button>} */}
@@ -396,6 +450,10 @@ export class Menu extends Component {
             </div>
         )
     }
+    
 }
 
-export default Menu
+export default Menu;
+
+
+

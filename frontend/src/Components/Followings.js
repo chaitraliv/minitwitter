@@ -4,6 +4,9 @@ import './Followings.css'
 import history from './../history';
 import axios from 'axios'
 import { Link } from 'react-router-dom';
+import {loggedUserData} from './Menu'
+
+export var followingUserArray=[]
 
 export class Followings extends Component {
 
@@ -13,7 +16,8 @@ export class Followings extends Component {
         this.state = {
             token:localStorage.getItem('token'),
             username:null,
-             followings:[]
+             followings:[],
+             msg:''
         }
     }
 
@@ -33,20 +37,33 @@ export class Followings extends Component {
         }
         else{
 
+            axios.defaults.headers = {
+                'Content-Type': 'application/json',
+                Authorization: localStorage.getItem('token')
+            }
+
             axios
             .post('http://127.0.0.1:8000/User/Followings/',this.state)
             .then(response=>{
                 console.log(response)
                 const userData=response.data[0]
                 const followingsArray=response.data[1]
+
+                // if(response.data.message='Start following !!'){
+                //     this.setState({
+                //         msg:'Start Following!'
+                //     })
+                //     return(this.state.msg)
+                // }
     
-                if(response['status']==200){
+                if(response['status']===200){
     
                     this.setState({
                         
                         username:userData.username,
                         followings:followingsArray
                     })
+                    followingUserArray=this.state.followings
 
                     if(this.state.followings===null || this.state.followings===undefined){
 
@@ -56,14 +73,23 @@ export class Followings extends Component {
                     }
                     
                 }
+                // if(response['status']==206){
+
+                //     this.setState({
+                //         msg:'Start Following!'
+                //     })
+                //     return(this.state.msg)
+    
+                    
+                // }
                 
             })
             .catch(error=>{
                 console.log(error)
-                console.log(error.response['status']);
-                if(error.response['status']==504){
-                    history.push('/')
-                }
+                // console.log(error.response['status']);
+                // if(error.response['status']==504){
+                //     history.push('/')
+                // }
             })
             
         }
@@ -79,6 +105,11 @@ export class Followings extends Component {
 
         }
 
+        axios.defaults.headers = {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('token')
+        }
+
         axios
         .post('http://127.0.0.1:8000/User/Followings/Unfollow/',unfollowuser)
         .then(response=>{
@@ -88,6 +119,11 @@ export class Followings extends Component {
                 history.push('/HomePage')
 
             }
+            if(response['status']==208){
+                console.log('Please follow again!')
+                 history.push('/HomePage')
+ 
+             }
             
         })
         .catch(error=>{
@@ -104,6 +140,12 @@ export class Followings extends Component {
 
 
     }
+    clickeventfollowers=event=>{
+        history.push('/Followers')
+    }
+    clickeventfollowings=event=>{
+        history.push('/Followings')
+    }
 
     render() {
         const{followings,username}=this.state
@@ -111,10 +153,23 @@ export class Followings extends Component {
             <div>
                 <Menu />
                 <div className="UserFollowings">
-                <div id="label"> Your Followings </div>
+                <div id="logeed-fullname">{loggedUserData.firstname} {loggedUserData.lastname}</div>
+                <div id="logeed-username">@{loggedUserData.username}</div>
+                <div id="upper-buttons">  
+                    <button id="btn--followers" onClick={()=>{this.clickeventfollowers()}}> Followers</button>
+                    <button id="btn--followings" onClick={()=>{this.clickeventfollowings()}}>Followings</button>
+                 </div>
+
+                 {/* {
+                     this.state.msg=='Start Following!' ?
+                        <h3>{this.state.msg}</h3>:
+                        null
+                 } */}
+
                 <div id="followers-list"> 
                     {followings.map(follow => (
                                 <div key={indexedDB}>
+                                <div id='following-fullname'><i class="fa fa-user-circle"></i>{follow.first_name} {follow.last_name}</div>
                                 <div id="followings-username">
                                     <Link onClick={()=>{this.viewProfile(follow.username)}}>
                                         @{follow.username}

@@ -36,9 +36,9 @@ export default class Routes extends Component {
                     <Route path="/LoginPage" component={LoginPage} />
                     <Route path="/RegistrationPage" component={RegistrationPage} />
                     <Route path="/Menu" component={Menu} />
-                    <Route path="/NewUser" component={NewUser} />
+                    <Route path="/NewUser:id" component={NewUser} />
                     <Route path="/UserProfile" component={UserProfile} />
-                    <Route path="/CreateEditProfile" component={CreateEditProfile} />
+                    <Route path="/CreateEditProfile:id" component={CreateEditProfile} />
                     <Route path="/HomePage" component={HomePage} />
                     <Route path="/Followers" component={Followers} />
                     <Route path="/Followings" component={Followings} />

@@ -27,7 +27,7 @@ export class HomePage extends Component {
 
         axios.defaults.headers = {
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token')
+            Authorization: "token "+localStorage.getItem('token')
         }
 
         axios

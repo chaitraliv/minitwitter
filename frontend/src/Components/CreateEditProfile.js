@@ -34,7 +34,7 @@ export class CreateEditProfile extends Component {
         })
 
         axios
-        .get('http://127.0.0.1:8020/minitwitter/users/<'+this.state.id+'>/',this.state)
+        .get('http://127.0.0.1:8020/minitwitter/users/'+this.state.id+'/',this.state)
         .then(response=>{
             console.log(response)
 
@@ -80,7 +80,7 @@ export class CreateEditProfile extends Component {
         }
 
         axios
-        .put('http://127.0.0.1:8020/minitwitter/users/<'+this.state.id+'>/',{"bio":this.state.bio})
+        .put('http://127.0.0.1:8020/minitwitter/users/'+this.state.id+'/',{"bio":this.state.bio})
         .then(response=>{
             console.log(response)
 

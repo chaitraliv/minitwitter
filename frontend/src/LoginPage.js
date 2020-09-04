@@ -23,16 +23,27 @@ class LoginPage extends Component {
     handleEvent=event=>{
 
         axios
-        .post('http://127.0.0.1:8020/minitwitter/users/login/',{'username':this.state.userName,'password':this.state.passWord}) // link of backend api
+        .post('http://127.0.0.1:8020/minitwitter/login/',{'username':this.state.userName,'password':this.state.passWord}) // link of backend api
         .then(response=>{
-            console.log(response);
+            console.log('login response-',response);
            
                 if(response['status'] == 200){
                 const userToken=response.data['token']
                 localStorage.setItem('token',userToken);
+                axios
+                .post('http://127.0.0.1:8020/minitwitter/current_user/',{'token':localStorage.getItem('token')})
+                .then(response=>{
+
+                    console.log('response of current_user api-',response);
+                    const userdata={
+                        firstname:response.data.first_name,
+                        lastname:response.data.last_name
+                    }
+                    console.log('data after logged in-',userdata)
+                    history.push('/HomePage')
+
+                })
                 // alert(`Welcome ${this.state.userName}  !`)
-                console.log(this.state);
-                history.push('/HomePage')
                 // event.preventDefault()
        
                 }

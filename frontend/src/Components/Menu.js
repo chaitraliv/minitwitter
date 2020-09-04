@@ -24,7 +24,7 @@ export class Menu extends Component {
             username:'user',
             firstname:'first name',
             lastname:'last name',
-            id:0,
+            id:this.props.id,
             tweets:null,
             allUsers:[],
             allUserFullname:[],
@@ -76,7 +76,7 @@ export class Menu extends Component {
 
         axios.defaults.headers = {
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token')
+            Authorization: "token "+localStorage.getItem('token')
         }
 
         axios
@@ -105,7 +105,7 @@ export class Menu extends Component {
 
         axios.defaults.headers = {
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token')
+            Authorization: "token "+localStorage.getItem('token')
         }
         axios
         .post('http://127.0.0.1:8000/Menu/',this.state)
@@ -143,7 +143,7 @@ export class Menu extends Component {
         
         axios.defaults.headers = {
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token')
+            Authorization: "token "+localStorage.getItem('token')
         }
 
 
@@ -220,7 +220,7 @@ export class Menu extends Component {
 
         axios.defaults.headers = {
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token')
+            Authorization: "token "+localStorage.getItem('token')
         }
 
         this.setState({

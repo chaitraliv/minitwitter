@@ -27,7 +27,7 @@ export class NewUser extends Component {
     }
     componentDidMount(){
         this.setState({
-            id:this.props.match.params.id
+            id:localStorage.getItem('id')
         })
     }
     

@@ -34,7 +34,7 @@ export class NewUser extends Component {
     render() {
         return (
             <div>
-            <Menu /> 
+            <Menu id={this.state.id}/> 
                <div className="Pages-">
                    <h1>Welcome To Twitter</h1>
                    <button id="welcome" type="button" onClick={this.buttonClick}>Create Profile</button>

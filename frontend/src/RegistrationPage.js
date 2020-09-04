@@ -57,6 +57,7 @@ export class RegistrationPage extends Component {
               this.setState({
                 id:response.data.id
               })
+              localStorage.setItem('id',this.state.id)
               axios
                .post('http://127.0.0.1:8020/minitwitter/users/login/',{'username':this.state.username,'password':this.state.password})
                .then(response=>{

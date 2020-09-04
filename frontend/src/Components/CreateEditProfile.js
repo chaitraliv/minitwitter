@@ -27,10 +27,10 @@ export class CreateEditProfile extends Component {
 
         axios.defaults.headers = {
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token')
+            Authorization: "token "+localStorage.getItem('token')
         }
         this.setState({
-            id:this.props.match.params.id
+            id:localStorage.getItem('id')
         })
 
         axios
@@ -76,7 +76,7 @@ export class CreateEditProfile extends Component {
 
         axios.defaults.headers = {
             'Content-Type': 'application/json',
-            Authorization: localStorage.getItem('token')
+            Authorization: "token "+localStorage.getItem('token')
         }
 
         axios

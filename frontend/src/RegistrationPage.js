@@ -66,7 +66,7 @@ export class RegistrationPage extends Component {
                     const userToken=response.data['token']
                     localStorage.setItem('token',userToken);
                     alert(`Hey ${this.state.firstname}.... Registration Successful! `);
-                    history.push('/NewUser:'+this.state.id)      //Rendering on next page
+                    history.push('/NewUser/:'+this.state.id)      //Rendering on next page
 
                   }
                   else{

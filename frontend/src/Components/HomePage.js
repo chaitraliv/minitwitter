@@ -30,14 +30,15 @@ export class HomePage extends Component {
             Authorization: "token "+localStorage.getItem('token')
         }
 
+        const id=localStorage.getItem('id')
         axios
-        .post('http://127.0.0.1:8000/HomePage/',this.state)
+        .get('http://127.0.0.1:8020/minitwitter/tweets/',id)
         .then(response=>{
-            console.log(response)
+            console.log('response of timeline-',response)
 
             if(response['status']==200){
 
-                const tweetArray=response.data
+                const tweetArray=response.data.tweets
                 const{timelineArray,timelineContent}=this.state
 
                 tweetArray.map(tweet=>(

@@ -30,16 +30,23 @@ class LoginPage extends Component {
                 if(response['status'] == 200){
                 const userToken=response.data['token']
                 localStorage.setItem('token',userToken);
+                axios.defaults.headers = {
+                    'Content-Type': 'application/json',
+                    Authorization: "token "+localStorage.getItem('token')
+                }
                 axios
-                .post('http://127.0.0.1:8020/minitwitter/current_user/',{'token':localStorage.getItem('token')})
+                .get('http://127.0.0.1:8020/minitwitter/current_user/')
                 .then(response=>{
 
                     console.log('response of current_user api-',response);
                     const userdata={
                         firstname:response.data.first_name,
-                        lastname:response.data.last_name
+                        lastname:response.data.last_name,
+                        username:response.data.username,
+                        id:response.data.id
                     }
                     console.log('data after logged in-',userdata)
+                    localStorage.setItem('id',userdata.id);
                     history.push('/HomePage')
 
                 })

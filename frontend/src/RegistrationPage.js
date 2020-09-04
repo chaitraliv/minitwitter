@@ -28,6 +28,7 @@ export class RegistrationPage extends Component {
              email:null,
              firstname:null,
              lastname:null,
+             id:0,
              isDone:'',
              errors: {
                 firstname:'please enter name',
@@ -46,46 +47,53 @@ export class RegistrationPage extends Component {
         event.preventDefault();
         
         axios
-        .post('http://127.0.0.1:8000/RegistrationPage/',this.state) // link of backend api
+        .post('http://127.0.0.1:8020/minitwitter/users/register/',{"first_name":this.state.firstname,'last_name':this.state.lastname,'email':this.state.email,'username':this.state.username,'password':this.state.password}) // link of backend api
         .then(response=>{
             console.log(response);
            
             if(response['status'] === 201){
               console.info('Valid Form')
               console.log(this.state)
-                if(response.data['token']!==null){
+              this.setState({
+                id:response.data.id
+              })
+              axios
+               .post('http://127.0.0.1:8020/minitwitter/users/login/',{'username':this.state.username,'password':this.state.password})
+               .then(response=>{
 
-                  const userToken=response.data['token']
-                  localStorage.setItem('token',userToken);
-                  alert(`Hey ${this.state.firstname}.... Registration Successful! `);
-                  history.push('/NewUser')      //Rendering on next page
+                  if(response.data['token']!==null){
 
-                }
-                else{
+                    const userToken=response.data['token']
+                    localStorage.setItem('token',userToken);
+                    alert(`Hey ${this.state.firstname}.... Registration Successful! `);
+                    history.push('/NewUser:'+this.state.id)      //Rendering on next page
 
-                  alert(`Server Error! `);
-                  console.log('Token is empty')
+                  }
+                  else{
 
-                }
+                    alert(`Server Error! `);
+                    console.log('Token is empty')
+
+                  }
               
+
+               })
+                
  
-            }
-            if(response['status'] === 226){
-              console.log(this.state)
-              alert(`Hey ${this.state.firstname}.... username already used! `);
-            }
-            
-           
-                     
+            }         
            
 
         })
         .catch(error=>{
-            // console.log(error.response['status']);
+            console.log(error.response['status']);
 
-            // if(error.response['status']  === 400){
+            if(error.response['status']  === 400){
+              console.log(this.state)
+              alert(`Username Already Exist! `);
+            }
+            // if(error.response['status']  === 406){
             //   console.log(this.state)
-            //   alert(`Empty feilds not allowed! `);
+            //   alert(`Special characters are not allowed! `);
             // }
         })
        

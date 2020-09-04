@@ -23,7 +23,7 @@ export class InstaTwitter extends Component {
 
           <div className="split right">
             <img src={require('./logo.gif')}  />
-            <h1>See what’s happening in the Instazen right now</h1>
+            <h1>See what’s happening in the world right now</h1>
             <button id="btn-SignIn" type="Submit" onClick={()=>history.push('/RegistrationPage')} >Sign In</button>
             <button id="btn-LogIn" type="Submit" onClick={()=>history.push('/LoginPage')} >Log In</button>
           </div>

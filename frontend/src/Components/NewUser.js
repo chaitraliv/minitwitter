@@ -13,7 +13,8 @@ export class NewUser extends Component {
              firstname:null,
              lastname:null,
              username:null,
-             bio:null
+             bio:null,
+             id:0
              
         }
     }
@@ -21,8 +22,13 @@ export class NewUser extends Component {
     buttonClick= event=>{
 
         event.preventDefault();
-        history.push('/CreateEditProfile')
+        history.push('/CreateEditProfile:'+this.state.id)
 
+    }
+    componentDidMount(){
+        this.setState({
+            id:this.props.match.params.id
+        })
     }
     
     render() {

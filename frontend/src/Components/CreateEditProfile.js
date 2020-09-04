@@ -3,6 +3,7 @@ import Menu from './Menu'
 import './CreateEditProfile.css'
 import axios from 'axios'
 import history from './../history';
+import {loggedUserData} from './Menu'
 
 // This component will render the profile page of user where user can edit their personal
 export class CreateEditProfile extends Component {
@@ -15,6 +16,7 @@ export class CreateEditProfile extends Component {
             lastname:null,
             username:'',
             bio:null,
+            id:0,
             token:localStorage.getItem('token')
 
         }
@@ -23,8 +25,16 @@ export class CreateEditProfile extends Component {
     // This function will call automatically whenever this component get call
     componentDidMount=()=>{
 
+        axios.defaults.headers = {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('token')
+        }
+        this.setState({
+            id:this.props.match.params.id
+        })
+
         axios
-        .post('http://127.0.0.1:8000/User/CreateEditProfile/',this.state)
+        .get('http://127.0.0.1:8020/minitwitter/users/<'+this.state.id+'>/',this.state)
         .then(response=>{
             console.log(response)
 
@@ -34,7 +44,8 @@ export class CreateEditProfile extends Component {
                     firstname:response.data['firstname'],
                     lastname:response.data['lastname'],
                     username:response.data['username'],
-                    bio:response.data['bio']
+                    bio:response.data['bio'],
+                    id:response.data['id'],
                 })
                 
             }
@@ -63,8 +74,13 @@ export class CreateEditProfile extends Component {
 
         console.log(this.state)
 
+        axios.defaults.headers = {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('token')
+        }
+
         axios
-        .post('http://127.0.0.1:8000/User/CreateEditProfile/',this.state)
+        .put('http://127.0.0.1:8020/minitwitter/users/<'+this.state.id+'>/',{"bio":this.state.bio})
         .then(response=>{
             console.log(response)
 
@@ -87,7 +103,7 @@ export class CreateEditProfile extends Component {
             <div>
                 <Menu />
                 <div className="Profile-">
-                    <div id="label"> User Profile </div>
+                    <div id="label-upper"> Edit Profile </div>
                     <div className="profileForm">
 
                     <form>

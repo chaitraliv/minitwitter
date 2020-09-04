@@ -25,6 +25,11 @@ export class HomePage extends Component {
     // This function will get call automatically whenever this component will maount and will set the required feilds
     componentDidMount=()=>{
 
+        axios.defaults.headers = {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('token')
+        }
+
         axios
         .post('http://127.0.0.1:8000/HomePage/',this.state)
         .then(response=>{
@@ -78,13 +83,12 @@ export class HomePage extends Component {
 
                 <div className="timeline">
 
-                    <div id="label">timeline</div>
-
                     <div className="tweets-timeline"><div id="tweets-timeline-content">{timelineContent.map(tweet => (
                                 <h4 key={tweet.id}>
                                     <div id="each-content">
 
                                         <div id="tweet-full-name">
+                                        <i class="fa fa-user-circle"></i>
                                             {tweet.firstname} {tweet.lastname} 
                                             {/* <div id="tweet-user-name"> */}
                                                 <Link id="tweet-user-name" onClick={()=>{this.viewProfile(tweet.username)}}>

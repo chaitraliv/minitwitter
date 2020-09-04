@@ -1,42 +1,40 @@
 .timeline{
-    /* top:0;
-margin-top: 10.5%;
-margin-left: 15%;
- height: 76%;
- box-shadow: 0 5px 10px rgba(0,0,0,.2);
- width: 54%;
- float: center;
- position: fixed;
- overflow: scroll; */
- top:0;
-margin-top: 9.7%;
- margin-left: 14.73%;
- height: 76%;
- /* box-shadow: 0 5px 10px rgba(0,0,0,.2); */
- border-top: none;
- border-left: 2px solid rgba(0,0,0,.1);
- border-right: 2px solid rgba(0,0,0,.1);
- border-bottom: 2px solid rgba(0,0,0,.1);
- width: 53.84%;
- float: center;
- position: fixed;
+    top:0;
+ height: 500px;
+ width: 540px;
+ border: 1px solid rgba(0,0,0,.1);
+ padding: 20px 28.77px;
+ transform:translate(493px,-662px);
  text-align: center;
- overflow: scroll;
+ overflow: hidden;
+}
+.timeline:hover{
+    overflow: scroll;
+
 }
 
 .tweets-timeline{
     text-align: left;
-    overflow: scroll;
+    overflow: hidden;
+    margin: 0%;
 }
+
 /* #tweets-timeline-content{
     border-bottom: 2px solid rgba(0,0,0,.1);
     padding-top: 3px;
 } */
-
+.fa-user-circle{
+    font-size: 30px;
+    padding-right: 10px;
+    top:0;
+    transform: translate(0px,10px);
+}
 #each-content{
 
+    
     border-bottom: 2px solid rgba(0,0,0,.1);
-    margin-top: 5px;
+    margin: 0%;
+    background-color: #fff;
 
 
 }
@@ -53,7 +51,7 @@ margin-top: 9.7%;
     background-color: rgb(241, 251, 255);
 } */
 #tweet-user-name{
-    color: rgb(100, 99, 99);
+    color: rgb(138, 138, 138);
     font-weight: lighter;
     font-size: 15px;
     margin-left: 10px;
@@ -62,13 +60,13 @@ margin-top: 9.7%;
 #tweet-full-name{
     color: black;
     font-weight: bolder;
-    font-size: 20px;
-    margin-left: 10px;
+    font-size: 17px;
+    
 
 }
 
 #tweet-content{
-    margin-left: 10px;
+    margin-left: 39px;
     font-weight: lighter;
     margin-top: 5px;
 }

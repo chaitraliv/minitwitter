@@ -40,6 +40,11 @@ export class UserProfile extends Component {
 
     componentDidMount=()=>{
 
+        axios.defaults.headers = {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('token')
+        }
+
         axios
         .post('http://127.0.0.1:8000/User/UserProfile/',this.state)
         .then(response=>{
@@ -75,23 +80,25 @@ export class UserProfile extends Component {
             <div>
              <Menu />  
             <div className="Profile">
+                <div id="upper-portion">{this.state.firstname}  {this.state.lastname}
+                </div>
 
-                <img src="./logo.png"></img>
-                <h1 id="fullname">{this.state.firstname}  {this.state.lastname}</h1>
-                <h2 id="userid">@{this.state.username}</h2>
-                <h3 id="bio">{this.state.bio}</h3>
-                <div id="label-">TWEETS</div>
+                <i class="fa fa-user-alt"></i>
+                <div id="full-name">{this.state.firstname}  {this.state.lastname}</div>
+                <div id="user-id">@{this.state.username}</div>
+                <div id="user-id">{this.state.bio}</div>
+                <button id="tweets-available">Tweets</button>
                 <div className="tweets">
                         <h4 id="tweets">
                         
                         {tweets.map(tweet => (
-                                <h4 key={tweet.id}><div id="tweetuser">@{this.state.username}<br/></div>{tweet.tweet}</h4>
+                                <h4 key={tweet.id}><div id="tweetuser"><i class="fa fa-user-circle"></i>@{this.state.username}<br/></div><div id="user-tweet"><div id="twitter">{tweet.tweet}</div></div></h4>
                             ))}
                         </h4>
                 </div>
                 <button id="edit" type="button" onClick={this.clickForEdit}>Edit</button>
-                <button id="followers" type="button" onClick={this.clickForFollowers}>Followers</button>
-                <button id="following" type="button" onClick={this.clickForFollowing}>Following</button>
+                {/* <button id="followers" type="button" onClick={this.clickForFollowers}>Followers</button>
+                <button id="following" type="button" onClick={this.clickForFollowing}>Following</button> */}
                 
              
             </div>

@@ -25,6 +25,12 @@ export class OtherUserProfile extends Component {
     componentDidMount=()=>{
 
         console.log(this.state.otherUserName)
+
+        axios.defaults.headers = {
+            'Content-Type': 'application/json',
+            Authorization: localStorage.getItem('token')
+        }
+
         axios
         .post('http://127.0.0.1:8000/User/OtherUserProfile/',this.state)
         .then(response=>{
@@ -68,19 +74,19 @@ export class OtherUserProfile extends Component {
             <div>
                 <Menu />
                 <div className="other-user-profile">
-                    <div id="label">
+                    <div id="upper-portion">
                         {otherUserName}'s Profile
                     </div>
-                    <img src="./logo.png"></img>
-                    <h1 id="fullname">{firstname}  {lastname}</h1>
-                    <h2 id="userid">@{username}</h2>
-                    <h3 id="bio">{bio}</h3>
-                    <div id="label-">TWEETS</div>
+                    <i class="fa fa-user-alt"></i>
+                    <div id="full-name">{firstname}  {lastname}</div>
+                    <div id="user-id">@{username}</div>
+                    <div id="user-id">{bio}</div>
+                    <button id="tweetsAvailable">Tweets</button>
                     <div className="tweets">
                             <h4 id="tweets">
                             
                             {tweets.map(tweet => (
-                                    <h4 key={tweet.id}><div id="tweetuser">@{this.state.username}<br/></div>{tweet.tweet}</h4>
+                                    <h4 key={tweet.id}><div id="tweetuser"><i class="fa fa-user-circle"></i>@{this.state.username}<br/></div><div id="user-tweet"><div id="twitter">{tweet.tweet}</div></div></h4>
                                 ))}
                             </h4>
                     </div>

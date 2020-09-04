@@ -23,7 +23,7 @@ class LoginPage extends Component {
     handleEvent=event=>{
 
         axios
-        .post('http://127.0.0.1:8000/LoginPage/',this.state) // link of backend api
+        .post('http://127.0.0.1:8020/minitwitter/users/login/',{'username':this.state.userName,'password':this.state.passWord}) // link of backend api
         .then(response=>{
             console.log(response);
            

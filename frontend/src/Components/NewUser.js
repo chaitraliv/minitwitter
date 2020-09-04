@@ -22,7 +22,7 @@ export class NewUser extends Component {
     buttonClick= event=>{
 
         event.preventDefault();
-        history.push('/CreateEditProfile:'+this.state.id)
+        history.push('/CreateEditProfile/:'+this.state.id)
 
     }
     componentDidMount(){

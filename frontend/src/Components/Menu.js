@@ -223,6 +223,9 @@ export class Menu extends Component {
             Authorization: localStorage.getItem('token')
         }
 
+        this.setState({
+            id:this.props.id
+        })
 
         axios
         .post('http://127.0.0.1:8020/minitwitter/users/<'+this.state.id+'>/',this.state)

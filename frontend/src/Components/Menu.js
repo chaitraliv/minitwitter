@@ -223,12 +223,11 @@ export class Menu extends Component {
             Authorization: "token "+localStorage.getItem('token')
         }
 
-        this.setState({
-            id:this.props.id
-        })
+        
+        const token=localStorage.getItem('token')
 
         axios
-        .post('http://127.0.0.1:8020/minitwitter/users/<'+this.state.id+'>/',this.state)
+        .post('http://127.0.0.1:8020/minitwitter/current_users/',token)
         .then( response=>{
                 console.log(response)
                 
@@ -239,20 +238,20 @@ export class Menu extends Component {
 
                 
 
-                // this.setState({
-                //     username:setusername.username,
-                //     firstname:setusername.firstname,
-                //     lastname:setusername.lastname,
-                //     id:setusername.id,
-                //     allUsers:Object.values(userArray),
-                //     allUserFullname:Object.values(userDetails)
-                // })
+                this.setState({
+                    username:response.data.username,
+                    firstname:response.data.first_name,
+                    lastname:response.data.last_name,
+                    id:response.data.id,
+                    // allUsers:Object.values(userArray),
+                    // allUserFullname:Object.values(userDetails)
+                })
                 // allUsersArray=this.state.allUsers
                 // console.log(this.state.allUserFullname)
-                // loggedUserData.firstname=this.state.firstname
-                // loggedUserData.lastname=this.state.lastname
-                // loggedUserData.username=this.state.username
-                // loggedUserData.id=this.state.id
+                loggedUserData.firstname=this.state.firstname
+                loggedUserData.lastname=this.state.lastname
+                loggedUserData.username=this.state.username
+                loggedUserData.id=this.state.id
 
         })
         .catch(error=>{

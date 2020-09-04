@@ -65,7 +65,7 @@ export class RegistrationPage extends Component {
                 if(response.token!==null){
 
                     const userToken=response.token
-                    console.log('token after rgtn ',userTokens)
+                    console.log('token after rgtn ',userToken)
                     localStorage.setItem('token',userToken);
                     alert(`Hey ${this.state.firstname}.... Registration Successful! `);
                     history.push('/NewUser/:'+this.state.id)      //Rendering on next page

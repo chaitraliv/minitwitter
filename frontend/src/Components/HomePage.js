@@ -38,7 +38,7 @@ export class HomePage extends Component {
 
             if(response['status']==200){
 
-                const tweetArray=response.data.tweets
+                const tweetArray=response.data
                 const{timelineArray,timelineContent}=this.state
 
                 tweetArray.map(tweet=>(
